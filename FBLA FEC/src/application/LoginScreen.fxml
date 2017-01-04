@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="14.0" prefHeight="80.0" prefWidth="291.0" text="Family Entertainment Center">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="16.0" prefHeight="80.0" prefWidth="353.0" text="Infinity Family Entertainment Center">
          <font>
             <Font size="19.0" />
          </font>
@@ -22,15 +21,27 @@
       </Label>
       <VBox layoutX="253.0" layoutY="169.0" prefHeight="62.0" prefWidth="95.0">
          <children>
-            <TextField prefHeight="26.0" prefWidth="95.0" promptText="Username" />
-            <TextField layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="95.0" promptText="Password">
+            <TextField fx:id="txtUsername" prefHeight="26.0" prefWidth="95.0" promptText="Username">
+               <font>
+                  <Font size="10.0" />
+               </font></TextField>
+            <PasswordField fx:id="txtPassword" promptText="Password">
                <VBox.margin>
-                  <Insets top="8.0" />
+                  <Insets top="4.0" />
                </VBox.margin>
-            </TextField>
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </PasswordField>
          </children>
       </VBox>
       <Ellipse fill="#1fd7ff" layoutX="300.0" layoutY="115.0" radiusX="39.0" radiusY="31.0" stroke="BLACK" strokeType="INSIDE" />
       <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" layoutX="301.0" layoutY="115.0" startX="-150.0" stroke="BLACK" />
+      <Button layoutX="267.0" layoutY="239.0" mnemonicParsing="false" onAction="#Login" text="Sign In" />
+      <Label layoutX="6.0" layoutY="272.0" text="Powered by Infinity Systems">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
