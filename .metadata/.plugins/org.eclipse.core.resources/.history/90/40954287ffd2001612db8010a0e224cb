@@ -21,7 +21,7 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 public class LoginScreenController implements Initializable {
-		public LoginScreenModel loginModel = new LoginScreenModel();
+		public LoginModel loginModel = new LoginModel();
 		
 		@FXML
 		private TextField txtUsername;
