@@ -1,0 +1,167 @@
+package application;
+
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+
+public class Main_Menu_EmployeeModel {
+    private final SimpleIntegerProperty EmployeesID;
+    private final SimpleStringProperty EmployeesFirst_Name;
+    private final SimpleStringProperty EmployeesLast_Name;
+    private final SimpleStringProperty EmployeesEmail;
+    private final SimpleStringProperty EmployeesPhone;
+    private final SimpleStringProperty EmployeesAddress;
+    private final SimpleStringProperty EmployeesDOB;
+    private final SimpleIntegerProperty EmployeesisActive;
+    
+    public Main_Menu_EmployeeModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name, String EmployeesEmail, Double EmployeesDataStudentCGPA, String EmployeesDataStudentPhone, String EmployeesDataStudentDOB, String EmployeesDataGuardianName, String EmployeesDataGuardianEmail, String EmployeesDataGuardianPhone, String EmployeesDataStudentAddress) {
+        this.EmployeesDataNo = new SimpleIntegerProperty(EmployeesDataNo);
+        this.EmployeesDataStudentName = new SimpleStringProperty(EmployeesDataStudentName);
+        this.EmployeesDataStudentID = new SimpleStringProperty(EmployeesDataStudentID);
+        this.EmployeesDataStudentDepartment = new SimpleStringProperty(EmployeesDataStudentDepartment);
+        this.EmployeesDataStudentCGPA = new SimpleDoubleProperty(EmployeesDataStudentCGPA);
+        this.EmployeesDataStudentPhone = new SimpleStringProperty(EmployeesDataStudentPhone);
+        this.EmployeesDataStudentDOB = new SimpleStringProperty(EmployeesDataStudentDOB);
+        this.EmployeesDataGuardianName = new SimpleStringProperty(EmployeesDataGuardianName);
+        this.EmployeesDataGuardianEmail = new SimpleStringProperty(EmployeesDataGuardianEmail);
+        this.EmployeesDataGuardianPhone = new SimpleStringProperty(EmployeesDataGuardianPhone);
+        this.EmployeesDataStudentAddress = new SimpleStringProperty(EmployeesDataStudentAddress);
+    }
+
+
+
+
+    public Integer getEmployeesDataNo() {
+
+        return EmployeesDataNo.get();
+    }
+
+    public SimpleIntegerProperty EmployeesDataNoProperty() {
+        return EmployeesDataNo;
+    }
+
+    public void setEmployeesDataNo(Integer EmployeesDataNo) {
+        this.EmployeesDataNo.set(EmployeesDataNo);
+    }
+
+    public String getEmployeesDataStudentName() {
+        return EmployeesDataStudentName.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentNameProperty() {
+        return EmployeesDataStudentName;
+    }
+
+    public void setEmployeesDataStudentName(String EmployeesDataStudentName) {
+        this.EmployeesDataStudentName.set(EmployeesDataStudentName);
+    }
+
+    public String getEmployeesDataStudentID() {
+        return EmployeesDataStudentID.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentIDProperty() {
+        return EmployeesDataStudentID;
+    }
+
+    public void setEmployeesDataStudentID(String EmployeesDataStudentID) {
+        this.EmployeesDataStudentID.set(EmployeesDataStudentID);
+    }
+
+    public String getEmployeesDataStudentDepartment() {
+        return EmployeesDataStudentDepartment.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentDepartmentProperty() {
+        return EmployeesDataStudentDepartment;
+    }
+
+    public void setEmployeesDataStudentDepartment(String EmployeesDataStudentDepartment) {
+        this.EmployeesDataStudentDepartment.set(EmployeesDataStudentDepartment);
+    }
+
+    public Double getEmployeesDataStudentCGPA() {
+        return EmployeesDataStudentCGPA.get();
+    }
+
+    public SimpleDoubleProperty EmployeesDataStudentCGPAProperty() {
+        return EmployeesDataStudentCGPA;
+    }
+
+    public void setEmployeesDataStudentCGPA(Double EmployeesDataStudentCGPA) {
+        this.EmployeesDataStudentCGPA.set(EmployeesDataStudentCGPA);
+    }
+
+    public String getEmployeesDataStudentPhone() {
+        return EmployeesDataStudentPhone.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentPhoneProperty() {
+        return EmployeesDataStudentPhone;
+    }
+
+    public void setEmployeesDataStudentPhone(String EmployeesDataStudentPhone) {
+        this.EmployeesDataStudentPhone.set(EmployeesDataStudentPhone);
+    }
+
+    public String getEmployeesDataStudentDOB() {
+        return EmployeesDataStudentDOB.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentDOBProperty() {
+        return EmployeesDataStudentDOB;
+    }
+
+    public void setEmployeesDataStudentDOB(String EmployeesDataStudentDOB) {
+        this.EmployeesDataStudentDOB.set(EmployeesDataStudentDOB);
+    }
+
+    public String getEmployeesDataGuardianName() {
+        return EmployeesDataGuardianName.get();
+    }
+
+    public SimpleStringProperty EmployeesDataGuardianNameProperty() {
+        return EmployeesDataGuardianName;
+    }
+
+    public void setEmployeesDataGuardianName(String EmployeesDataGuardianName) {
+        this.EmployeesDataGuardianName.set(EmployeesDataGuardianName);
+    }
+
+    public String getEmployeesDataGuardianEmail() {
+        return EmployeesDataGuardianEmail.get();
+    }
+
+    public SimpleStringProperty EmployeesDataGuardianEmailProperty() {
+        return EmployeesDataGuardianEmail;
+    }
+
+    public void setEmployeesDataGuardianEmail(String EmployeesDataGuardianEmail) {
+        this.EmployeesDataGuardianEmail.set(EmployeesDataGuardianEmail);
+    }
+
+    public String getEmployeesDataGuardianPhone() {
+        return EmployeesDataGuardianPhone.get();
+    }
+
+    public SimpleStringProperty EmployeesDataGuardianPhoneProperty() {
+        return EmployeesDataGuardianPhone;
+    }
+
+    public void setEmployeesDataGuardianPhone(String EmployeesDataGuardianPhone) {
+        this.EmployeesDataGuardianPhone.set(EmployeesDataGuardianPhone);
+    }
+
+    public String getEmployeesDataStudentAddress() {
+        return EmployeesDataStudentAddress.get();
+    }
+
+    public SimpleStringProperty EmployeesDataStudentAddressProperty() {
+        return EmployeesDataStudentAddress;
+    }
+
+    public void setEmployeesDataStudentAddress(String EmployeesDataStudentAddress) {
+        this.EmployeesDataStudentAddress.set(EmployeesDataStudentAddress);
+    }
+}

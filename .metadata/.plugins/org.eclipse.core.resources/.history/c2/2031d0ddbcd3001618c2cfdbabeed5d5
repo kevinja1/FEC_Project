@@ -38,7 +38,6 @@ public class LoginScreenController implements Initializable {
 		{
 			try{
 				if(loginModel.isLogin(txtUsername.getText(), txtPassword.getText())){
-						((Node)event.getSource()).getScene().getWindow().hide();
 					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
 					    Scene MainMenu = new Scene(Main_Menu);
                         Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
