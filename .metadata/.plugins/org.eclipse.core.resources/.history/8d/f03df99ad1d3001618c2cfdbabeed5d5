@@ -190,68 +190,6 @@ public class Main_Menu_EmployeeModel{
 	    public void setEmployeesLast_Name(String EmployeesLast_Name) {
 	        this.EmployeesLast_Name.set(EmployeesLast_Name);
 	    }
-	    
-	    public String getEmployeesEmail() {
-	        return EmployeesEmail.get();
-	    }
-
-	    public SimpleStringProperty EmployeesEmail() {
-	        return EmployeesEmail();
-	    }
-
-	    public void setEmployeesEmail(String EmployeesEmail) {
-	        this.EmployeesEmail.set(EmployeesEmail);
-	    }
-	    
-	    public String getEmployeesPhone() {
-	        return EmployeesPhone.get();
-	    }
-
-	    public SimpleStringProperty EmployeesPhone() {
-	        return EmployeesPhone();
-	    }
-
-	    public void setEmployeesPhone(String EmployeesPhone) {
-	        this.EmployeesPhone.set(EmployeesPhone);
-	    }
-	    
-	    public String getEmployeesAddress() {
-	        return EmployeesAddress.get();
-	    }
-
-	    public SimpleStringProperty EmployeesAddress() {
-	        return EmployeesAddress();
-	    }
-
-	    public void setEmployeesAddress(String EmployeesAddress) {
-	        this.EmployeesAddress.set(EmployeesAddress);
-	    }
-	    
-	    public String getEmployeesDOB() {
-	        return EmployeesDOB.get();
-	    }
-
-	    public SimpleStringProperty EmployeesDOB() {
-	        return EmployeesDOB();
-	    }
-
-	    public void setEmployeesDOB(String EmployeesDOB) {
-	        this.EmployeesDOB.set(EmployeesDOB);
-	    }
-	    
-	    public Integer getEmployeesisActive() {
-	        return EmployeesisActive.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesisActive() {
-	        return EmployeesisActive();
-	    }
-
-	    public void setEmployeesisActive(Integer EmployeesisActive) {
-	        this.EmployeesisActive.set(EmployeesisActive);
-	    }
-	    
-	    
 
 	    
 }

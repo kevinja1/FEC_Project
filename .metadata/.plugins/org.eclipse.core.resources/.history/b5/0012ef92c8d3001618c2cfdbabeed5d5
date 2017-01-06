@@ -1,18 +1,15 @@
 package application;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 
 public class Main_Menu_EmployeeModel{
 	private final SimpleIntegerProperty EmployeesID;
@@ -31,7 +28,7 @@ public class Main_Menu_EmployeeModel{
     
 	public Main_Menu_EmployeeModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name, String EmployeesEmail, String EmployeesPhone, String EmployeesAddress, String EmployeesDOB, int EmployeesisActive){
 
-		this.EmployeesID = new SimpleIntegerProperty(0);
+		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
 		this.EmployeesFirst_Name = new SimpleStringProperty(EmployeesFirst_Name);
 		this.EmployeesLast_Name = new SimpleStringProperty(EmployeesLast_Name);
 		this.EmployeesEmail = new SimpleStringProperty(EmployeesEmail);
@@ -41,25 +38,12 @@ public class Main_Menu_EmployeeModel{
 		this.EmployeesisActive = new SimpleIntegerProperty(EmployeesisActive);
 	}
 	
-	public Main_Menu_EmployeeModel(){
-
-		this.EmployeesID = new SimpleIntegerProperty(0);
-		this.EmployeesFirst_Name = new SimpleStringProperty("");
-		this.EmployeesLast_Name = new SimpleStringProperty("");
-		this.EmployeesEmail = new SimpleStringProperty("");
-		this.EmployeesPhone = new SimpleStringProperty("");
-		this.EmployeesAddress = new SimpleStringProperty("");
-		this.EmployeesDOB = new SimpleStringProperty("");
-		this.EmployeesisActive = new SimpleIntegerProperty(0);
-	}
-	
-
-	 public ObservableList getDataFromSqlAndAddToObservableList(String query){
+	 private ObservableList getDataFromSqlAndAddToObservableList(String query){
 	        ObservableList<Main_Menu_EmployeeModel> employeeTableData = FXCollections.observableArrayList();
 	        try {
 	        	connection = SqliteConnection.Connector();
 	            statement = connection.createStatement();
-	            resultSet = statement.executeQuery(query); 
+	            resultSet = statement.executeQuery("SELECT * FROM EMPLOYEES"); 
 	           
 	            while(resultSet.next()){
 	                employeeTableData.add(new Main_Menu_EmployeeModel(
@@ -73,7 +57,7 @@ public class Main_Menu_EmployeeModel{
 	                        resultSet.getInt("isActive")
 	                        ));
 	            }
-	            //connection.close();
+	            connection.close();
 	            statement.close();
 	            resultSet.close();
 	        } 
@@ -85,12 +69,38 @@ public class Main_Menu_EmployeeModel{
 	    }
 
 
-	 
-/*
+	    @Override
+	    public void initialize(URL location, ResourceBundle resources) {
+
+
+	        //1st initially get all data from MySQL server
+	        //And set it to Observable arrayList
+	        //getDataFromSqlAndAddToObservableList();
+
+
+	        //Get data from adminTableData ObservableList and set thus data on JavaFX table column
+
+	        adminTableStudentNo.setCellValueFactory(new PropertyValueFactory<AdminTable,Integer>("adminTableDataNo")); // Point JavaFX adminTableStudentNo column at AdminTable's adminTableDataNo variable Property
+	        adminTableStudentName.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentName"));
+	        adminTableStudentID.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentID"));
+	        adminTableStudentDepartment.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentDepartment"));
+	        adminTableStudentCGPA.setCellValueFactory(new PropertyValueFactory<AdminTable, Double>("adminTableDataStudentCGPA"));
+	        adminTableStudentPhone.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentPhone"));
+	        adminTableStudentDOB.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentDOB"));
+	        adminTableGuardianName.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataGuardianName"));
+	        adminTableGuardianEmail.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataGuardianEmail"));
+	        adminTableGuardianPhone.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataGuardianPhone"));
+	        adminTableStudentAddress.setCellValueFactory(new PropertyValueFactory<AdminTable, String>("adminTableDataStudentAddress"));
+	        //
+
+	        adminTableView.setItems(getDataFromSqlAndAddToObservableList("SELECT * FROM student;"));//Point JavaFX table at adminTableData ObservableList
+
+	    }
+
 	//getters
 	
 	public SimpleIntegerProperty getEmployeesID() {
-		return EmployeesID.get();
+		return EmployeesID;
 	}
 	
 	public SimpleStringProperty getEmployeesFirst_Name() {
@@ -154,106 +164,7 @@ public class Main_Menu_EmployeeModel{
 	public void setEmployeesisActive(int isActive) {
 		this.EmployeesisActive.set(isActive);
 	}
-*/
-	    public Integer getEmployeesID() {
-	        return EmployeesID.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesID() {
-	        return EmployeesID();
-	    }
-
-	    public void setEmployeesID(Integer EmployeesID) {
-	        this.EmployeesID.set(EmployeesID);
-	    }
-	    
-	    public String getEmployeesFirst_Name() {
-	        return EmployeesFirst_Name.get();
-	    }
-
-	    public SimpleStringProperty EmployeesFirst_Name() {
-	        return EmployeesFirst_Name();
-	    }
-
-	    public void setEmployeesFirst_Name(String EmployeesFirst_Name) {
-	        this.EmployeesFirst_Name.set(EmployeesFirst_Name);
-	    }
-	    
-	    public String getEmployeesLast_Name() {
-	        return EmployeesLast_Name.get();
-	    }
-
-	    public SimpleStringProperty EmployeesLast_Name() {
-	        return EmployeesLast_Name();
-	    }
-
-	    public void setEmployeesLast_Name(String EmployeesLast_Name) {
-	        this.EmployeesLast_Name.set(EmployeesLast_Name);
-	    }
-	    
-	    public String getEmployeesEmail() {
-	        return EmployeesEmail.get();
-	    }
-
-	    public SimpleStringProperty EmployeesEmail() {
-	        return EmployeesEmail();
-	    }
-
-	    public void setEmployeesEmail(String EmployeesEmail) {
-	        this.EmployeesEmail.set(EmployeesEmail);
-	    }
-	    
-	    public String getEmployeesPhone() {
-	        return EmployeesPhone.get();
-	    }
-
-	    public SimpleStringProperty EmployeesPhone() {
-	        return EmployeesPhone();
-	    }
-
-	    public void setEmployeesPhone(String EmployeesPhone) {
-	        this.EmployeesPhone.set(EmployeesPhone);
-	    }
-	    
-	    public String getEmployeesAddress() {
-	        return EmployeesAddress.get();
-	    }
-
-	    public SimpleStringProperty EmployeesAddress() {
-	        return EmployeesAddress();
-	    }
-
-	    public void setEmployeesAddress(String EmployeesAddress) {
-	        this.EmployeesAddress.set(EmployeesAddress);
-	    }
-	    
-	    public String getEmployeesDOB() {
-	        return EmployeesDOB.get();
-	    }
-
-	    public SimpleStringProperty EmployeesDOB() {
-	        return EmployeesDOB();
-	    }
-
-	    public void setEmployeesDOB(String EmployeesDOB) {
-	        this.EmployeesDOB.set(EmployeesDOB);
-	    }
-	    
-	    public Integer getEmployeesisActive() {
-	        return EmployeesisActive.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesisActive() {
-	        return EmployeesisActive();
-	    }
-
-	    public void setEmployeesisActive(Integer EmployeesisActive) {
-	        this.EmployeesisActive.set(EmployeesisActive);
-	    }
-	    
-	    
-
-	    
+		
 }
 
 

@@ -227,30 +227,6 @@ public class Main_Menu_EmployeeModel{
 	        this.EmployeesAddress.set(EmployeesAddress);
 	    }
 	    
-	    public String getEmployeesDOB() {
-	        return EmployeesDOB.get();
-	    }
-
-	    public SimpleStringProperty EmployeesDOB() {
-	        return EmployeesDOB();
-	    }
-
-	    public void setEmployeesDOB(String EmployeesDOB) {
-	        this.EmployeesDOB.set(EmployeesDOB);
-	    }
-	    
-	    public Integer getEmployeesisActive() {
-	        return EmployeesisActive.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesisActive() {
-	        return EmployeesisActive();
-	    }
-
-	    public void setEmployeesisActive(Integer EmployeesisActive) {
-	        this.EmployeesisActive.set(EmployeesisActive);
-	    }
-	    
 	    
 
 	    

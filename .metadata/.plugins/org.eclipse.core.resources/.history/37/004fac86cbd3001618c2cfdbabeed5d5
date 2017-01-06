@@ -58,15 +58,19 @@ public class Main_Menu_EmployeeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-       
-        //Get data from adminTableData ObservableList and set this data on JavaFX table column
+        //1st initially get all data from MySQL server
+        //And set it to Observable arrayList
+        Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES");
 
-        EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
+
+        //Get data from adminTableData ObservableList and set thus data on JavaFX table column
+
+        EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); // Point JavaFX adminTableStudentNo column at AdminTable's adminTableDataNo variable Property
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesLast_Name"));
         EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesID"));
         EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesEmail"));
         
-        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
+        adminTableView.setItems(getDataFromSqlAndAddToObservableList("SELECT * FROM student;"));//Point JavaFX table at adminTableData ObservableList
 
     }
 

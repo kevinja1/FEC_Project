@@ -48,7 +48,7 @@ public class LoginScreenModel {
 		finally{
 			preparedStatement.close();
 			resultSet.close();
-			//connection.close();
+			connection.close();
 		}
 	}
 }

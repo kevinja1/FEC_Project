@@ -239,17 +239,6 @@ public class Main_Menu_EmployeeModel{
 	        this.EmployeesDOB.set(EmployeesDOB);
 	    }
 	    
-	    public Integer getEmployeesisActive() {
-	        return EmployeesisActive.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesisActive() {
-	        return EmployeesisActive();
-	    }
-
-	    public void setEmployeesisActive(Integer EmployeesisActive) {
-	        this.EmployeesisActive.set(EmployeesisActive);
-	    }
 	    
 	    
 
