@@ -23,6 +23,10 @@ public class LoginScreenModel {
 		}
 	}
 	
+	public Connection getConnection(){
+		return connection;
+	}
+	
 	public boolean isLogin(String user, String pass) throws SQLException{
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

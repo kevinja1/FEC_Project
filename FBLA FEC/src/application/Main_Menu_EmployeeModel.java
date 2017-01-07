@@ -22,23 +22,21 @@ public class Main_Menu_EmployeeModel{
 	private final SimpleStringProperty EmployeesPhone;
 	private final SimpleStringProperty EmployeesAddress;
 	private final SimpleStringProperty EmployeesDOB;
-	private final SimpleIntegerProperty EmployeesisActive;
     Connection connection;
 	
     private Statement statement;
     private ResultSet resultSet;
     
     
-	public Main_Menu_EmployeeModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name, String EmployeesEmail, String EmployeesPhone, String EmployeesAddress, String EmployeesDOB, int EmployeesisActive){
+	public Main_Menu_EmployeeModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name, String EmployeesEmail, String EmployeesPhone, String EmployeesAddress, String EmployeesDOB){
 
-		this.EmployeesID = new SimpleIntegerProperty(0);
+		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
 		this.EmployeesFirst_Name = new SimpleStringProperty(EmployeesFirst_Name);
 		this.EmployeesLast_Name = new SimpleStringProperty(EmployeesLast_Name);
 		this.EmployeesEmail = new SimpleStringProperty(EmployeesEmail);
 		this.EmployeesPhone = new SimpleStringProperty(EmployeesPhone);
 		this.EmployeesAddress = new SimpleStringProperty(EmployeesAddress);
 		this.EmployeesDOB = new SimpleStringProperty(EmployeesDOB);
-		this.EmployeesisActive = new SimpleIntegerProperty(EmployeesisActive);
 	}
 	
 	public Main_Menu_EmployeeModel(){
@@ -50,7 +48,6 @@ public class Main_Menu_EmployeeModel{
 		this.EmployeesPhone = new SimpleStringProperty("");
 		this.EmployeesAddress = new SimpleStringProperty("");
 		this.EmployeesDOB = new SimpleStringProperty("");
-		this.EmployeesisActive = new SimpleIntegerProperty(0);
 	}
 	
 
@@ -69,13 +66,14 @@ public class Main_Menu_EmployeeModel{
 	                        resultSet.getString("Email"),
 	                        resultSet.getString("Phone"),
 	                        resultSet.getString("Address"),
-	                        resultSet.getString("DOB"),
-	                        resultSet.getInt("isActive")
+	                        resultSet.getString("DOB")
+	                        
 	                        ));
 	            }
-	            //connection.close();
+	            
 	            statement.close();
 	            resultSet.close();
+	            connection.close();
 	        } 
 	        catch (SQLException e) {
 	            e.printStackTrace();
@@ -84,7 +82,7 @@ public class Main_Menu_EmployeeModel{
 
 	    }
 
-
+	
 	 
 /*
 	//getters
@@ -239,17 +237,7 @@ public class Main_Menu_EmployeeModel{
 	        this.EmployeesDOB.set(EmployeesDOB);
 	    }
 	    
-	    public Integer getEmployeesisActive() {
-	        return EmployeesisActive.get();
-	    }
-
-	    public SimpleIntegerProperty EmployeesisActive() {
-	        return EmployeesisActive();
-	    }
-
-	    public void setEmployeesisActive(Integer EmployeesisActive) {
-	        this.EmployeesisActive.set(EmployeesisActive);
-	    }
+	    
 	    
 	    
 

@@ -34,10 +34,11 @@ public class LoginScreenController implements Initializable {
 			
 		}
 		
-		public void Login (ActionEvent event) throws IOException
+		public void Login (ActionEvent event) throws IOException, SQLException
 		{
 			try{
 				if(loginModel.isLogin(txtUsername.getText(), txtPassword.getText())){
+						loginModel.getConnection().close();
 						((Node)event.getSource()).getScene().getWindow().hide();
 					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
 					    Scene MainMenu = new Scene(Main_Menu);
@@ -62,7 +63,7 @@ public class LoginScreenController implements Initializable {
 			} 
 			catch (SQLException e){
 				e.printStackTrace();
-			}		
+			}
 		}	
 }
 
