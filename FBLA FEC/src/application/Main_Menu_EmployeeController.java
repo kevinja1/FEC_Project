@@ -134,6 +134,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 
     }
 	
+	
 	 private void MainMenuSetAllClear(){
 		 	txtFirst_Name.clear();
 	        txtLast_Name.clear();

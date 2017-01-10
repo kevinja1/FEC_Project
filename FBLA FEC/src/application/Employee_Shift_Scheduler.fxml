@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -7,8 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="application.Employee_Shift_SchedulerController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Shift_SchedulerController">
    <children>
       <BorderPane prefHeight="720.0" prefWidth="1080.0">
          <top>
@@ -37,126 +37,21 @@
             </VBox>
          </top>
          <center>
-            <SplitPane dividerPositions="0.6818181818181818" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="689.0" prefWidth="578.0">
                      <children>
-                        <HBox layoutX="16.0" layoutY="125.0" prefHeight="251.0" prefWidth="700.0">
-                           <children>
-                              <GridPane gridLinesVisible="true" prefHeight="270.0" prefWidth="700.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="97.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="101.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="103.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="104.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="105.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="97.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="93.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="217.0" minHeight="10.0" prefHeight="187.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="215.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <ListView fx:id="listSun" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listMon" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listTues" prefHeight="169.0" prefWidth="103.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listWed" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listThurs" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listFri" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                    <ListView fx:id="listSat" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Sun." textAlignment="CENTER" wrappingWidth="97.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblSun" prefHeight="17.0" prefWidth="95.0" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="59.0" prefWidth="105.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon." textAlignment="CENTER" wrappingWidth="97.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblMon" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Tues." textAlignment="CENTER" wrappingWidth="97.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblTues" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Wed." textAlignment="CENTER" wrappingWidth="118.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblWed" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Thurs." textAlignment="CENTER" wrappingWidth="100.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblThurs" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Fri." textAlignment="CENTER" wrappingWidth="94.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblFri" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="56.0" prefWidth="93.0" GridPane.columnIndex="6">
-                                       <children>
-                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Sat." textAlignment="CENTER" wrappingWidth="88.24609375">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Text>
-                                          <Label fx:id="lblSat" text="Label" />
-                                       </children>
-                                    </VBox>
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="123.0" style="-fx-background-color: #09B28C;" text="Add Emp." textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <Text fill="#0091ea" layoutX="293.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly Schedule">
+                        <Text fill="#0091ea" layoutX="475.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly Schedule">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Separator layoutX="25.0" layoutY="60.0" prefHeight="5.0" prefWidth="677.0" />
-                        <GridPane layoutX="266.0" layoutY="49.0" prefHeight="85.0" prefWidth="202.0">
+                        <Separator layoutX="25.0" layoutY="45.0" prefHeight="6.0" prefWidth="1015.0" />
+                        <GridPane layoutX="438.0" layoutY="24.0" prefHeight="85.0" prefWidth="285.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="92.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="109.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="104.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="79.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -167,24 +62,147 @@
                                     <Font size="14.0" />
                                  </font>
                               </Text>
-                              <DatePicker disable="true" prefHeight="22.0" prefWidth="139.0" GridPane.columnIndex="1" />
+                              <DatePicker fx:id="dtSchedule" disable="true" prefHeight="25.0" prefWidth="137.0" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#populateDates" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: #09B28C;" text="Go" textFill="WHITE" GridPane.columnIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Button>
                            </children>
                         </GridPane>
-                        <TableView fx:id="TableEmployees" layoutX="16.0" layoutY="388.0" prefHeight="233.0" prefWidth="702.0">
+                        <TableView fx:id="TableEmployees" layoutX="16.0" layoutY="395.0" prefHeight="233.0" prefWidth="1046.0">
                           <columns>
-                            <TableColumn fx:id="EmployeesFirst_Name" prefWidth="280.0" text="First Name" />
-                            <TableColumn fx:id="EmployeesLast_Name" prefWidth="294.0" text="Last Name" />
-                              <TableColumn fx:id="EmployeesID" prefWidth="127.0" text="ID" />
+                            <TableColumn fx:id="EmployeesFirst_Name" prefWidth="443.0" text="First Name" />
+                            <TableColumn fx:id="EmployeesLast_Name" prefWidth="465.0" text="Last Name" />
+                              <TableColumn fx:id="EmployeesID" prefWidth="135.0" text="ID" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="txtSearch" layoutX="439.0" layoutY="644.0" promptText="Employee ID" />
-                        <Button layoutX="622.0" layoutY="644.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
-                        <Button layoutX="16.0" layoutY="644.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee" textFill="WHITE" />
-                        <RadioButton fx:id="rdAM_Shift" layoutX="237.0" layoutY="649.0" mnemonicParsing="false" text="AM Shift" />
+                        <TextField fx:id="txtSearch" layoutX="782.0" layoutY="645.0" promptText="Employee ID" />
+                        <Button fx:id="btSearch_Employee" layoutX="982.0" layoutY="644.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
+                        <Button fx:id="btAdd_Employee" layoutX="16.0" layoutY="644.0" mnemonicParsing="false" onAction="#addEmployeeClicked" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee" textFill="WHITE" />
+                        <RadioButton fx:id="rdAM_Shift" layoutX="237.0" layoutY="649.0" mnemonicParsing="false" selected="true" text="AM Shift">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="group" />
+                           </toggleGroup></RadioButton>
                         <RadioButton fx:id="rdPM_Shift" layoutX="328.0" layoutY="649.0" mnemonicParsing="false" text="PM Shift" />
+                        <HBox layoutX="12.0" layoutY="94.0" prefHeight="251.0" prefWidth="1067.0">
+                           <children>
+                              <GridPane gridLinesVisible="true" minWidth="-Infinity" prefHeight="251.0" prefWidth="1049.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="147.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="154.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="157.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="158.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="0.0" prefWidth="161.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="3.0" prefWidth="143.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="145.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="217.0" minHeight="10.0" prefHeight="176.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="215.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ListView fx:id="listSun" minWidth="-Infinity" prefHeight="174.0" prefWidth="148.0" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listMon" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listTues" prefHeight="181.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listWed" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listThurs" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listFri" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <ListView fx:id="listSat" prefHeight="181.0" prefWidth="115.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Sun." textAlignment="CENTER" wrappingWidth="146.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblSun" alignment="CENTER" prefHeight="17.0" prefWidth="142.0" text="Label">
+                                             <opaqueInsets>
+                                                <Insets left="10.0" />
+                                             </opaqueInsets>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="59.0" prefWidth="105.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Mon." textAlignment="CENTER" wrappingWidth="155.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblMon" alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Tues." textAlignment="CENTER" wrappingWidth="158.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblTues" alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Wed." textAlignment="CENTER" wrappingWidth="158.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblWed" alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Thurs." textAlignment="CENTER" wrappingWidth="161.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblThurs" alignment="CENTER" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Fri." textAlignment="CENTER" wrappingWidth="143.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblFri" alignment="CENTER" prefHeight="17.0" prefWidth="142.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="39.0" prefWidth="89.0" GridPane.columnIndex="6">
+                                       <children>
+                                          <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Sat." textAlignment="CENTER" wrappingWidth="148.24609375">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Label fx:id="lblSat" alignment="CENTER" prefHeight="17.0" prefWidth="144.0" text="Label" />
+                                       </children>
+                                    </VBox>
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpSun" prefHeight="39.0" prefWidth="148.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpMon" prefHeight="39.0" prefWidth="156.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpTues" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpWed" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpThurs" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpFri" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpSat" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #09B28C;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </HBox>
+                        <Text fill="#673ab7" layoutX="483.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Separator layoutX="41.0" layoutY="361.0" prefHeight="6.0" prefWidth="1015.0" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="689.0" prefWidth="494.0" />
               </items>
             </SplitPane>
          </center>
