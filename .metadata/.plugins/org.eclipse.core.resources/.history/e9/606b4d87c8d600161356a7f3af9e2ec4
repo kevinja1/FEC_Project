@@ -1,0 +1,75 @@
+package application;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ListView;
+
+import javafx.scene.control.Label;
+
+import javafx.scene.control.RadioButton;
+
+import javafx.scene.control.TableColumn;
+
+public class Employee_Shift_SchedulerController implements Initializable {
+	
+	public Employee_Shift_SchedulerModel Scheduler_table = new Employee_Shift_SchedulerModel();
+	@FXML
+	private ListView listSun;
+	@FXML
+	private ListView listMon;
+	@FXML
+	private ListView listTues;
+	@FXML
+	private ListView listWed;
+	@FXML
+	private ListView listThurs;
+	@FXML
+	private ListView listFri;
+	@FXML
+	private ListView listSat;
+	@FXML
+	private Label lblSun;
+	@FXML
+	private Label lblMon;
+	@FXML
+	private Label lblTues;
+	@FXML
+	private Label lblWed;
+	@FXML
+	private Label lblThurs;
+	@FXML
+	private Label lblFri;
+	@FXML
+	private Label lblSat;
+	@FXML
+	private TableColumn EmployeesFirst_Name;
+	@FXML
+	private TableColumn EmployeesLast_Name;
+	@FXML
+	private TableColumn EmployeesID;
+	@FXML
+	private TextField txtSearch;
+	@FXML
+	private RadioButton rdAM_Shift;
+	@FXML
+	private RadioButton rdPM_Shift;
+
+	@Override
+    public void initialize(URL location, ResourceBundle resources) {
+		
+        //Get data from adminTableData ObservableList and set this data on JavaFX table column
+
+        EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
+        EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesLast_Name"));
+        EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesID"));
+        EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesEmail"));
+        
+        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
+
+    }
+}

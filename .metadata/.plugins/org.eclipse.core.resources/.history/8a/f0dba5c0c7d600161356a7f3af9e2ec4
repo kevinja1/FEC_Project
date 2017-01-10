@@ -1,0 +1,33 @@
+package application;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+public class Employee_Shift_SchedulerModel {
+	private final SimpleIntegerProperty EmployeesID;
+	private final SimpleStringProperty EmployeesFirst_Name;
+	private final SimpleStringProperty EmployeesLast_Name;
+	
+	Connection connection;
+	
+    private Statement statement;
+    private ResultSet resultSet;
+    
+    public Employee_Shift_SchedulerModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name){
+
+		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
+		this.EmployeesFirst_Name = new SimpleStringProperty(EmployeesFirst_Name);
+		this.EmployeesLast_Name = new SimpleStringProperty(EmployeesLast_Name);
+	}
+	
+	public Employee_Shift_SchedulerModel(){
+
+		this.EmployeesID = new SimpleIntegerProperty(0);
+		this.EmployeesFirst_Name = new SimpleStringProperty("");
+		this.EmployeesLast_Name = new SimpleStringProperty("");
+	}
+}
