@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.print.PageFormat;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
 import java.sql.Connection;
@@ -16,7 +17,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Scale;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -30,7 +34,11 @@ import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.print.PageLayout;
 import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.PrinterAttributes;
 import javafx.print.PrinterJob;
 
 public class Employee_Shift_SchedulerController implements Initializable {
@@ -448,21 +456,56 @@ public class Employee_Shift_SchedulerController implements Initializable {
         listSat.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
-    @FXML
-    
-    private boolean doPrint(Event event){
-    	PrinterJob job = PrinterJob.createPrinterJob();
+   @FXML  
+    private void doPrint(Event event) throws InvocationTargetException{
+	   Printer printer = Printer.getDefaultPrinter();
+	   PrinterJob job = PrinterJob.createPrinterJob();
+	   PageLayout pageLayout
+	        = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+	    
+	   //PrinterAttributes attr = printer.getPrinterAttributes();
+	   
+	   double scaleX
+       = pageLayout.getPrintableWidth() / grSchedule.getBoundsInParent().getWidth();
+	   double scaleY
+       = pageLayout.getPrintableHeight() / grSchedule.getBoundsInParent().getHeight();
+	   Scale scale = new Scale(scaleX, scaleY);
+  	   grSchedule.getTransforms().add(scale);
+  
     	if(job == null){
     		//tray notification printer not found
     		System.out.println("not found");
-    		return false;
+    		
     	}
-    	if(!job.printPage(listSun)){
+    	if(job.printPage(pageLayout, grSchedule)){
+        	job.endJob();
+        	grSchedule.getTransforms().remove(scale);
+        	
+    	}
+    	else{
     		System.out.println("printing failed");
-    		return false;
+    		
     	}
-    	return job.endJob();
+    	
     }
+    
+   @FXML
+   public void printNode(Event event){
+	    Printer printer = Printer.getDefaultPrinter();
+	    PageLayout pageLayout
+	        = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
+	    PrinterJob job = PrinterJob.createPrinterJob();
+	  
+	    if (job != null) {
+	      boolean success = job.printPage(pageLayout, grSchedule);
+	      if (success) {
+	        job.endJob();
+
+	      }
+	    }
+	    
+	  }
+   
 }
 	
 
