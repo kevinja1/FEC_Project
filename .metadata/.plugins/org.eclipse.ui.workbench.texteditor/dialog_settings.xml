@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="dtSchedule.getValue()" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="dtSchedule.getValue()"/>
+			<item value="dtSchedule"/>
 			<item value="stud"/>
 			<item value="getSel"/>
 			<item value="delete"/>
 			<item value="getDataFrom"/>
 			<item value="Active"/>
 			<item value="adminSetAllEnable"/>
-			<item value="isSetAdminAdd"/>
-			<item value="setAdminAddNew"/>
 		</list>
 		<list key="replacehistory">
+			<item value="LocalDate.now()"/>
 			<item value="Employees"/>
 		</list>
 	</section>

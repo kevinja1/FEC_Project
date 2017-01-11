@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.print.PageFormat;
 import java.net.URL;
 
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -30,7 +28,7 @@ import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.print.PageOrientation;
+
 import javafx.print.PrinterJob;
 
 public class Employee_Shift_SchedulerController implements Initializable {
@@ -86,15 +84,11 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	private Button btAdd_Employee;
 	@FXML
 	private Button btSearch_Employee;
-	
-	@FXML
-	private GridPane grSchedule;
 
 	private Label chosen;
 	Connection connection;
     private Statement statement;
     private ResultSet resultSet;
-    private PageFormat format;
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -450,18 +444,17 @@ public class Employee_Shift_SchedulerController implements Initializable {
     
     @FXML
     
-    private boolean doPrint(Event event){
+    private boolean doPaint(Node n){
     	PrinterJob job = PrinterJob.createPrinterJob();
     	if(job == null){
     		//tray notification printer not found
     		System.out.println("not found");
     		return false;
     	}
-    	if(!job.printPage(listSun)){
+    	if(!job.printPage(n)){
     		System.out.println("printing failed");
     		return false;
     	}
-    	return job.endJob();
     }
 }
 	

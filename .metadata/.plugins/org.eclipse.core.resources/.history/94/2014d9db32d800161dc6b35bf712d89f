@@ -452,6 +452,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
     
     private boolean doPrint(Event event){
     	PrinterJob job = PrinterJob.createPrinterJob();
+    	PageOrientation orientation;
     	if(job == null){
     		//tray notification printer not found
     		System.out.println("not found");

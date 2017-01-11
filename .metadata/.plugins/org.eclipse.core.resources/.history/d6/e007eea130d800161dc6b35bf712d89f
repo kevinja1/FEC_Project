@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.print.PageFormat;
 import java.net.URL;
 
 import java.sql.Connection;
@@ -30,7 +29,7 @@ import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.print.PageOrientation;
+
 import javafx.print.PrinterJob;
 
 public class Employee_Shift_SchedulerController implements Initializable {
@@ -94,7 +93,6 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	Connection connection;
     private Statement statement;
     private ResultSet resultSet;
-    private PageFormat format;
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -457,7 +455,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
     		System.out.println("not found");
     		return false;
     	}
-    	if(!job.printPage(listSun)){
+    	if(!job.printPage(TableEmployees)){
     		System.out.println("printing failed");
     		return false;
     	}

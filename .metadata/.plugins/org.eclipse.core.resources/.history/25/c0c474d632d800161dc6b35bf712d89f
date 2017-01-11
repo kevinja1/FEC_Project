@@ -30,7 +30,7 @@ import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.print.PageOrientation;
+
 import javafx.print.PrinterJob;
 
 public class Employee_Shift_SchedulerController implements Initializable {
@@ -457,7 +457,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
     		System.out.println("not found");
     		return false;
     	}
-    	if(!job.printPage(listSun)){
+    	if(!job.printPage(horizontal, grSchedule)){
     		System.out.println("printing failed");
     		return false;
     	}
