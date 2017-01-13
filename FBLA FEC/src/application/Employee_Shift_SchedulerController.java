@@ -479,32 +479,15 @@ public class Employee_Shift_SchedulerController implements Initializable {
     	}
     	if(job.printPage(pageLayout, grSchedule)){
         	job.endJob();
-        	grSchedule.getTransforms().remove(scale);
-        	
+        	grSchedule.getTransforms().remove(scale);        	
     	}
     	else{
     		System.out.println("printing failed");
-    		
     	}
     	
     }
     
-   @FXML
-   public void printNode(Event event){
-	    Printer printer = Printer.getDefaultPrinter();
-	    PageLayout pageLayout
-	        = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
-	    PrinterJob job = PrinterJob.createPrinterJob();
-	  
-	    if (job != null) {
-	      boolean success = job.printPage(pageLayout, grSchedule);
-	      if (success) {
-	        job.endJob();
-
-	      }
-	    }
-	    
-	  }
+   
    
 }
 	

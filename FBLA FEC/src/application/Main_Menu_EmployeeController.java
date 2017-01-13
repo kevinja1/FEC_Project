@@ -135,6 +135,8 @@ public class Main_Menu_EmployeeController implements Initializable {
     }
 	
 	
+	
+	
 	 private void MainMenuSetAllClear(){
 		 	txtFirst_Name.clear();
 	        txtLast_Name.clear();
@@ -315,6 +317,19 @@ public class Main_Menu_EmployeeController implements Initializable {
 		    Schedule.setScene(scheduler);
 		    Schedule.setTitle("Scheduler");
 		    Schedule.show();
+	    }
+	 
+
+	 @FXML
+	    private void launchCustomerScreen(Event event) throws IOException{
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+		    Scene customer_screen = new Scene(CustomerScreen);
+		    Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Customer_Screen.hide();
+		    Customer_Screen.setScene(customer_screen);
+		    Customer_Screen.setTitle("Customer Screen");
+		    Customer_Screen.show();
 	    }
 
 	 
