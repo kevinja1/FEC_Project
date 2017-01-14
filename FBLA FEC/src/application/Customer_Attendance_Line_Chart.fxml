@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Customer_Attendance_Line_ChartController">
+   <children>
+      <Pane prefHeight="700.0" prefWidth="700.0">
+         <children>
+            <LineChart fx:id="lineChartAttendance" layoutX="1.0" prefHeight="700.0" prefWidth="700.0" title="Customer Attendance">
+              <xAxis>
+                <CategoryAxis label="Day of Week" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Number of Customers" side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

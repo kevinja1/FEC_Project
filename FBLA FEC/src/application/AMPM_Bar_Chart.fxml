@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AMPM_Bar_ChartController">
+   <children>
+      <Pane prefHeight="700.0" prefWidth="700.0">
+         <children>
+            <BarChart fx:id="barChartAttendance" prefHeight="700.0" prefWidth="700.0" title="Customer Attendance">
+              <xAxis>
+                <CategoryAxis label="Time (AM vs PM)" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Number of Customers" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

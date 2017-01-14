@@ -331,6 +331,30 @@ public class Main_Menu_EmployeeController implements Initializable {
 		    Customer_Screen.setTitle("Customer Screen");
 		    Customer_Screen.show();
 	    }
+	 
+	 @FXML
+	    private void launchBarChart(Event event) throws IOException{
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent BarChart = FXMLLoader.load(getClass().getResource("AMPM_Bar_Chart.fxml"));
+		    Scene bar_chart = new Scene(BarChart);
+		    Stage Bar_Chart = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Bar_Chart.hide();
+		    Bar_Chart.setScene(bar_chart);
+		    Bar_Chart.setTitle("Customer Attendance");
+		    Bar_Chart.show();
+	    }
+	 
+	 @FXML
+	    private void launchLineChart(Event event) throws IOException{
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent LineChart = FXMLLoader.load(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+		    Scene line_chart = new Scene(LineChart);
+		    Stage Line_Chart = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Line_Chart.hide();
+		    Line_Chart.setScene(line_chart);
+		    Line_Chart.setTitle("Customer Attendance");
+		    Line_Chart.show();
+	    }
 
 	 
 	

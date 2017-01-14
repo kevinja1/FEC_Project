@@ -373,10 +373,10 @@ public class Menu_CustomerController implements Initializable {
 	        	getSelectedRow.getCustomers_ID();
 	        	
 	            	int rowsAffected = statement.executeUpdate("insert into`Customers_Attendance` "+
-	                        "(ID, `Date`,`AMPM`"+
+	                        "(ID, `Date`,`AMPM`,`Day_of_Week`"+
 	                        ""+
 	                        ") "+
-	                        "values ("+getSelectedRow.getCustomers_ID()+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM()
+	                        "values ("+getSelectedRow.getCustomers_ID()+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM() +"','" +dtAttendance.getValue().getDayOfWeek().toString()
 	                        +"'); ");
 	           
 	            

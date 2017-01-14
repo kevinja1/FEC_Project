@@ -1,0 +1,6 @@
+package application;
+
+public class AMPM_Bar_ChartModel {
+	private double numAM;
+	private double numPM;
+}

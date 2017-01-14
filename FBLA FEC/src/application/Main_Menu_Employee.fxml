@@ -117,6 +117,8 @@
                   <Button fx:id="MainMenuClearButton" disable="true" layoutX="62.0" layoutY="388.0" mnemonicParsing="false" onAction="#MainMenuSetAllClear" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #FF5151; -fx-text-fill: white;" text="Clear" />
                   <Button layoutX="88.0" layoutY="502.0" mnemonicParsing="false" onAction="#launchScheduler" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Launch Scheduler" textFill="WHITE" />
                   <Button layoutX="69.0" layoutY="464.0" mnemonicParsing="false" onAction="#launchCustomerScreen" prefHeight="27.0" prefWidth="185.0" style="-fx-background-color: #09B28C;" text="Launch Customer Screen" textFill="WHITE" />
+                  <Button layoutX="90.0" layoutY="425.0" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Bar Chart" textFill="WHITE" />
+                  <Button layoutX="88.0" layoutY="542.0" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Line Chart" textFill="WHITE" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="574.0">

@@ -1,0 +1,42 @@
+package application;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+
+public class Customer_Attendance_Line_ChartController implements Initializable {
+	
+	@FXML
+	private LineChart<String,Integer> lineChartAttendance;
+	
+	@Override
+	public void initialize(URL url, ResourceBundle rb){
+		XYChart.Series<String, Integer> seriesAM = new XYChart.Series<>();
+		XYChart.Series<String, Integer> seriesPM = new XYChart.Series<>();
+		   
+		seriesAM.getData().add(new XYChart.Data<>("Sunday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Monday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Tuesday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Wednesday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Thursday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Friday", barchart.calcNumAM()));
+		seriesAM.getData().add(new XYChart.Data<>("Saturday", barchart.calcNumAM()));
+		
+		seriesPM.getData().add(new XYChart.Data<>("Sunday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Monday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Tuesday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Wednesday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Thursday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Friday", barchart.calcNumAM()));
+		seriesPM.getData().add(new XYChart.Data<>("Saturday", barchart.calcNumAM()));
+		
+		
+		
+		lineChartAttendance.getData().addAll(seriesAM);   
+		lineChartAttendance.getData().addAll(seriesPM);   
+	}
+}
