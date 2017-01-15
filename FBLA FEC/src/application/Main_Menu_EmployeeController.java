@@ -99,6 +99,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	@FXML
     private void setMainMenuAddNewButtonClick(Event event){
         MainMenuSetAllEnable();
+        MainMenuSetAllClear();
         isMainMenuAddNewButtonClick = true;
     }
 	
@@ -251,7 +252,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			        statement = connection.createStatement();
 		             
 		            statement.executeUpdate(sqlQuery);
-		            statement.executeUpdate("delete from Employees where ID ='"+getSelectedRow.getEmployeesID()+"';");
+		            //statement.executeUpdate("delete from Employees where ID ='"+getSelectedRow.getEmployeesID()+"';");
 		            TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
 		            statement.close();
 		            connection.close();
@@ -288,27 +289,27 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 
 	 @FXML
 	    private void launchScheduler(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("Weekly Scheduler");
-	        stage.show();
+		 	((Node)event.getSource()).getScene().getWindow().hide();
+		 	Parent Scheduler = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+		 	Scene scheduler = new Scene(Scheduler);
+		 	Stage Schedule = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		 	Schedule.hide();
+		 	Schedule.setScene(scheduler);
+		 	Schedule.setTitle("Scheduler");
+		 	Schedule.show();
 	    }
 	 
 
 	 @FXML
 	    private void launchCustomerScreen(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Menu_Customer.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("Customer Details");
-	        stage.show();
+		 	((Node)event.getSource()).getScene().getWindow().hide();
+		 	Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+		 	Scene customer_screen = new Scene(CustomerScreen);
+		 	Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		 	Customer_Screen.hide();
+		 	Customer_Screen.setScene(customer_screen);
+		 	Customer_Screen.setTitle("Customer Screen");
+		 	Customer_Screen.show();
 	    }
 	 
 	 @FXML

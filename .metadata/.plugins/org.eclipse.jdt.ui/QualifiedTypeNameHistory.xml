@@ -14,12 +14,9 @@
 <fullyQualifiedTypeName name="javafx.collections.ObservableList"/>
 <fullyQualifiedTypeName name="javafx.collections.FXCollections"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
-<fullyQualifiedTypeName name="java.net.URL"/>
-<fullyQualifiedTypeName name="java.util.ResourceBundle"/>
 <fullyQualifiedTypeName name="javafx.scene.control.cell.PropertyValueFactory"/>
 <fullyQualifiedTypeName name="java.time.LocalDate"/>
 <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
-<fullyQualifiedTypeName name="javafx.event.Event"/>
 <fullyQualifiedTypeName name="javafx.print.PrinterJob"/>
 <fullyQualifiedTypeName name="javafx.scene.Node"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
@@ -33,7 +30,15 @@
 <fullyQualifiedTypeName name="javafx.print.PrinterAttributes"/>
 <fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
 <fullyQualifiedTypeName name="javafx.scene.transform.Scale"/>
-<fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ToggleGroup"/>
 <fullyQualifiedTypeName name="javafx.scene.control.RadioButton"/>
+<fullyQualifiedTypeName name="javafx.scene.chart.BarChart"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.util.ResourceBundle"/>
+<fullyQualifiedTypeName name="javafx.scene.chart.XYChart"/>
+<fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Series"/>
+<fullyQualifiedTypeName name="javafx.event.Event"/>
+<fullyQualifiedTypeName name="javafx.scene.chart.LineChart"/>
+<fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
+<fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 </qualifiedTypeNameHistroy>

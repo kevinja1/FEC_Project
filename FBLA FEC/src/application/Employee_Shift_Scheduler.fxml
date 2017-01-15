@@ -8,38 +8,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ancpn" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Shift_SchedulerController">
+<AnchorPane fx:id="ancpn" prefHeight="720.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Shift_SchedulerController">
    <children>
-      <BorderPane prefHeight="720.0" prefWidth="1080.0">
+      <BorderPane layoutX="220.0" prefHeight="720.0" prefWidth="1080.0">
          <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                  <MenuBar>
-                     <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Delete" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="About" />
-                           </items>
-                        </Menu>
-                     </menus>
-                  </MenuBar>
-               </children>
-            </VBox>
+            <VBox BorderPane.alignment="CENTER" />
          </top>
          <center>
             <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="689.0" prefWidth="578.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="689.0" prefWidth="1138.0">
                      <children>
                         <Text fill="#0091ea" layoutX="475.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly Schedule">
                            <font>
@@ -70,21 +48,21 @@
                               </Button>
                            </children>
                         </GridPane>
-                        <TableView fx:id="TableEmployees" layoutX="16.0" layoutY="395.0" prefHeight="233.0" prefWidth="1046.0">
+                        <TableView fx:id="TableEmployees" layoutX="16.0" layoutY="415.0" prefHeight="233.0" prefWidth="1046.0">
                           <columns>
                             <TableColumn fx:id="EmployeesFirst_Name" prefWidth="443.0" text="First Name" />
                             <TableColumn fx:id="EmployeesLast_Name" prefWidth="465.0" text="Last Name" />
                               <TableColumn fx:id="EmployeesID" prefWidth="135.0" text="ID" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="txtSearch" layoutX="782.0" layoutY="645.0" promptText="Employee ID" />
-                        <Button fx:id="btSearch_Employee" layoutX="982.0" layoutY="644.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
-                        <Button fx:id="btAdd_Employee" layoutX="16.0" layoutY="644.0" mnemonicParsing="false" onAction="#addEmployeeClicked" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee" textFill="WHITE" />
-                        <RadioButton fx:id="rdAM_Shift" layoutX="237.0" layoutY="649.0" mnemonicParsing="false" text="AM Shift">
+                        <TextField fx:id="txtSearch" layoutX="683.0" layoutY="667.0" promptText="Employee ID" />
+                        <Button fx:id="btSearch_Employee" layoutX="863.0" layoutY="667.0" mnemonicParsing="false" onAction="#setSearchButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
+                        <Button fx:id="btAdd_Employee" layoutX="16.0" layoutY="665.0" mnemonicParsing="false" onAction="#addEmployeeClicked" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee" textFill="WHITE" />
+                        <RadioButton fx:id="rdAM_Shift" layoutX="237.0" layoutY="670.0" mnemonicParsing="false" text="AM Shift">
                            <toggleGroup>
                               <ToggleGroup fx:id="group" />
                            </toggleGroup></RadioButton>
-                        <RadioButton fx:id="rdPM_Shift" layoutX="328.0" layoutY="649.0" mnemonicParsing="false" text="PM Shift" toggleGroup="$group" />
+                        <RadioButton fx:id="rdPM_Shift" layoutX="328.0" layoutY="670.0" mnemonicParsing="false" text="PM Shift" toggleGroup="$group" />
                         <HBox layoutX="12.0" layoutY="94.0" prefHeight="251.0" prefWidth="1067.0">
                            <children>
                               <GridPane fx:id="grSchedule" gridLinesVisible="true" minWidth="-Infinity" prefHeight="251.0" prefWidth="1049.0">
@@ -184,29 +162,63 @@
                                           <Label fx:id="lblSat" alignment="CENTER" prefHeight="17.0" prefWidth="144.0" style="-fx-font-family: &quot;Arial&quot;;" text="Label" />
                                        </children>
                                     </VBox>
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpSun" prefHeight="39.0" prefWidth="148.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpMon" prefHeight="39.0" prefWidth="156.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpTues" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpWed" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpThurs" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpFri" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#chooseEmpSat" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Choose Emp." textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpSun" prefHeight="39.0" prefWidth="148.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Sunday" textFill="WHITE" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpMon" prefHeight="39.0" prefWidth="156.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Monday" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpTues" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Tuesday" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpWed" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Wednesday" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpThurs" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Thursday" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpFri" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Friday" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#chooseEmpSat" prefHeight="39.0" prefWidth="150.0" style="-fx-background-color: #09B28C; -fx-font-family: &quot;Arial&quot;;" text="Edit Saturday" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>
                         </HBox>
-                        <Text fill="#673ab7" layoutX="483.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List">
+                        <Text fill="#673ab7" layoutX="483.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List">
                            <font>
                               <Font size="17.0" />
                            </font>
                         </Text>
                         <Separator layoutX="41.0" layoutY="361.0" prefHeight="6.0" prefWidth="1015.0" />
-                        <Button fx:id="btPrintSchedule" layoutX="588.0" layoutY="645.0" mnemonicParsing="false" onAction="#doPrint" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Print" textFill="WHITE" />
+                        <Button fx:id="btPrintSchedule" layoutX="533.0" layoutY="667.0" mnemonicParsing="false" onAction="#doPrint" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Print" textFill="WHITE" />
+                        <Button fx:id="btDelete" layoutX="439.0" layoutY="666.0" mnemonicParsing="false" onAction="#schedulerDelete" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: #FF5151;" text="delete" textFill="WHITE" />
+                        <Button fx:id="btRefresh" layoutX="952.0" layoutY="666.0" mnemonicParsing="false" onAction="#setRefreshButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Refresh" textFill="WHITE" />
                      </children>
                   </AnchorPane>
               </items>
             </SplitPane>
          </center>
       </BorderPane>
+      <VBox prefHeight="720.0" prefWidth="220.0">
+         <children>
+            <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity FEC" textAlignment="CENTER" wrappingWidth="220.4951171875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Text>
+            <Button fx:id="btAdd_Employee1" mnemonicParsing="false" onAction="#launchEmployeeMainMenu" prefHeight="52.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Employee Manager" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btAdd_Employee111" mnemonicParsing="false" onAction="#launchCustomerScreen" prefHeight="57.0" prefWidth="220.0" style="-fx-background-color: #408E2F#09B28C;" text="Customer Attendance" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Total)" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Day of Week)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

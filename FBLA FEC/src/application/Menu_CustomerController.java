@@ -55,8 +55,6 @@ public class Menu_CustomerController implements Initializable {
 	@FXML
 	private TextField txtAddress;
 	@FXML
-	private TextField txtID;
-	@FXML
 	private DatePicker dtDOB;
 	@FXML
 	private DatePicker dtAttendance;
@@ -100,7 +98,7 @@ public class Menu_CustomerController implements Initializable {
     private Statement statement;
     private ResultSet resultSet;
     
-    private String temp;
+    private int temp;
     
 	
     @Override
@@ -125,6 +123,7 @@ public class Menu_CustomerController implements Initializable {
         TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance"));
         CustomersAttendanceSetAllDisable();
         AddAttendanceButton.setDisable(true); 
+        rdAM.setSelected(true);
         
 
     }
@@ -142,8 +141,7 @@ public class Menu_CustomerController implements Initializable {
         txtPhone.setDisable(false);
         txtAddress.setDisable(false);
         dtDOB.setDisable(false);
-        txtID.setDisable(false);
-        
+       
 
         CustomerSaveButton.setDisable(false);
         CustomerClearButton.setDisable(false);
@@ -157,7 +155,7 @@ public class Menu_CustomerController implements Initializable {
         txtPhone.setDisable(true);
         txtAddress.setDisable(true);
         dtDOB.setDisable(true);
-        txtID.setDisable(true);
+      
         
 
         CustomerSaveButton.setDisable(true);
@@ -194,7 +192,7 @@ public class Menu_CustomerController implements Initializable {
 	        txtPhone.clear();
 	        txtAddress.clear();
 	        dtDOB.setValue(null);
-	        txtID.clear();
+	     
 	       	        
 	    }
 	 
@@ -211,7 +209,7 @@ public class Menu_CustomerController implements Initializable {
 	        txtPhone.clear();
 	        txtAddress.clear();
 	        dtDOB.setValue(null);
-	        txtID.clear();
+	       
 	       	        
 	    }
 	
@@ -222,6 +220,7 @@ public class Menu_CustomerController implements Initializable {
 	            statement = connection.createStatement();
 	        
 	            if(isCustomersAddNewButtonClick){
+	            	isCustomersEditButtonClick = true;
 	            	int rowsAffected = statement.executeUpdate("insert into`Customers` "+
 	                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
 	                        "`Address`,`DOB`"+
@@ -236,11 +235,10 @@ public class Menu_CustomerController implements Initializable {
 	           
 	            }
 	            else if (isCustomersEditButtonClick){
-
+	            	isCustomersAddNewButtonClick = false;
 	                int rowsAffected = statement.executeUpdate("update Customers set "+
 	                        "First_Name = '"+txtFirst_Name.getText()+"',"+
 	                        "Last_Name = '"+txtLast_Name.getText()+"',"+
-	                        "ID = "+txtID.getText()+","+
 	                        "Email = '"+txtEmail.getText()+"',"+
 	                        "Phone = '"+txtPhone.getText()+"',"+
 	                        "Address = '"+txtAddress.getText()+"',"+
@@ -269,7 +267,7 @@ public class Menu_CustomerController implements Initializable {
 	 
 	 @FXML
 	    private void setCustomerEditButtonClick(Event event){
-	        
+		 
 	     if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
 	    	 Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 	        	String sqlQuery = "select * FROM Customers where ID = "+getSelectedRow.getCustomers_ID()+";";
@@ -287,19 +285,11 @@ public class Menu_CustomerController implements Initializable {
 	                 txtPhone.setText(resultSet.getString("Phone"));
 	                 txtAddress.setText(resultSet.getString("Address"));
 	                 dtDOB.setValue(LocalDate.parse(resultSet.getString("DOB")));
-	                 txtID.setText(resultSet.getString("ID"));
-	                 /*try {
-	                    if (!(resultSet.getString("DOB").isEmpty())) {
-	                        adminDPStudentDOB.setValue(LocalDate.parse(resultSet.getString("dbStudentDOB")));
-	                    }
-	                }
-	                catch (NullPointerException e){
-	                    adminDPStudentDOB.setValue(null);
-	                }
-	                */
+	                 temp = resultSet.getInt("ID");
+	                 
 	            }
 
-	            temp = txtID.getText();
+	           
 	            isCustomersEditButtonClick = true;
 	        }
 	        catch (SQLException e) {
@@ -323,6 +313,8 @@ public class Menu_CustomerController implements Initializable {
 		 	if(TableCustomers.getSelectionModel().getSelectedItem()!=null){
 		 		Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 		        String sqlQuery = "delete from Customers where ID = '"+getSelectedRow.getCustomers_ID()+"';";
+		        String sqlQuery2 = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+"';";
+		        
 		        try {
 		        	connection = SqliteConnection.Connector();
 			        statement = connection.createStatement();
@@ -330,6 +322,12 @@ public class Menu_CustomerController implements Initializable {
 		            statement.executeUpdate(sqlQuery);
 		            statement.executeUpdate("delete from Customers where ID ='"+getSelectedRow.getCustomers_ID()+"';");
 		            TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
+		            statement.close();
+		            
+		            
+		            statement.executeUpdate(sqlQuery2);
+		            
+		            TableCustomerAttendance.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance;"));
 		            statement.close();
 		            connection.close();
 
@@ -414,6 +412,55 @@ public class Menu_CustomerController implements Initializable {
 				return "PM";
 			}
 		}
+	 
+	 @FXML
+	    private void launchScheduler(Event event) throws IOException{
+		 	((Node)event.getSource()).getScene().getWindow().hide();
+		 	Parent Scheduler = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+		 	Scene scheduler = new Scene(Scheduler);
+		 	Stage Schedule = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		 	Schedule.hide();
+		 	Schedule.setScene(scheduler);
+		 	Schedule.setTitle("Scheduler");
+		 	Schedule.show();
+	    }
+	
+	 @FXML
+	 	private void launchEmployeeMainMenu(Event event) throws IOException{
+		 ((Node)event.getSource()).getScene().getWindow().hide();
+		 Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+		 Scene MainMenu = new Scene(Main_Menu);
+         Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         mainMenu.hide();
+         mainMenu.setScene(MainMenu);
+         mainMenu.setTitle("Main Menu");
+         mainMenu.show();
+	 }
+	 
+	 @FXML
+	    private void launchBarChart(Event event) throws IOException{
+		 	FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
+	        loader.load();
+	        Parent p = loader.getRoot();
+	        Stage stage = new Stage();
+	        stage.setScene(new Scene(p));
+	        stage.setTitle("All Customer Attendance Data");
+	        stage.show();
+	    }
+	 
+	 @FXML
+	    private void launchLineChart(Event event) throws IOException{
+		 	FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+	        loader.load();
+	        Parent p = loader.getRoot();
+	        Stage stage = new Stage();
+	        stage.setScene(new Scene(p));
+	        stage.setTitle("Week Customer Attendance Data");
+	        stage.show();
+	    }
+
 	 
 	 
 

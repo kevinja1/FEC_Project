@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
@@ -8,40 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main_Menu_EmployeeController">
-   <top>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Reports">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#launchBarChart" text="Total Customer Attendance" />
-                        <MenuItem mnemonicParsing="false" onAction="#launchLineChart" text="Week Customer Attendance " />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Customers">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#launchCustomerScreen" text="Customer Data" />
-                  </items>
-                </Menu>
-                  <Menu mnemonicParsing="false" text="Scheduler">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#launchScheduler" text="Weekly Scheduler" />
-                     </items>
-                  </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </VBox>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main_Menu_EmployeeController">
    <center>
-      <SplitPane dividerPositions="0.3685968819599109" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.33867735470941884" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="327.0">
                <children>
@@ -114,24 +84,20 @@
                   <Separator layoutX="22.0" layoutY="373.0" prefHeight="2.0" prefWidth="272.0" />
                   <Button fx:id="MainMenuSaveButton" disable="true" layoutX="174.0" layoutY="388.0" mnemonicParsing="false" onAction="#setMainMenuSaveButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #408E2F; -fx-text-fill: white;" text="Save" />
                   <Button fx:id="MainMenuClearButton" disable="true" layoutX="62.0" layoutY="388.0" mnemonicParsing="false" onAction="#MainMenuSetAllClear" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #FF5151; -fx-text-fill: white;" text="Clear" />
-                  <Button layoutX="88.0" layoutY="502.0" mnemonicParsing="false" onAction="#launchScheduler" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Launch Scheduler" textFill="WHITE" />
-                  <Button layoutX="69.0" layoutY="464.0" mnemonicParsing="false" onAction="#launchCustomerScreen" prefHeight="27.0" prefWidth="185.0" style="-fx-background-color: #09B28C;" text="Launch Customer Screen" textFill="WHITE" />
-                  <Button layoutX="90.0" layoutY="425.0" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Bar Chart" textFill="WHITE" />
-                  <Button layoutX="88.0" layoutY="542.0" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #09B28C;" text="Line Chart" textFill="WHITE" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="574.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="675.0">
                <children>
                   <Button layoutX="48.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuViewButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="View" textFill="WHITE" />
                   <Button layoutX="145.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuRefreshButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Refresh" textFill="WHITE" />
-                  <TextField fx:id="txtSearch" layoutX="282.0" layoutY="14.0" promptText="Employee ID" />
-                  <Button layoutX="462.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuSearchButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
-                  <TableView fx:id="TableEmployees" layoutY="54.0" prefHeight="516.0" prefWidth="563.0">
+                  <TextField fx:id="txtSearch" layoutX="367.0" layoutY="14.0" promptText="Employee ID" />
+                  <Button layoutX="547.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuSearchButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
+                  <TableView fx:id="TableEmployees" layoutY="54.0" prefHeight="554.0" prefWidth="656.0">
                      <columns>
                         <TableColumn fx:id="EmployeesID" prefWidth="40.0" text="ID" />
-                        <TableColumn fx:id="EmployeesFirst_Name" prefWidth="145.0" text="First Name" />
-                        <TableColumn fx:id="EmployeesLast_Name" prefWidth="98.0" text="Last Name" />
-                        <TableColumn fx:id="EmployeesEmail" prefWidth="279.0" text="Email" />
+                        <TableColumn fx:id="EmployeesFirst_Name" prefWidth="178.0" text="First Name" />
+                        <TableColumn fx:id="EmployeesLast_Name" prefWidth="175.0" text="Last Name" />
+                        <TableColumn fx:id="EmployeesEmail" prefWidth="262.0" text="Email" />
                      </columns>
                   </TableView>
                </children>
@@ -139,4 +105,42 @@
         </items>
       </SplitPane>
    </center>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="600.0" prefWidth="196.0">
+               <children>
+                  <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity FEC" textAlignment="CENTER" wrappingWidth="198.4951171875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="200.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Day of Week)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="201.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Total)" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btAdd_Employee111" mnemonicParsing="false" onAction="#launchCustomerScreen" prefHeight="57.0" prefWidth="200.0" style="-fx-background-color: #408E2F#09B28C;" text="Customer Attendance" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btAdd_Employee11" mnemonicParsing="false" onAction="#launchScheduler" prefHeight="55.0" prefWidth="208.0" style="-fx-background-color: #408E2F;" text="Employee Scheduler" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </left>
 </BorderPane>

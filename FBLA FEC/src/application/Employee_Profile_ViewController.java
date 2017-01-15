@@ -29,7 +29,7 @@ public class Employee_Profile_ViewController {
 	private Employee_Profile_ViewModel Info;
 
     public void setCurrentInfo(Employee_Profile_ViewModel currentInfo) {
-        txtID.setText(currentInfo.getId());
+        txtID.setText("Employee ID: " + currentInfo.getId());
         txtName.setText(currentInfo.getName());
         txtPhone.setText(currentInfo.getPhone());
         txtDOB.setText(currentInfo.getDOB());
