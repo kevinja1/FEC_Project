@@ -1,0 +1,67 @@
+package application;
+
+import javafx.fxml.FXML;
+
+import javafx.scene.text.Text;
+
+import javafx.scene.control.Label;
+
+import javafx.scene.image.ImageView;
+
+public class Employee_Profile_ViewController {
+	@FXML
+	private ImageView profilePic;
+	@FXML
+	private Text txtName;
+	@FXML
+	private Text txtPhone;
+	@FXML
+	private Text txtEmail;
+	@FXML
+	private Text tDOB;
+	@FXML
+	private Text txtID;
+	@FXML
+	private Text txtAddress;
+	@FXML
+	private Label label;
+	
+	private Employee_Profile_ViewModel Info;
+
+    public void setCurrentInfo(Employee_Profile_ViewModel currentInfo) {
+        txtID.setText(currentInfo.getId());
+        txtName.setText(currentInfo.getName());
+        txtPhone.setText(currentInfo.getPhone());
+        txtDOB.setText(currentInfo.getDOB());
+        tCGPA.setText(currentInfo.getCgpa());
+        tVEmail.setText(currentInfo.getVemail());
+        tDOB.setText(currentInfo.getDob());
+        tEmail.setText(currentInfo.getEmail());
+        tPhone.setText(currentInfo.getPhone());
+        tAddress.setText(currentInfo.getAddress());
+
+
+        tGName.setText(currentInfo.getGname());
+        tGEmail.setText(currentInfo.getGemail());
+        tGPhone.setText(currentInfo.getGphone());
+
+
+
+        try {
+            Image image = new Image("/image/"+currentInfo.getfullId()+".jpg");
+            profilePic.setImage(image);
+        }
+        catch (Exception e){
+            profilePic.setImage(new Image("/image/default-user-icon.png"));
+        }
+
+
+
+
+
+        this.currentInfo = currentInfo;
+
+    }
+
+
+}

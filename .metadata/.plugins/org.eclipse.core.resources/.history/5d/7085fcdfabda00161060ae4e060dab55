@@ -177,13 +177,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 
 	                int rowsAffected = statement.executeUpdate("update Employees set "+
 	                        "First_Name = '"+txtFirst_Name.getText()+"',"+
-	                        "Last_Name = '"+txtLast_Name.getText()+"',"+                      
+	                        "Last_Name = '"+txtLast_Name.getText()+"','"+                      
 	                        "Email = '"+txtEmail.getText()+"',"+
 	                        "Phone = '"+txtPhone.getText()+"',"+
 	                        "Address = '"+txtAddress.getText()+"',"+
 	                        "DOB = '"+dtDOB.getValue()+
-	                        "' where ID = "+
-	                        temp+";");	               
+	                        "' where ID = '"+
+	                        temp+"';");	               
 	            }
 
 	            statement.close();
@@ -288,68 +288,53 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 
 	 @FXML
 	    private void launchScheduler(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("Weekly Scheduler");
-	        stage.show();
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent Scheduler = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+		    Scene scheduler = new Scene(Scheduler);
+		    Stage Schedule = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Schedule.hide();
+		    Schedule.setScene(scheduler);
+		    Schedule.setTitle("Scheduler");
+		    Schedule.show();
 	    }
 	 
 
 	 @FXML
 	    private void launchCustomerScreen(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Menu_Customer.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("Customer Details");
-	        stage.show();
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+		    Scene customer_screen = new Scene(CustomerScreen);
+		    Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Customer_Screen.hide();
+		    Customer_Screen.setScene(customer_screen);
+		    Customer_Screen.setTitle("Customer Screen");
+		    Customer_Screen.show();
 	    }
 	 
 	 @FXML
 	    private void launchBarChart(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("All Customer Attendance Data");
-	        stage.show();
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent BarChart = FXMLLoader.load(getClass().getResource("AMPM_Bar_Chart.fxml"));
+		    Scene bar_chart = new Scene(BarChart);
+		    Stage Bar_Chart = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Bar_Chart.hide();
+		    Bar_Chart.setScene(bar_chart);
+		    Bar_Chart.setTitle("Customer Attendance");
+		    Bar_Chart.show();
 	    }
 	 
 	 @FXML
 	    private void launchLineChart(Event event) throws IOException{
-		 	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-	        stage.setTitle("Week Customer Attendance Data");
-	        stage.show();
+		    ((Node)event.getSource()).getScene().getWindow().hide();
+		    Parent LineChart = FXMLLoader.load(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+		    Scene line_chart = new Scene(LineChart);
+		    Stage Line_Chart = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    Line_Chart.hide();
+		    Line_Chart.setScene(line_chart);
+		    Line_Chart.setTitle("Customer Attendance");
+		    Line_Chart.show();
 	    }
 
-	 @FXML
-	    private void setMainMenuViewButtonClick(Event event) throws IOException {
-
-	        Employee_Profile_ViewModel info = new Employee_Profile_ViewModel(TableEmployees.getSelectionModel().getSelectedItem().getEmployeesID().toString());
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Employee_Profile_View.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
-
-	        Employee_Profile_ViewController profileView = loader.getController();
-	        profileView.setCurrentInfo(info);
-	        stage.show();
-	    }
 	 
 	
 

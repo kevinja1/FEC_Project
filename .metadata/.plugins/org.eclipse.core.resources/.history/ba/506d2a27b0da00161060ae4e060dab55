@@ -1,0 +1,96 @@
+package application;
+
+import javafx.fxml.FXML;
+
+import javafx.scene.text.Text;
+
+import javafx.scene.control.Label;
+
+import javafx.scene.image.ImageView;
+
+public class Employee_Profile_ViewController {
+	@FXML
+	private ImageView profilePic;
+	@FXML
+	private Text txtName;
+	@FXML
+	private Text txtPhone;
+	@FXML
+	private Text txtEmail;
+	@FXML
+	private Text tDOB;
+	@FXML
+	private Text txtID;
+	@FXML
+	private Text txtAddress;
+	@FXML
+	private Label label;
+	
+	private Employee_Profile_ViewModel Info;
+
+    public void setCurrentInfo(Info currentInfo) {
+        tID.setText(currentInfo.getId());
+        tName.setText(currentInfo.getName());
+        tDepartment.setLayoutX(tName.getLayoutX()+10+tName.getBoundsInParent().getWidth());//Adjust Layout with name
+        tDepartment.setText(currentInfo.getDepartment());
+        tCGPA.setText(currentInfo.getCgpa());
+        tVEmail.setText(currentInfo.getVemail());
+        tDOB.setText(currentInfo.getDob());
+        tEmail.setText(currentInfo.getEmail());
+        tPhone.setText(currentInfo.getPhone());
+        tAddress.setText(currentInfo.getAddress());
+
+
+        tGName.setText(currentInfo.getGname());
+        tGEmail.setText(currentInfo.getGemail());
+        tGPhone.setText(currentInfo.getGphone());
+
+
+
+        try {
+            Image image = new Image("/image/"+currentInfo.getfullId()+".jpg");
+            profilePic.setImage(image);
+        }
+        catch (Exception e){
+            profilePic.setImage(new Image("/image/default-user-icon.png"));
+        }
+
+
+
+
+
+        this.currentInfo = currentInfo;
+
+    }
+
+    @FXML
+    private void setLoadGpaButtonClcik(Event event){
+        gpaVisualization.getData().clear();
+        XYChart.Series<String,Number> gpaLineChart = new XYChart.Series<String,Number>();
+
+        try {
+            connection = database.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM student where dbStudentID = '"+currentInfo.getfullId()+"';");
+
+            while (resultSet.next()){
+
+                for (int i = 1; i <12 ; i++) {
+                    if(resultSet.getDouble("dbStudent"+i+"thSemGpa")!=0.00){
+                        gpaLineChart.getData().add(new XYChart.Data<String,Number>(i+"th", resultSet.getDouble("dbStudent"+i+"thSemGpa")));
+                    }
+                }
+
+                gpaLineChart.setName("All GPA");
+                gpaVisualization.getData().add(gpaLineChart);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+}
