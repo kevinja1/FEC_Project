@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -65,5 +66,7 @@ public class LoginScreenController implements Initializable {
 				e.printStackTrace();
 			}
 		}	
+		
+	
 }
 

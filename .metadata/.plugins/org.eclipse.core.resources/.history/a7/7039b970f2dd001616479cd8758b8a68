@@ -1,0 +1,7 @@
+.root{
+	-fx-font-family:"Arial";
+}
+
+.axis {
+    -fx-font-family: "Arial"
+}

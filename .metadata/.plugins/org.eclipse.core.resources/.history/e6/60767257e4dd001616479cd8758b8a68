@@ -1,0 +1,130 @@
+package application;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.DatePicker;
+
+public class Customer_Attendance_Line_ChartController implements Initializable {
+	
+	private DatePicker dtWeek;
+	private String sunday, monday, tuesday, wednesday, thursday, friday, saturday;
+	Customer_Attendance_Line_ChartModel linechart = new Customer_Attendance_Line_ChartModel();
+	
+	@FXML
+	private LineChart<String,Integer> lineChartAttendance;
+	
+	@Override
+	public void initialize(URL url, ResourceBundle rb){
+		XYChart.Series<String, Integer> seriesAM = new XYChart.Series<>();
+		
+		seriesAM.setName("AM");
+		
+		XYChart.Series<String, Integer> seriesPM = new XYChart.Series<>();
+		seriesPM.setName("PM");
+		
+		String now = LocalDate.now().getDayOfWeek().toString();
+        if(now == "SUNDAY"){
+			
+			sunday = (LocalDate.now().toString());
+			monday = (LocalDate.now().plusDays(1).toString());
+			tuesday = (LocalDate.now().plusDays(2).toString());
+			wednesday = (LocalDate.now().plusDays(3).toString());
+			thursday = (LocalDate.now().plusDays(4).toString());
+			friday = (LocalDate.now().plusDays(5).toString());
+			saturday = (LocalDate.now().plusDays(6).toString());
+
+		}
+		else if(now == "MONDAY"){
+			
+			monday = (LocalDate.now().toString());
+			tuesday = (LocalDate.now().plusDays(1).toString());
+			wednesday = (LocalDate.now().plusDays(2).toString());
+			thursday = (LocalDate.now().plusDays(3).toString());
+			friday = (LocalDate.now().plusDays(4).toString());
+			saturday = (LocalDate.now().plusDays(5).toString());
+			sunday = (LocalDate.now().minusDays(1).toString());
+
+		}
+		else if(now == "TUESDAY"){
+			
+			tuesday = (LocalDate.now().toString());
+			wednesday = (LocalDate.now().plusDays(1).toString());
+			thursday = (LocalDate.now().plusDays(2).toString());
+			friday = (LocalDate.now().plusDays(3).toString());
+			saturday = (LocalDate.now().plusDays(4).toString());
+			sunday = (LocalDate.now().minusDays(2).toString());
+			monday = (LocalDate.now().minusDays(1).toString());
+
+		}
+		else if(now == "WEDNESDAY"){
+			
+			wednesday = (LocalDate.now().toString());
+			thursday = (LocalDate.now().plusDays(1).toString());
+			friday = (LocalDate.now().plusDays(2).toString());
+			saturday = (LocalDate.now().plusDays(3).toString());
+			sunday = (LocalDate.now().minusDays(3).toString());
+			monday = (LocalDate.now().minusDays(2).toString());
+			tuesday = (LocalDate.now().minusDays(1).toString());
+
+		}
+		else if(now == "THURSDAY"){
+			
+			thursday = (LocalDate.now().toString());
+			friday = (LocalDate.now().plusDays(1).toString());
+			saturday = (LocalDate.now().plusDays(2).toString());
+			sunday = (LocalDate.now().minusDays(4).toString());
+			monday = (LocalDate.now().minusDays(3).toString());
+			tuesday = (LocalDate.now().minusDays(2).toString());
+			wednesday = (LocalDate.now().minusDays(1).toString());
+
+		}
+		else if(now == "FRIDAY"){
+			
+			friday = (LocalDate.now().toString());
+			saturday = (LocalDate.now().plusDays(1).toString());
+			sunday = (LocalDate.now().minusDays(5).toString());
+			monday = (LocalDate.now().minusDays(4).toString());
+			tuesday = (LocalDate.now().minusDays(3).toString());
+			wednesday = (LocalDate.now().minusDays(2).toString());
+			thursday = (LocalDate.now().minusDays(1).toString());
+
+		}
+		else if(now == "SATURDAY"){
+			
+			saturday = (LocalDate.now().toString());
+			sunday = (LocalDate.now().minusDays(6).toString());
+			monday = (LocalDate.now().minusDays(5).toString());
+			tuesday = (LocalDate.now().minusDays(4).toString());
+			wednesday = (LocalDate.now().minusDays(3).toString());
+			thursday = (LocalDate.now().minusDays(2).toString());
+			friday = (LocalDate.now().minusDays(1).toString());
+		}
+		   
+		seriesAM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumAMSunday()));
+		seriesAM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumAMMonday()));
+		seriesAM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumAMTuesday()));
+		seriesAM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumAMWednesday()));
+		seriesAM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumAMThursday()));
+		seriesAM.getData().add(new XYChart.Data<>("Friday", linechart.calcNumAMFriday()));
+		seriesAM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumAMSaturday()));
+		
+		seriesPM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumPMSunday()));
+		seriesPM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumPMMonday()));
+		seriesPM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumPMTuesday()));
+		seriesPM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumPMWednesday()));
+		seriesPM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumPMThursday()));
+		seriesPM.getData().add(new XYChart.Data<>("Friday", linechart.calcNumPMFriday()));
+		seriesPM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumPMSaturday()));
+		
+		
+		
+		lineChartAttendance.getData().addAll(seriesAM);   
+		lineChartAttendance.getData().addAll(seriesPM);   
+	}
+}

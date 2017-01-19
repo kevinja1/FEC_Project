@@ -11,7 +11,7 @@ public class Customer_Attendance_Line_ChartModel {
     private Statement statement;
     private ResultSet resultSet;
     
-	public int calcNumAMSunday(){
+	public int calcNumAMSunday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -22,7 +22,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("SUNDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("SUNDAY") && resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Sunday++;
 			 		}
 			 	}
@@ -38,7 +38,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Sunday;	
 	}
 	
-	public int calcNumAMMonday(){
+	public int calcNumAMMonday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -49,7 +49,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("MONDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("MONDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Monday++;
 			 		}
 			 	}
@@ -65,7 +65,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Monday;	
 	}
 	
-	public int calcNumAMTuesday(){
+	public int calcNumAMTuesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -76,7 +76,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("TUESDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("TUESDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Tuesday++;
 			 		}
 			 	}
@@ -92,7 +92,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Tuesday;	
 	}
 	
-	public int calcNumAMWednesday(){
+	public int calcNumAMWednesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -103,7 +103,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("WEDNESDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("WEDNESDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Wednesday++;
 			 		}
 			 	}
@@ -119,7 +119,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Wednesday;	
 	}
 	
-	public int calcNumAMThursday(){
+	public int calcNumAMThursday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -130,7 +130,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("THURSDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("THURSDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Thursday++;
 			 		}
 			 	}
@@ -146,7 +146,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Thursday;	
 	}
 	
-	public int calcNumAMFriday(){
+	public int calcNumAMFriday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -157,7 +157,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("FRIDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("FRIDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Friday++;
 			 		}
 			 	}
@@ -173,7 +173,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Friday;	
 	}
 	
-	public int calcNumAMSaturday(){
+	public int calcNumAMSaturday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -184,7 +184,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("Saturday")){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("Saturday")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Saturday++;
 			 		}
 			 	}
@@ -200,7 +200,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Saturday;	
 	}
 	
-	public int calcNumPMSunday(){
+	public int calcNumPMSunday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -211,7 +211,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("SUNDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("SUNDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Sunday++;
 			 		}
 			 	}
@@ -227,7 +227,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Sunday;	
 	}
 	
-	public int calcNumPMMonday(){
+	public int calcNumPMMonday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -238,7 +238,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("MONDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("MONDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Monday++;
 			 		}
 			 	}
@@ -254,7 +254,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Monday;	
 	}
 	
-	public int calcNumPMTuesday(){
+	public int calcNumPMTuesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -265,7 +265,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("TUESDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("TUESDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Tuesday++;
 			 		}
 			 	}
@@ -281,7 +281,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Tuesday;	
 	}
 	
-	public int calcNumPMWednesday(){
+	public int calcNumPMWednesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -292,7 +292,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("WEDNESDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("WEDNESDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Wednesday++;
 			 		}
 			 	}
@@ -308,7 +308,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Wednesday;	
 	}
 	
-	public int calcNumPMThursday(){
+	public int calcNumPMThursday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -319,7 +319,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("THURSDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("THURSDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Thursday++;
 			 		}
 			 	}
@@ -335,7 +335,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Thursday;	
 	}
 	
-	public int calcNumPMFriday(){
+	public int calcNumPMFriday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -346,7 +346,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("FRIDAY")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("FRIDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Friday++;
 			 		}
 			 	}
@@ -362,7 +362,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Friday;	
 	}
 	
-	public int calcNumPMSaturday(){
+	public int calcNumPMSaturday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -373,7 +373,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("Saturday")){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("Saturday")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Saturday++;
 			 		}
 			 	}

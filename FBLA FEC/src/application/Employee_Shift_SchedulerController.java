@@ -496,29 +496,38 @@ public class Employee_Shift_SchedulerController implements Initializable {
     private void doPrint(Event event) throws InvocationTargetException{
 	   Printer printer = Printer.getDefaultPrinter();
 	   PrinterJob job = PrinterJob.createPrinterJob();
-	   PageLayout pageLayout
-	        = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
-	    
-	   //PrinterAttributes attr = printer.getPrinterAttributes();
 	   
-	   double scaleX
-       = pageLayout.getPrintableWidth() / grSchedule.getBoundsInParent().getWidth();
-	   double scaleY
-       = pageLayout.getPrintableHeight() / grSchedule.getBoundsInParent().getHeight();
-	   Scale scale = new Scale(scaleX, scaleY);
-  	   grSchedule.getTransforms().add(scale);
-  
-    	if(job == null){
+	   if(printer != null){
+		   PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+		   double scaleX
+	       = pageLayout.getPrintableWidth() / grSchedule.getBoundsInParent().getWidth();
+		   double scaleY
+	       = pageLayout.getPrintableHeight() / grSchedule.getBoundsInParent().getHeight();
+		   Scale scale = new Scale(scaleX, scaleY);
+	  	   grSchedule.getTransforms().add(scale);
+	  	   
+	  	 if(job.printPage(pageLayout, grSchedule)){
+	        	job.endJob();
+	        	grSchedule.getTransforms().remove(scale);        	
+	    	}
+	    	else{
+	    		NotificationType notificationType = NotificationType.ERROR;
+	            TrayNotification tray = new TrayNotification();
+	            tray.setTitle("Printing error");
+	            tray.setMessage("Try turning on your printers");
+	            tray.setNotificationType(notificationType);
+	            tray.showAndDismiss(Duration.millis(10000));
+	    	}
+	   }
+	   else if(printer == null){
     		//tray notification printer not found
-    		System.out.println("not found");
+    		NotificationType notificationType = NotificationType.ERROR;
+            TrayNotification tray = new TrayNotification();
+            tray.setTitle("Printer not found");
+            tray.setMessage("Please set default printer/turn printer on");
+            tray.setNotificationType(notificationType);
+            tray.showAndDismiss(Duration.millis(10000));
     		
-    	}
-    	if(job.printPage(pageLayout, grSchedule)){
-        	job.endJob();
-        	grSchedule.getTransforms().remove(scale);        	
-    	}
-    	else{
-    		System.out.println("printing failed");
     	}
     	
     }

@@ -339,17 +339,28 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 @FXML
 	    private void setMainMenuViewButtonClick(Event event) throws IOException {
 
-	        Employee_Profile_ViewModel info = new Employee_Profile_ViewModel(TableEmployees.getSelectionModel().getSelectedItem().getEmployeesID().toString());
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource("Employee_Profile_View.fxml"));
-	        loader.load();
-	        Parent p = loader.getRoot();
-	        Stage stage = new Stage();
-	        stage.setScene(new Scene(p));
+		 if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
+			 	Employee_Profile_ViewModel info = new Employee_Profile_ViewModel(TableEmployees.getSelectionModel().getSelectedItem().getEmployeesID().toString());
+			 	FXMLLoader loader = new FXMLLoader();
+		        loader.setLocation(getClass().getResource("Employee_Profile_View.fxml"));
+		        loader.load();
+		        Parent p = loader.getRoot();
+		        Stage stage = new Stage();
+		        stage.setScene(new Scene(p));
 
-	        Employee_Profile_ViewController profileView = loader.getController();
-	        profileView.setCurrentInfo(info);
-	        stage.show();
+		        Employee_Profile_ViewController profileView = loader.getController();
+		        profileView.setCurrentInfo(info);
+		        stage.show();
+		 }
+		 else{
+			    NotificationType notificationType = NotificationType.ERROR;
+	            TrayNotification tray = new TrayNotification();
+	            tray.setTitle("No Employee Selected");
+	            tray.setMessage("Select Employee to View");
+	            tray.setNotificationType(notificationType);
+	            tray.showAndDismiss(Duration.millis(5000));
+		 }
+	        
 	    }
 	 
 	
