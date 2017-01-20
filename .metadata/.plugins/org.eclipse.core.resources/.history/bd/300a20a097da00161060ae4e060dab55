@@ -1,7 +1,0 @@
-package application;
-
-import javafx.fxml.FXML;
-
-public class Customer_Attendance_Line_ChartController {
-
-}

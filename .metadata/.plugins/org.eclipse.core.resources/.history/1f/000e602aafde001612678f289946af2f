@@ -39,8 +39,6 @@ public class Menu_CustomerController implements Initializable {
 	@FXML
 	private Button txtAdd;
 	@FXML
-	private Button btShowAllAtt;
-	@FXML
 	private ToggleGroup group;
 	@FXML
 	private RadioButton rdAM;
@@ -123,8 +121,7 @@ public class Menu_CustomerController implements Initializable {
         TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
         		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
         CustomersAttendanceSetAllDisable();
-        AddAttendanceButton.setDisable(true);
-        btShowAllAtt.setDisable(false); 
+        AddAttendanceButton.setDisable(true); 
         rdAM.setSelected(true);
 
        
@@ -390,7 +387,6 @@ public class Menu_CustomerController implements Initializable {
 	            	
 	    	    CustomersAttendanceSetAllClear();
 	    	    CustomersAttendanceSetAllDisable();
-	    	    btShowAllAtt.setDisable(false);
 	            statement.close();
 	            connection.close();
 	        }
@@ -402,8 +398,7 @@ public class Menu_CustomerController implements Initializable {
 	 
 	 @FXML
 	 private void setAddAttendanceButtonClicked(Event event){
-		 	btShowAllAtt.setDisable(true);
-		 	CustomersAttendanceSetAllEnable();
+			CustomersAttendanceSetAllEnable();
 			CustomersSetAllClear();
 			CustomersSetAllDisable();
 			//TableCustomerAttendance.setDisable(false);
@@ -474,8 +469,7 @@ public class Menu_CustomerController implements Initializable {
 	    private void setCustomerAttendanceDeleteButtonClick(Event event){
 		 	if(TableCustomerAttendance.getSelectionModel().getSelectedItem()!=null){
 		 		Menu_Customer_AttendanceModel getSelectedRow = TableCustomerAttendance.getSelectionModel().getSelectedItem();
-		        String sqlQuery = "delete from Customers_Attendance where ID = "+getSelectedRow.getCustomers_ID()+ " AND Date = '"+getSelectedRow.getCustomers_Date()+ "' AND AMPM = '"+getSelectedRow.getCustomers_AMPM()+ "';";
-
+		        String sqlQuery = "delete from Customers_Attendance where Date = '"+getSelectedRow.getCustomers_Date()+"';";
 		        
 		        try {
 		        	connection = SqliteConnection.Connector();
@@ -485,13 +479,13 @@ public class Menu_CustomerController implements Initializable {
 		
 		            //TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance;"));
 		            TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-	                		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + getSelectedRow.getCustomers_ID() + ";"));
+		            		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
 		            statement.close();
 		            connection.close();
 		            
 		            CustomersAttendanceSetAllDisable();
 		            AddAttendanceButton.setDisable(true);
-		            btShowAllAtt.setDisable(false);
+		            
 
 		        }
 		        catch (SQLException e) {
@@ -508,14 +502,9 @@ public class Menu_CustomerController implements Initializable {
 	            tray.setMessage("To delete, please select an attendance");
 	            tray.setNotificationType(notificationType);
 	            tray.showAndDismiss(Duration.millis(5000));
-		 	}     	 	
+		 	}     
+		 	
 	    }
-	 
-	 	@FXML
-	    private void setShowAllAttClick(Event event){
-	 		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-	        		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
-	 	}
 
 	 
 	 

@@ -124,6 +124,7 @@ public class Menu_Customer_AttendanceModel {
 	        this.Customers_LastName.set(Customers_LastName);
 	    }
 	    
+	    
 	    public int getCustomers_ID() {
 	        return Customers_ID.get();
 	    }

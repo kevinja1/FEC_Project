@@ -474,8 +474,7 @@ public class Menu_CustomerController implements Initializable {
 	    private void setCustomerAttendanceDeleteButtonClick(Event event){
 		 	if(TableCustomerAttendance.getSelectionModel().getSelectedItem()!=null){
 		 		Menu_Customer_AttendanceModel getSelectedRow = TableCustomerAttendance.getSelectionModel().getSelectedItem();
-		        String sqlQuery = "delete from Customers_Attendance where ID = "+getSelectedRow.getCustomers_ID()+ " AND Date = '"+getSelectedRow.getCustomers_Date()+ "' AND AMPM = '"+getSelectedRow.getCustomers_AMPM()+ "';";
-
+		        String sqlQuery = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+ " AND DATE = '"+getSelectedRow.getCustomers_DATE()+ "';";
 		        
 		        try {
 		        	connection = SqliteConnection.Connector();

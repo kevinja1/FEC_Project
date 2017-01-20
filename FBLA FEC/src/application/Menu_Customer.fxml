@@ -121,7 +121,7 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                     </GridPane>
-                                    <Button fx:id="DeleteAttendanceButton" layoutX="172.0" layoutY="528.0" mnemonicParsing="false" onAction="#setCustomerDeleteButtonClick" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: FF5151;" text="Delete" textFill="WHITE" />
+                                    <Button fx:id="DeleteAttendanceButton" layoutX="172.0" layoutY="528.0" mnemonicParsing="false" onAction="#setCustomerAttendanceDeleteButtonClick" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: FF5151;" text="Delete" textFill="WHITE" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="574.0">
@@ -163,6 +163,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
+                  <Button fx:id="btShowAllAtt" layoutX="617.0" layoutY="12.0" mnemonicParsing="false" onAction="#setShowAllAttClick" prefHeight="27.0" prefWidth="176.0" style="-fx-background-color: #09B28C;" text="Show All Attendance" textFill="WHITE" />
                </children>
             </AnchorPane>
         </items>
