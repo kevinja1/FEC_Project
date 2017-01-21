@@ -97,7 +97,6 @@ public class Main_Menu_EmployeeController implements Initializable {
         EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesEmail"));
         
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
-        dtDOB.setEditable(false);
 
     }
 	
@@ -163,12 +162,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 @FXML
 	    private void setMainMenuSaveButtonClick(Event event){
 	        try{	       
+	            connection = SqliteConnection.Connector();
+	            statement = connection.createStatement();
 	  
-	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
-	            	
-	            	connection = SqliteConnection.Connector();
-		            statement = connection.createStatement();
-		            
+	            if(validateFirstName()){
 	            	if(isMainMenuAddNewButtonClick){
 		                int rowsAffected = statement.executeUpdate("insert into`Employees` "+
 		                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
@@ -389,96 +386,11 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 
 			 return false;
 		 }
-	}
-	 
-	 private boolean validateLastName(){
-		 Pattern p = Pattern.compile("[a-zA-z]+");
-		 Matcher m = p.matcher(txtLast_Name.getText());
-		 if(m.find() && m.group().equals(txtLast_Name.getText())){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Name");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Last Name");
-			 alert.showAndWait();
-			 
-			 return false;
 		 }
 	 }
 	 
-	 private boolean validateEmail(){
-		 Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-		 Matcher m = p.matcher(txtEmail.getText());
-		 if(m.find() && m.group().equals(txtEmail.getText())){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Email");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Email");
-			 alert.showAndWait();
-			 
-			 return false;
-		 }
-	 }
-	 
-	 private boolean validatePhone(){
-		 Pattern p = Pattern.compile("[0-9]{3,12}");
-		 Matcher m = p.matcher(txtPhone.getText());
-		 if(m.find() && m.group().equals(txtPhone.getText())){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Phone Number");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
-			 alert.showAndWait();
-			 
-			 return false;
-		 }
-	 }
-	 
-	 private boolean validateDOB(){
-		 if(dtDOB.getValue() != null){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Date");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a DOB");
-			 alert.showAndWait();
-			 
-			 return false;
-		 }
-		 
-	 }
-	 
-	 private boolean validateAddress(){
-		 if(txtAddress.getText() != null){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Address");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter an Address");
-			 alert.showAndWait();
-			 
-			 return false;
-		 } 
-	 }
-	 
+	
+
+
 	
 }
-
-	 
-	
-
-
-	
-

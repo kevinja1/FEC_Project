@@ -235,95 +235,92 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	@FXML
 	public void populateDates()
 	{
-		if(validateDate()){
-			String day_of_week = dtSchedule.getValue().getDayOfWeek().toString();
-			if(day_of_week == "SUNDAY"){
-				
-				lblSun.setText(dtSchedule.getValue().toString());
-				lblMon.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblTues.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(5).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(6).toString());
-
-			}
-			else if(day_of_week == "MONDAY"){
-				
-				lblMon.setText(dtSchedule.getValue().toString());
-				lblTues.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(5).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
-			else if(day_of_week == "TUESDAY"){
-				
-				lblTues.setText(dtSchedule.getValue().toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
-			else if(day_of_week == "WEDNESDAY"){
-				
-				lblWed.setText(dtSchedule.getValue().toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
-			else if(day_of_week == "THURSDAY"){
-				
-				lblThurs.setText(dtSchedule.getValue().toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
-			else if(day_of_week == "FRIDAY"){
-				
-				lblFri.setText(dtSchedule.getValue().toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(5).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblThurs.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
-			else if(day_of_week == "SATURDAY"){
-				
-				lblSat.setText(dtSchedule.getValue().toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(6).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(5).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblThurs.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblFri.setText(dtSchedule.getValue().minusDays(1).toString());
-
-			}
+		String day_of_week = dtSchedule.getValue().getDayOfWeek().toString();
+		if(day_of_week == "SUNDAY"){
 			
-			 setLoadListSun();
-	         setLoadListMon();
-	         setLoadListTues();
-	         setLoadListWed();
-	         setLoadListThurs();
-	         setLoadListFri();
-	         setLoadListSat();
+			lblSun.setText(dtSchedule.getValue().toString());
+			lblMon.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblTues.setText(dtSchedule.getValue().plusDays(2).toString());
+			lblWed.setText(dtSchedule.getValue().plusDays(3).toString());
+			lblThurs.setText(dtSchedule.getValue().plusDays(4).toString());
+			lblFri.setText(dtSchedule.getValue().plusDays(5).toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(6).toString());
+
+		}
+		else if(day_of_week == "MONDAY"){
+			
+			lblMon.setText(dtSchedule.getValue().toString());
+			lblTues.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblWed.setText(dtSchedule.getValue().plusDays(2).toString());
+			lblThurs.setText(dtSchedule.getValue().plusDays(3).toString());
+			lblFri.setText(dtSchedule.getValue().plusDays(4).toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(5).toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(1).toString());
+
+		}
+		else if(day_of_week == "TUESDAY"){
+			
+			lblTues.setText(dtSchedule.getValue().toString());
+			lblWed.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblThurs.setText(dtSchedule.getValue().plusDays(2).toString());
+			lblFri.setText(dtSchedule.getValue().plusDays(3).toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(4).toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(2).toString());
+			lblMon.setText(dtSchedule.getValue().minusDays(1).toString());
+
+		}
+		else if(day_of_week == "WEDNESDAY"){
+			
+			lblWed.setText(dtSchedule.getValue().toString());
+			lblThurs.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblFri.setText(dtSchedule.getValue().plusDays(2).toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(3).toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(3).toString());
+			lblMon.setText(dtSchedule.getValue().minusDays(2).toString());
+			lblTues.setText(dtSchedule.getValue().minusDays(1).toString());
+
+		}
+		else if(day_of_week == "THURSDAY"){
+			
+			lblThurs.setText(dtSchedule.getValue().toString());
+			lblFri.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(2).toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(4).toString());
+			lblMon.setText(dtSchedule.getValue().minusDays(3).toString());
+			lblTues.setText(dtSchedule.getValue().minusDays(2).toString());
+			lblWed.setText(dtSchedule.getValue().minusDays(1).toString());
+
+		}
+		else if(day_of_week == "FRIDAY"){
+			
+			lblFri.setText(dtSchedule.getValue().toString());
+			lblSat.setText(dtSchedule.getValue().plusDays(1).toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(5).toString());
+			lblMon.setText(dtSchedule.getValue().minusDays(4).toString());
+			lblTues.setText(dtSchedule.getValue().minusDays(3).toString());
+			lblWed.setText(dtSchedule.getValue().minusDays(2).toString());
+			lblThurs.setText(dtSchedule.getValue().minusDays(1).toString());
+
+		}
+		else if(day_of_week == "SATURDAY"){
+			
+			lblSat.setText(dtSchedule.getValue().toString());
+			lblSun.setText(dtSchedule.getValue().minusDays(6).toString());
+			lblMon.setText(dtSchedule.getValue().minusDays(5).toString());
+			lblTues.setText(dtSchedule.getValue().minusDays(4).toString());
+			lblWed.setText(dtSchedule.getValue().minusDays(3).toString());
+			lblThurs.setText(dtSchedule.getValue().minusDays(2).toString());
+			lblFri.setText(dtSchedule.getValue().minusDays(1).toString());
+
 		}
 		
+		 setLoadListSun();
+         setLoadListMon();
+         setLoadListTues();
+         setLoadListWed();
+         setLoadListThurs();
+         setLoadListFri();
+         setLoadListSat();
 	}
 	
 	@FXML 
@@ -665,7 +662,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
 			 Alert alert = new Alert(AlertType.WARNING);
 			 alert.setTitle("Validate Date");
 			 alert.setHeaderText(null);
-			 alert.setContentText("Please Choose a Date");
+			 alert.setContentText("Please Enter a DOB");
 			 alert.showAndWait();
 			 
 			 return false;

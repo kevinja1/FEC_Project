@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,12 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -130,10 +126,8 @@ public class Menu_CustomerController implements Initializable {
         AddAttendanceButton.setDisable(true);
         btShowAllAtt.setDisable(false); 
         rdAM.setSelected(true);
-        
         dtDOB.setEditable(false);
-        dtAttendance.setEditable(false);
-        
+       
     }
 	
 	@FXML
@@ -224,46 +218,44 @@ public class Menu_CustomerController implements Initializable {
 	 @FXML
 	    private void setCustomerSaveButtonClick(Event event){
 	        try{	       
-	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
-	            	connection = SqliteConnection.Connector();
-		            statement = connection.createStatement();
-		        
-		            if(isCustomersAddNewButtonClick){
-		            	isCustomersEditButtonClick = true;
-		            	int rowsAffected = statement.executeUpdate("insert into`Customers` "+
-		                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
-		                        "`Address`,`DOB`"+
-		                        ") "+
-		                        "values ('"+txtFirst_Name.getText()+"','"+txtLast_Name.getText()+"','"+txtEmail.getText()
-		                        +"','"+txtPhone.getText()
-		                        +"','"+txtAddress.getText()
-		                        +"','"+dtDOB.getValue().toString()
-		                       
-		    
-		                        +"'); ");
-		           
-		            }
-		            else if (isCustomersEditButtonClick){
-		            	isCustomersAddNewButtonClick = false;
-		                int rowsAffected = statement.executeUpdate("update Customers set "+
-		                        "First_Name = '"+txtFirst_Name.getText()+"',"+
-		                        "Last_Name = '"+txtLast_Name.getText()+"',"+
-		                        "Email = '"+txtEmail.getText()+"',"+
-		                        "Phone = '"+txtPhone.getText()+"',"+
-		                        "Address = '"+txtAddress.getText()+"',"+
-		                        "DOB = '"+dtDOB.getValue()+
-		                        "' where ID = '"+
-		                        temp+"';");
-		               /* if (temp.equals(txtID.getText())){
-		                    statement.executeUpdate("update studentgpa set dbstudentgpaID ='"+adminTFStudentID.getText()+"' where dbStudentID = '"+ temp+"';");
-		                }
-		                */
-		                AddAttendanceButton.setDisable(true);
-		            }
+	            connection = SqliteConnection.Connector();
+	            statement = connection.createStatement();
+	        
+	            if(isCustomersAddNewButtonClick){
+	            	isCustomersEditButtonClick = true;
+	            	int rowsAffected = statement.executeUpdate("insert into`Customers` "+
+	                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
+	                        "`Address`,`DOB`"+
+	                        ") "+
+	                        "values ('"+txtFirst_Name.getText()+"','"+txtLast_Name.getText()+"','"+txtEmail.getText()
+	                        +"','"+txtPhone.getText()
+	                        +"','"+txtAddress.getText()
+	                        +"','"+dtDOB.getValue().toString()
+	                       
+	    
+	                        +"'); ");
+	           
+	            }
+	            else if (isCustomersEditButtonClick){
+	            	isCustomersAddNewButtonClick = false;
+	                int rowsAffected = statement.executeUpdate("update Customers set "+
+	                        "First_Name = '"+txtFirst_Name.getText()+"',"+
+	                        "Last_Name = '"+txtLast_Name.getText()+"',"+
+	                        "Email = '"+txtEmail.getText()+"',"+
+	                        "Phone = '"+txtPhone.getText()+"',"+
+	                        "Address = '"+txtAddress.getText()+"',"+
+	                        "DOB = '"+dtDOB.getValue()+
+	                        "' where ID = '"+
+	                        temp+"';");
+	               /* if (temp.equals(txtID.getText())){
+	                    statement.executeUpdate("update studentgpa set dbstudentgpaID ='"+adminTFStudentID.getText()+"' where dbStudentID = '"+ temp+"';");
+	                }
+	                */
+	                AddAttendanceButton.setDisable(true);
+	            }
 
-		            statement.close();
-		            connection.close();
-	            }	        	
+	            statement.close();
+	            connection.close();
 	        }
 	        catch (SQLException e){
 	            e.printStackTrace();
@@ -377,33 +369,30 @@ public class Menu_CustomerController implements Initializable {
 	 @FXML
 	    private void setCustomerAttendanceSaveButtonClick(Event event){
 	        try{	       
-	            if(validateAttendanceDate()){
-	            	connection = SqliteConnection.Connector();
-		            statement = connection.createStatement();
-		        
-		            Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
-		        	getSelectedRow.getCustomers_ID();
-		        	
-		            	int rowsAffected = statement.executeUpdate("insert into`Customers_Attendance` "+
-		                        "(ID, `Date`,`AMPM`,`Day_of_Week`"+
-		                        ""+
-		                        ") "+
-		                        "values ("+getSelectedRow.getCustomers_ID()+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM() +"','" +dtAttendance.getValue().getDayOfWeek().toString()
-		                        +"'); ");
-		           
-		            
-		            	
-		    	        //TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance where ID = " + getSelectedRow.getCustomers_ID() + ";"));
-		            	TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-		                		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + getSelectedRow.getCustomers_ID() + ";"));
-		            	
-		    	    CustomersAttendanceSetAllClear();
-		    	    CustomersAttendanceSetAllDisable();
-		    	    btShowAllAtt.setDisable(false);
-		            statement.close();
-		            connection.close();
-	            }
+	            connection = SqliteConnection.Connector();
+	            statement = connection.createStatement();
+	        
+	            Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
+	        	getSelectedRow.getCustomers_ID();
 	        	
+	            	int rowsAffected = statement.executeUpdate("insert into`Customers_Attendance` "+
+	                        "(ID, `Date`,`AMPM`,`Day_of_Week`"+
+	                        ""+
+	                        ") "+
+	                        "values ("+getSelectedRow.getCustomers_ID()+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM() +"','" +dtAttendance.getValue().getDayOfWeek().toString()
+	                        +"'); ");
+	           
+	            
+	            	
+	    	        //TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance where ID = " + getSelectedRow.getCustomers_ID() + ";"));
+	            	TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
+	                		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + getSelectedRow.getCustomers_ID() + ";"));
+	            	
+	    	    CustomersAttendanceSetAllClear();
+	    	    CustomersAttendanceSetAllDisable();
+	    	    btShowAllAtt.setDisable(false);
+	            statement.close();
+	            connection.close();
 	        }
 	        catch (SQLException e){
 	            e.printStackTrace();
@@ -527,122 +516,6 @@ public class Menu_CustomerController implements Initializable {
 	 		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
 	        		+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
 	 	}
-	 	
-	 	private boolean validateFirstName(){
-			 Pattern p = Pattern.compile("[a-zA-z]+");
-			 Matcher m = p.matcher(txtFirst_Name.getText());
-			 if(m.find() && m.group().equals(txtFirst_Name.getText())){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Name");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid First Name");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-		}
-		 
-		 private boolean validateLastName(){
-			 Pattern p = Pattern.compile("[a-zA-z]+");
-			 Matcher m = p.matcher(txtLast_Name.getText());
-			 if(m.find() && m.group().equals(txtLast_Name.getText())){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Name");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Last Name");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-		 }
-		 
-		 private boolean validateEmail(){
-			 Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-			 Matcher m = p.matcher(txtEmail.getText());
-			 if(m.find() && m.group().equals(txtEmail.getText())){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Email");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Email");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-		 }
-		 
-		 private boolean validatePhone(){
-			 Pattern p = Pattern.compile("[0-9]{3,12}");
-			 Matcher m = p.matcher(txtPhone.getText());
-			 if(m.find() && m.group().equals(txtPhone.getText())){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Phone Number");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-		 }
-		 
-		 private boolean validateDOB(){
-			 if(dtDOB.getValue() != null){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Date");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a DOB");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-			 
-		 }
-		 
-		 private boolean validateAddress(){
-			 if(txtAddress.getText() != null){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Address");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter an Address");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-			 
-		 }
-		 
-		 private boolean validateAttendanceDate(){
-			 if(dtAttendance.getValue() != null){
-				 return true;
-			 }
-			 else{
-				 Alert alert = new Alert(AlertType.WARNING);
-				 alert.setTitle("Validate Date");
-				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter an Attendance Date");
-				 alert.showAndWait();
-				 
-				 return false;
-			 }
-			 
-		 }
 
 	 
 	 

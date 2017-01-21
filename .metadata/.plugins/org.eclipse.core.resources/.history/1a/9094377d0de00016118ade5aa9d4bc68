@@ -97,7 +97,6 @@ public class Main_Menu_EmployeeController implements Initializable {
         EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesEmail"));
         
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
-        dtDOB.setEditable(false);
 
     }
 	
@@ -163,12 +162,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 @FXML
 	    private void setMainMenuSaveButtonClick(Event event){
 	        try{	       
+	            connection = SqliteConnection.Connector();
+	            statement = connection.createStatement();
 	  
-	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
-	            	
-	            	connection = SqliteConnection.Connector();
-		            statement = connection.createStatement();
-		            
+	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone()){
 	            	if(isMainMenuAddNewButtonClick){
 		                int rowsAffected = statement.executeUpdate("insert into`Employees` "+
 		                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
@@ -435,47 +432,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 Alert alert = new Alert(AlertType.WARNING);
 			 alert.setTitle("Validate Phone Number");
 			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
+			 alert.setContentText("Please Enter a Valid Phone Number");
 			 alert.showAndWait();
 			 
 			 return false;
 		 }
 	 }
-	 
-	 private boolean validateDOB(){
-		 if(dtDOB.getValue() != null){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Date");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a DOB");
-			 alert.showAndWait();
-			 
-			 return false;
-		 }
-		 
 	 }
-	 
-	 private boolean validateAddress(){
-		 if(txtAddress.getText() != null){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Address");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter an Address");
-			 alert.showAndWait();
-			 
-			 return false;
-		 } 
-	 }
-	 
-	
-}
-
 	 
 	
 

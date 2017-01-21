@@ -470,10 +470,9 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 
 			 return false;
-		 } 
+		 }
+		 
 	 }
-	 
-	
 }
 
 	 

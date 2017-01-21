@@ -163,12 +163,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 @FXML
 	    private void setMainMenuSaveButtonClick(Event event){
 	        try{	       
+	            connection = SqliteConnection.Connector();
+	            statement = connection.createStatement();
 	  
-	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
-	            	
-	            	connection = SqliteConnection.Connector();
-		            statement = connection.createStatement();
-		            
+	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone()){
 	            	if(isMainMenuAddNewButtonClick){
 		                int rowsAffected = statement.executeUpdate("insert into`Employees` "+
 		                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
@@ -457,23 +455,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 }
 		 
 	 }
-	 
-	 private boolean validateAddress(){
-		 if(txtAddress.getText() != null){
-			 return true;
-		 }
-		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Address");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter an Address");
-			 alert.showAndWait();
-			 
-			 return false;
-		 } 
-	 }
-	 
-	
 }
 
 	 

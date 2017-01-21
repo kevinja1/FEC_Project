@@ -163,6 +163,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 @FXML
 	    private void setMainMenuSaveButtonClick(Event event){
 	        try{	       
+	            
 	  
 	            if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
 	            	
@@ -470,10 +471,9 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 
 			 return false;
-		 } 
+		 }
+		 
 	 }
-	 
-	
 }
 
 	 
