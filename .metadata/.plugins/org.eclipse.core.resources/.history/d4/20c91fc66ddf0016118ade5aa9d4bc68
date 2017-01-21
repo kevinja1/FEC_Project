@@ -23,20 +23,11 @@ public class Employee_Shift_SchedulerModel {
     private ResultSet resultSet;
     
     
-    public Employee_Shift_SchedulerModel(int EmployeesID, String Date, String Shift, String LastName, String FirstName){
+    public Employee_Shift_SchedulerModel(int EmployeesID, String Date, String Shift, String FirstName, String LastName){
 
 		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
 		this.EmployeesScheduleDate = new SimpleStringProperty(Date);
 		this.EmployeesScheduleShift = new SimpleStringProperty(Shift);
-		this.EmployeesLast_Name = new SimpleStringProperty(LastName);
-		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
-	}
-    
-    public Employee_Shift_SchedulerModel(int EmployeesID, String FirstName, String LastName){
-
-		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
-		this.EmployeesScheduleDate = new SimpleStringProperty("");
-		this.EmployeesScheduleShift = new SimpleStringProperty("");
 		this.EmployeesLast_Name = new SimpleStringProperty(LastName);
 		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
 	}
@@ -60,6 +51,8 @@ public class Employee_Shift_SchedulerModel {
             while(resultSet.next()){
                 employeeTableData.add(new Employee_Shift_SchedulerModel(
                         resultSet.getInt("ID"),
+                        resultSet.getString("Date"),
+                        resultSet.getString("Shift"),
                         resultSet.getString("First_Name"),
                         resultSet.getString("Last_Name")
                         ));
@@ -77,17 +70,21 @@ public class Employee_Shift_SchedulerModel {
     }
 	
 	public ObservableList getDataFromSqlAndAddToObservableListSchedule(String query){
-		ObservableList<String> employeeTableData = FXCollections.observableArrayList();
+        ObservableList<Integer> employeeTableData = FXCollections.observableArrayList();
         try {
         	connection = SqliteConnection.Connector();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query); 
            
             while(resultSet.next()){
-                employeeTableData.add(
-                        resultSet.getString("First_Name") +" "+
+                employeeTableData.add(new Employee_Shift_SchedulerModel(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("Date"),
+                        resultSet.getString("Shift"),
+                        resultSet.getString("First_Name"),
                         resultSet.getString("Last_Name")
-                        );
+                        )                       
+                       );
             }
             
             statement.close();
@@ -136,4 +133,5 @@ public class Employee_Shift_SchedulerModel {
 	    public void setEmployeesLast_Name(String EmployeesLast_Name) {
 	        this.EmployeesLast_Name.set(EmployeesLast_Name);
 	    }
+	    
 }

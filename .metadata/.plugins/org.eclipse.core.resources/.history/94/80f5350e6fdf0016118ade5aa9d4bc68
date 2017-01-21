@@ -77,17 +77,20 @@ public class Employee_Shift_SchedulerModel {
     }
 	
 	public ObservableList getDataFromSqlAndAddToObservableListSchedule(String query){
-		ObservableList<String> employeeTableData = FXCollections.observableArrayList();
+		ObservableList<Employee_Shift_SchedulerModel> employeeTableData = FXCollections.observableArrayList();
         try {
         	connection = SqliteConnection.Connector();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query); 
            
             while(resultSet.next()){
-                employeeTableData.add(
-                        resultSet.getString("First_Name") +" "+
+                employeeTableData.add(new Employee_Shift_SchedulerModel(
+                        resultSet.getInt("ID"),
+                        resultSet.getString("Date"),
+                        resultSet.getString("AMPM"),
+                        resultSet.getString("First_Name"),
                         resultSet.getString("Last_Name")
-                        );
+                        ));
             }
             
             statement.close();
@@ -136,4 +139,9 @@ public class Employee_Shift_SchedulerModel {
 	    public void setEmployeesLast_Name(String EmployeesLast_Name) {
 	        this.EmployeesLast_Name.set(EmployeesLast_Name);
 	    }
+	    
+	    public SimpleStringProperty toString(){
+	    	return EmployeesFirst_Name();
+	    }
+	    
 }

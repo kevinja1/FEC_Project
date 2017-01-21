@@ -219,12 +219,12 @@ public class Employee_Shift_SchedulerController implements Initializable {
 		}
         
         setLoadListSun();
-        setLoadListMon();
+       /* setLoadListMon();
         setLoadListTues();
         setLoadListWed();
         setLoadListThurs();
         setLoadListFri();
-        setLoadListSat();
+        setLoadListSat();*/
         
     }
 	
@@ -431,12 +431,12 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	             btRefresh.setDisable(true);
 	        	 
 	             setLoadListSun();
-	             setLoadListMon();
+	             /*setLoadListMon();
 	             setLoadListTues();
 	             setLoadListWed();
 	             setLoadListThurs();
 	             setLoadListFri();
-	             setLoadListSat();
+	             setLoadListSat();*/
         }
         else{
         	    NotificationType notificationType = NotificationType.ERROR;
@@ -464,39 +464,42 @@ public class Employee_Shift_SchedulerController implements Initializable {
     private void setLoadListSun(){
         //String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblSun.getText()+"';";
         //listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableList(sqlQuery)));
+    	ObservableList<Employee_Shift_SchedulerModel> employeeTableData = Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
+        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSun.getText()+"';");
     	
-    	listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSun.getText()+"';")));
+    	String first = employeeTableData.get(0).getEmployeesFirst_Name();
+    	
+    	listSun.setItems("bob");
     }
     
     private void setLoadListMon(){
-    	listMon.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblMon.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblMon.getText()+"';";
+        listMon.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
     private void setLoadListTues(){
-    	listTues.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblTues.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblTues.getText()+"';";
+        listTues.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
     private void setLoadListWed(){
-    	listWed.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblWed.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblWed.getText()+"';";
+        listWed.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
     private void setLoadListThurs(){
-    	listThurs.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblThurs.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblThurs.getText()+"';";
+        listThurs.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
     private void setLoadListFri(){
-    	listFri.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblFri.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblFri.getText()+"';";
+        listFri.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
     private void setLoadListSat(){
-    	listSat.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSat.getText()+"';")));
+        String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblSat.getText()+"';";
+        listSat.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(sqlQuery));
     }
     
    @FXML  
