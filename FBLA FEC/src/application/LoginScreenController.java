@@ -12,9 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -49,23 +52,53 @@ public class LoginScreenController implements Initializable {
                         mainMenu.setTitle("Main Menu");
                         mainMenu.show();
 				} 
-				else {
-					 	NotificationType notificationType = NotificationType.ERROR;
-			            TrayNotification tray = new TrayNotification();
-			            tray.setTitle("Error Login");
-			            tray.setMessage("Incorrect login or password");
-			            tray.setNotificationType(notificationType);
-			            tray.showAndDismiss(Duration.millis(5000));
-
-			            txtUsername.clear();
-			            txtPassword.clear();
-
+				else{
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Error Login");
+					alert.setHeaderText(null);
+					alert.setContentText("Incorrect Username or Password");
+					alert.showAndWait();
+					 
+			        txtUsername.clear();
+			        txtPassword.clear();
 				}
 			} 
 			catch (SQLException e){
 				e.printStackTrace();
 			}
 		}	
+		
+		@FXML
+		public void handleEnterPressed(KeyEvent event) throws IOException, SQLException{
+		    if (event.getCode() == KeyCode.ENTER) {
+		    	try{
+					if(loginModel.isLogin(txtUsername.getText(), txtPassword.getText())){
+						loginModel.getConnection().close();
+						((Node)event.getSource()).getScene().getWindow().hide();
+					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+					    Scene MainMenu = new Scene(Main_Menu);
+	                    Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	                    mainMenu.hide();
+	                    mainMenu.setScene(MainMenu);
+	                    mainMenu.setTitle("Main Menu");
+	                    mainMenu.show();
+					} 
+					else{
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Error Login");
+						alert.setHeaderText(null);
+						alert.setContentText("Incorrect Username or Password");
+						alert.showAndWait();
+						 
+				        txtUsername.clear();
+				        txtPassword.clear();
+					}
+				} 
+				catch (SQLException e){
+					e.printStackTrace();
+				}
+		    }
+		}
 		
 	
 }

@@ -1,5 +1,6 @@
 package application;
 
+//imported required packages for this class
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,8 @@ public class Customer_Attendance_Line_ChartModel {
     private Statement statement;
     private ResultSet resultSet;
     
-	public int calcNumAMSunday(String date){
+	//Method to calculate the number of AM Customer Attendances on a given Sunday
+    public int calcNumAMSunday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
 		connection = SqliteConnection.Connector();
@@ -21,6 +23,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    	statement = connection.createStatement();
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
+			 	//Checks to see if table entry is sunday, am, and the proper date to increment the numAM_Sunday variable
 			 	while(resultSet.next()){
 			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("SUNDAY") && resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Sunday++;
@@ -38,6 +41,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Sunday;	
 	}
 	
+    //method to calculate the number of AM Customer Attendances on a given Monday
 	public int calcNumAMMonday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -65,6 +69,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Monday;	
 	}
 	
+	//method to calculate the number of AM Customer Attendances on a given Tuesday
 	public int calcNumAMTuesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -92,6 +97,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Tuesday;	
 	}
 	
+	//method to calculate the number of AM Customer Attendances on a given Wednesday
 	public int calcNumAMWednesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -119,6 +125,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Wednesday;	
 	}
 	
+	//method to calculate the number of AM Customer Attendances on a given Thursday
 	public int calcNumAMThursday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -146,6 +153,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Thursday;	
 	}
 	
+	//method to calculate the number of AM Customer Attendances on a given Friday
 	public int calcNumAMFriday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -173,6 +181,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Friday;	
 	}
 	
+	//method to calculate the number of AM Customer Attendances on a given Saturday
 	public int calcNumAMSaturday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -184,7 +193,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("Saturday")&& resultSet.getString("Date").equals(date)){			 			
+			 		if(resultSet.getString("AMPM").equals("AM") && resultSet.getString("Day_of_Week").equals("SATURDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numAM_Saturday++;
 			 		}
 			 	}
@@ -200,6 +209,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numAM_Saturday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Sunday
 	public int calcNumPMSunday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -227,6 +237,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Sunday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Monday
 	public int calcNumPMMonday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -254,6 +265,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Monday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Tuesday
 	public int calcNumPMTuesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -281,6 +293,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Tuesday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Wednesday
 	public int calcNumPMWednesday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -308,6 +321,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Wednesday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Thursday
 	public int calcNumPMThursday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -335,6 +349,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Thursday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Friday
 	public int calcNumPMFriday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -362,6 +377,7 @@ public class Customer_Attendance_Line_ChartModel {
 	    return numPM_Friday;	
 	}
 	
+	//method to calculate the number of PM Customer Attendances on a given Saturday
 	public int calcNumPMSaturday(String date){
 		
 		String sqlQuery = "select * FROM Customers_Attendance";
@@ -373,7 +389,7 @@ public class Customer_Attendance_Line_ChartModel {
 			 	resultSet = statement.executeQuery(sqlQuery);
 			 	
 			 	while(resultSet.next()){
-			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("Saturday")&& resultSet.getString("Date").equals(date)){			 			
+			 		if(resultSet.getString("AMPM").equals("PM") && resultSet.getString("Day_of_Week").equals("SATURDAY")&& resultSet.getString("Date").equals(date)){			 			
 			 			numPM_Saturday++;
 			 		}
 			 	}

@@ -57,18 +57,22 @@ public class Main_Menu_EmployeeModel{
 	        	connection = SqliteConnection.Connector();
 	            statement = connection.createStatement();
 	            resultSet = statement.executeQuery(query); 
-	           
-	            while(resultSet.next()){
-	                employeeTableData.add(new Main_Menu_EmployeeModel(
-	                        resultSet.getInt("ID"),
-	                        resultSet.getString("First_Name"),
-	                        resultSet.getString("Last_Name"),
-	                        resultSet.getString("Email"),
-	                        resultSet.getString("Phone"),
-	                        resultSet.getString("Address"),
-	                        resultSet.getString("DOB")
-	                        
-	                        ));
+	            if(resultSet.isBeforeFirst()){    
+	            	while(resultSet.next()){
+		                employeeTableData.add(new Main_Menu_EmployeeModel(
+		                        resultSet.getInt("ID"),
+		                        resultSet.getString("First_Name"),
+		                        resultSet.getString("Last_Name"),
+		                        resultSet.getString("Email"),
+		                        resultSet.getString("Phone"),
+		                        resultSet.getString("Address"),
+		                        resultSet.getString("DOB")
+		                        
+		                        ));
+		            }
+	            } 	
+	            else{
+	            	return null;
 	            }
 	            
 	            statement.close();

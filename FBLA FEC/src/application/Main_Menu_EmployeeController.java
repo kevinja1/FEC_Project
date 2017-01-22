@@ -9,9 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -33,7 +36,7 @@ import javafx.event.Event;
 import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.DatePicker;
-
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
@@ -82,13 +85,10 @@ public class Main_Menu_EmployeeController implements Initializable {
     private ResultSet resultSet;
     
     private int temp;
-    
 	
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-       
         //Get data from adminTableData ObservableList and set this data on JavaFX table column
 
         EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
@@ -98,7 +98,6 @@ public class Main_Menu_EmployeeController implements Initializable {
         
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
         dtDOB.setEditable(false);
-
     }
 	
 	@FXML
@@ -196,16 +195,18 @@ public class Main_Menu_EmployeeController implements Initializable {
 
 		            statement.close();
 		            connection.close();
-		        }
+		            
+		            MainMenuSetAllClear();
+			        MainMenuSetAllDisable();
+			        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
+			        isMainMenuEditButtonClick=false;
+			        isMainMenuAddNewButtonClick = false;
+	            }
 	        }
 		        catch (SQLException e){
 		            e.printStackTrace();
 		        }
-		        MainMenuSetAllClear();
-		        MainMenuSetAllDisable();
-		        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
-		        isMainMenuEditButtonClick=false;
-		        isMainMenuAddNewButtonClick = false;
+		        
 		    }
 	            
 	            
@@ -255,14 +256,18 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 
 	 @FXML
 	    private void setMainMenuDeleteButtonClick(Event event){
+		 	TableEmployees.setPlaceholder(new Label("No Employees"));
 		 	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
 		 		Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
 		        String sqlQuery = "delete from Employees where ID = '"+getSelectedRow.getEmployeesID()+"';";
+		        String sqlQuery2 = "delete from Employees_Schedule where ID = '"+getSelectedRow.getEmployeesID()+"';";
+		        
 		        try {
 		        	connection = SqliteConnection.Connector();
 			        statement = connection.createStatement();
 		             
 		            statement.executeUpdate(sqlQuery);
+		            statement.executeUpdate(sqlQuery2);
 		            //statement.executeUpdate("delete from Employees where ID ='"+getSelectedRow.getEmployeesID()+"';");
 		            TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
 		            statement.close();
@@ -382,14 +387,15 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 }
 		 else{
 			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Name");
-			 alert.setHeaderText(null);
+		   	 alert.setTitle("Validate Name");
+		   	 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a Valid First Name");
 			 alert.showAndWait();
-			 
+			 txtFirst_Name.clear();
 			 return false;
-		 }
+		}
 	}
+	
 	 
 	 private boolean validateLastName(){
 		 Pattern p = Pattern.compile("[a-zA-z]+");
@@ -403,7 +409,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a Valid Last Name");
 			 alert.showAndWait();
-			 
+			 txtLast_Name.clear();
 			 return false;
 		 }
 	 }
@@ -420,7 +426,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a Valid Email");
 			 alert.showAndWait();
-			 
+			 txtEmail.clear();
 			 return false;
 		 }
 	 }
@@ -437,7 +443,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
 			 alert.showAndWait();
-			 
+			 txtPhone.clear();
 			 return false;
 		 }
 	 }
@@ -452,7 +458,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a DOB");
 			 alert.showAndWait();
-			 
 			 return false;
 		 }
 		 
@@ -473,7 +478,20 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 } 
 	 }
 	 
-	
+	 @FXML
+	 public void setOnSearchKeyPressed(KeyEvent event) throws IOException{
+		 if(txtSearch.getText()!=""){
+			 String sqlQuery = "select * FROM Employees where First_Name like '%"+txtSearch.getText()+"%' OR "
+			 		+ "Last_Name like '%"+txtSearch.getText() + "%';";
+			 if(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery)==null){
+		    	 TableEmployees.setPlaceholder(new Label("No Employee With Given Name"));
+		     }
+			 TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
+		 }
+		 else{
+			 TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("select * FROM Employees"));
+		 }
+	 } 
 }
 
 	 

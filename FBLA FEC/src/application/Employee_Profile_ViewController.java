@@ -30,11 +30,11 @@ public class Employee_Profile_ViewController {
 
     public void setCurrentInfo(Employee_Profile_ViewModel currentInfo) {
         txtID.setText("Employee ID: " + currentInfo.getId());
-        txtName.setText(currentInfo.getName());
-        txtPhone.setText(currentInfo.getPhone());
-        txtDOB.setText(currentInfo.getDOB());
-        txtAddress.setText(currentInfo.getAddress());
-        txtEmail.setText(currentInfo.getEmail());
+        txtName.setText("Name: " + currentInfo.getName());
+        txtPhone.setText("Phone Number: " + currentInfo.getPhone());
+        txtDOB.setText("DOB: " + currentInfo.getDOB());
+        txtAddress.setText("Address: " +currentInfo.getAddress());
+        txtEmail.setText("Email: " + currentInfo.getEmail());
       
        
         profilePic.setImage(new Image("/application/default-user-icon.png"));

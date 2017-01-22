@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
@@ -22,9 +23,9 @@
 
 <HBox alignment="CENTER" prefHeight="249.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Profile_ViewController">
     <children>
-        <AnchorPane prefHeight="236.0" prefWidth="517.0">
+        <AnchorPane prefHeight="249.0" prefWidth="567.0">
             <children>
-                <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
                 <Text fx:id="txtName" fill="#0091ea" layoutX="238.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Last">
                     <font>
                         <Font size="40.0" />
@@ -68,6 +69,12 @@
                     </children>
                 </GridPane>
             </children>
+         <opaqueInsets>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets bottom="25.0" left="15.0" right="25.0" top="25.0" />
+         </HBox.margin>
         </AnchorPane>
     </children>
 </HBox>

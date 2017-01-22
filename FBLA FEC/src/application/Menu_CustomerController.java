@@ -400,6 +400,7 @@ public class Menu_CustomerController implements Initializable {
 		    	    CustomersAttendanceSetAllClear();
 		    	    CustomersAttendanceSetAllDisable();
 		    	    btShowAllAtt.setDisable(false);
+		    	    AddAttendanceButton.setDisable(true);
 		            statement.close();
 		            connection.close();
 	            }

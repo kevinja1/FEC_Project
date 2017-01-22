@@ -89,8 +89,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="675.0">
                <children>
                   <Button layoutX="48.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuViewButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="View" textFill="WHITE" />
-                  <Button layoutX="145.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuRefreshButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Refresh" textFill="WHITE" />
-                  <TextField fx:id="txtSearch" layoutX="367.0" layoutY="14.0" promptText="Employee ID" />
+                  <TextField fx:id="txtSearch" layoutX="367.0" layoutY="14.0" onKeyReleased="#setOnSearchKeyPressed" promptText="Name" />
                   <Button layoutX="547.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuSearchButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #09B28C;" text="Search" textFill="WHITE" />
                   <TableView fx:id="TableEmployees" layoutY="54.0" prefHeight="554.0" prefWidth="656.0">
                      <columns>
