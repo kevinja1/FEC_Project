@@ -139,8 +139,6 @@ public class Main_Menu_EmployeeController implements Initializable {
     }
 	
 	
-	
-	
 	 private void MainMenuSetAllClear(){
 		 	txtFirst_Name.clear();
 	        txtLast_Name.clear();
@@ -148,6 +146,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	        txtAddress.clear();
 	        txtEmail.clear();
 	        dtDOB.setValue(null);
+	        
 	       	        
 	    }
 	 
@@ -159,6 +158,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 	        txtAddress.clear();
 	        txtEmail.clear();
 	        dtDOB.setValue(null);
+	        
+	        txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 	       	        
 	    }
 	
@@ -404,6 +410,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 txtFirst_Name.clear();
 			 txtFirst_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 txtFirst_Name.requestFocus();
 			 return false;
 		}
 	}
@@ -423,6 +430,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 txtLast_Name.clear();
 			 txtLast_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 txtLast_Name.requestFocus();
 			 return false;
 		 }
 	 }
@@ -441,6 +449,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 txtEmail.clear();
 			 txtEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 txtEmail.requestFocus();
 			 return false;
 		 }
 	 }
@@ -459,6 +468,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 txtPhone.clear();
 			 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 txtPhone.requestFocus();
 			 return false;
 		 }
 	 }
@@ -490,6 +500,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter an Address");
 			 alert.showAndWait();
 			 txtAddress.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 txtAddress.requestFocus();
 			 return false;
 		 } 
 	 }
@@ -518,6 +529,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 else if(txtPhone.getText().length()==7){
 			 txtPhone.setText(txtPhone.getText()+"-");
 			 txtPhone.positionCaret(8);
+		 }
+		 else if(txtPhone.getText().length()>12 ){
+			 txtPhone.setText(txtPhone.getText().substring(0,12));
+			 txtPhone.positionCaret(12);
 		 }
 	 }
 	 
@@ -548,7 +563,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	    		 }
 	            }
 	        }
-	    }
+	 }
 }
 
 	 

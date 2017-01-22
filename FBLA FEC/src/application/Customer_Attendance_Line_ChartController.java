@@ -160,9 +160,9 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		seriesPM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumPMSaturday(week[6])));
 	}
 		
-	//Method Called when GO Button is Clicked
+	//Method Called when a date is Chosen
 	@FXML
-	public void displayLines(Event event){
+	public void setOnDatePickerChosen(Event event){
 		
 		dtWeek.setEditable(false);
 		lblWeek.setText("Week of " + dtWeek.getValue().toString());

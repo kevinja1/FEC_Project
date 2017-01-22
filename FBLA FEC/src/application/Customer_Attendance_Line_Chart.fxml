@@ -19,8 +19,7 @@
                 <NumberAxis label="Number of Customers" side="LEFT" styleClass=".axis" stylesheets="@application.css" />
               </yAxis>
             </LineChart>
-            <DatePicker fx:id="dtWeek" editable="false" layoutX="254.0" layoutY="37.0" />
-            <Button layoutX="472.0" layoutY="37.0" mnemonicParsing="false" onAction="#displayLines" prefHeight="27.0" prefWidth="69.0" style="-fx-background-color: #09B28C;" text="Go" textFill="WHITE" />
+            <DatePicker fx:id="dtWeek" editable="false" layoutX="254.0" layoutY="37.0" onAction="#setOnDatePickerChosen" />
             <Label fx:id="lblWeek" alignment="CENTER" layoutX="254.0" layoutY="71.0" prefHeight="17.0" prefWidth="196.0" text="Date" textAlignment="CENTER" />
             <Button layoutX="617.0" layoutY="673.0" mnemonicParsing="false" onAction="#printChart" prefHeight="8.0" prefWidth="69.0" style="-fx-background-color: #09B28C;" text="Print" textFill="WHITE" />
          </children>

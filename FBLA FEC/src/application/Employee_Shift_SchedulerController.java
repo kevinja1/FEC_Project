@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
@@ -31,6 +32,7 @@ import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -73,6 +75,8 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	private ListView<String> listFri;
 	@FXML
 	private ListView<String> listSat;
+	@FXML
+	private ListView<String> chosenlist;
 	
 	@FXML
 	private Label lblSun;
@@ -124,24 +128,15 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesFirst_Name")); 
+
+		EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesLast_Name"));
         EmployeesID.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesID"));
         
-       
+            
         TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
-        
-        TableEmployees.setDisable(true);
-        rdPM_Shift.setDisable(true);
+   
         rdAM_Shift.setSelected(true);
-        rdAM_Shift.setDisable(true);
-        btAdd_Employee.setDisable(true);
-        btSearch_Employee.setDisable(true);
-        txtSearch.setDisable(true);
-        dtSchedule.setDisable(false);
-        btDelete.setDisable(true);
-        btRefresh.setDisable(true);
-        
         dtSchedule.setEditable(false);
         
         String now = LocalDate.now().getDayOfWeek().toString();
@@ -233,97 +228,98 @@ public class Employee_Shift_SchedulerController implements Initializable {
     }
 	
 	@FXML
-	public void populateDates()
+	public void setOnDatePickerChosen(Event event)
 	{
-		if(validateDate()){
-			String day_of_week = dtSchedule.getValue().getDayOfWeek().toString();
-			if(day_of_week == "SUNDAY"){
-				
-				lblSun.setText(dtSchedule.getValue().toString());
-				lblMon.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblTues.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(5).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(6).toString());
+		if(dtSchedule.getValue()!= null){
+			if(validateDate()){
+				String day_of_week = dtSchedule.getValue().getDayOfWeek().toString();
+				if(day_of_week == "SUNDAY"){
+					
+					lblSun.setText(dtSchedule.getValue().toString());
+					lblMon.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblTues.setText(dtSchedule.getValue().plusDays(2).toString());
+					lblWed.setText(dtSchedule.getValue().plusDays(3).toString());
+					lblThurs.setText(dtSchedule.getValue().plusDays(4).toString());
+					lblFri.setText(dtSchedule.getValue().plusDays(5).toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(6).toString());
 
-			}
-			else if(day_of_week == "MONDAY"){
-				
-				lblMon.setText(dtSchedule.getValue().toString());
-				lblTues.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(5).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "MONDAY"){
+					
+					lblMon.setText(dtSchedule.getValue().toString());
+					lblTues.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblWed.setText(dtSchedule.getValue().plusDays(2).toString());
+					lblThurs.setText(dtSchedule.getValue().plusDays(3).toString());
+					lblFri.setText(dtSchedule.getValue().plusDays(4).toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(5).toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(1).toString());
 
-			}
-			else if(day_of_week == "TUESDAY"){
-				
-				lblTues.setText(dtSchedule.getValue().toString());
-				lblWed.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(4).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "TUESDAY"){
+					
+					lblTues.setText(dtSchedule.getValue().toString());
+					lblWed.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblThurs.setText(dtSchedule.getValue().plusDays(2).toString());
+					lblFri.setText(dtSchedule.getValue().plusDays(3).toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(4).toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(2).toString());
+					lblMon.setText(dtSchedule.getValue().minusDays(1).toString());
 
-			}
-			else if(day_of_week == "WEDNESDAY"){
-				
-				lblWed.setText(dtSchedule.getValue().toString());
-				lblThurs.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(3).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "WEDNESDAY"){
+					
+					lblWed.setText(dtSchedule.getValue().toString());
+					lblThurs.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblFri.setText(dtSchedule.getValue().plusDays(2).toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(3).toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(3).toString());
+					lblMon.setText(dtSchedule.getValue().minusDays(2).toString());
+					lblTues.setText(dtSchedule.getValue().minusDays(1).toString());
 
-			}
-			else if(day_of_week == "THURSDAY"){
-				
-				lblThurs.setText(dtSchedule.getValue().toString());
-				lblFri.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(2).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "THURSDAY"){
+					
+					lblThurs.setText(dtSchedule.getValue().toString());
+					lblFri.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(2).toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(4).toString());
+					lblMon.setText(dtSchedule.getValue().minusDays(3).toString());
+					lblTues.setText(dtSchedule.getValue().minusDays(2).toString());
+					lblWed.setText(dtSchedule.getValue().minusDays(1).toString());
 
-			}
-			else if(day_of_week == "FRIDAY"){
-				
-				lblFri.setText(dtSchedule.getValue().toString());
-				lblSat.setText(dtSchedule.getValue().plusDays(1).toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(5).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblThurs.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "FRIDAY"){
+					
+					lblFri.setText(dtSchedule.getValue().toString());
+					lblSat.setText(dtSchedule.getValue().plusDays(1).toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(5).toString());
+					lblMon.setText(dtSchedule.getValue().minusDays(4).toString());
+					lblTues.setText(dtSchedule.getValue().minusDays(3).toString());
+					lblWed.setText(dtSchedule.getValue().minusDays(2).toString());
+					lblThurs.setText(dtSchedule.getValue().minusDays(1).toString());
 
-			}
-			else if(day_of_week == "SATURDAY"){
-				
-				lblSat.setText(dtSchedule.getValue().toString());
-				lblSun.setText(dtSchedule.getValue().minusDays(6).toString());
-				lblMon.setText(dtSchedule.getValue().minusDays(5).toString());
-				lblTues.setText(dtSchedule.getValue().minusDays(4).toString());
-				lblWed.setText(dtSchedule.getValue().minusDays(3).toString());
-				lblThurs.setText(dtSchedule.getValue().minusDays(2).toString());
-				lblFri.setText(dtSchedule.getValue().minusDays(1).toString());
+				}
+				else if(day_of_week == "SATURDAY"){
+					
+					lblSat.setText(dtSchedule.getValue().toString());
+					lblSun.setText(dtSchedule.getValue().minusDays(6).toString());
+					lblMon.setText(dtSchedule.getValue().minusDays(5).toString());
+					lblTues.setText(dtSchedule.getValue().minusDays(4).toString());
+					lblWed.setText(dtSchedule.getValue().minusDays(3).toString());
+					lblThurs.setText(dtSchedule.getValue().minusDays(2).toString());
+					lblFri.setText(dtSchedule.getValue().minusDays(1).toString());
 
+				}
+				
+				 setLoadListSun();
+		         setLoadListMon();
+		         setLoadListTues();
+		         setLoadListWed();
+		         setLoadListThurs();
+		         setLoadListFri();
+		         setLoadListSat();
 			}
-			
-			 setLoadListSun();
-	         setLoadListMon();
-	         setLoadListTues();
-	         setLoadListWed();
-	         setLoadListThurs();
-	         setLoadListFri();
-	         setLoadListSat();
-		}
-		
+		}		
 	}
 	
 	@FXML 
@@ -331,59 +327,120 @@ public class Employee_Shift_SchedulerController implements Initializable {
 		 	rdPM_Shift.setDisable(false);
 	        rdAM_Shift.setDisable(false);
 	        btAdd_Employee.setDisable(false);
-	        btSearch_Employee.setDisable(false);
-	        txtSearch.setDisable(false);
 	        TableEmployees.setDisable(false);
 	        btDelete.setDisable(false);
-	        btRefresh.setDisable(false);
 	}
 	
 	@FXML 
 	private void chooseEmpSun(Event event){
 		 	setAllEnable();
 		 	chosen = lblSun;
+		 	chosenlist = listSun;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
+			
 	}
 	
 	@FXML 
 	private void chooseEmpMon(Event event){
 		 	setAllEnable();
 		 	chosen = lblMon;
+		 	chosenlist = listMon;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listSun.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void chooseEmpTues(Event event){
 		 	setAllEnable();
 		 	chosen = lblTues;
+		 	chosenlist = listTues;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listSun.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void chooseEmpWed(Event event){
 		 	setAllEnable();
 		 	chosen = lblWed;
+		 	chosenlist = listWed;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listSun.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void chooseEmpThurs(Event event){
 		 	setAllEnable();
 		 	chosen = lblThurs;
+		 	chosenlist = listThurs;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listSun.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void chooseEmpFri(Event event){
 		 	setAllEnable();
 		 	chosen = lblFri;
+		 	chosenlist = listFri;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listSun.setStyle("-fx-background-color: white;");
+			listSat.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void chooseEmpSat(Event event){
 		 	setAllEnable();
 		 	chosen = lblSat;
+		 	chosenlist = listSat;
+		 	chosenlist.setStyle("-fx-background-color: #3c3c3c;");
+		 	
+		 	listMon.setStyle("-fx-background-color: white;");
+		 	listTues.setStyle("-fx-background-color: white;");
+			listWed.setStyle("-fx-background-color: white;");
+			listThurs.setStyle("-fx-background-color: white;");
+			listFri.setStyle("-fx-background-color: white;");
+			listSun.setStyle("-fx-background-color: white;");
 	}
 	
 	@FXML 
 	private void addEmployeeClicked(Event event){
 		
-        if(TableEmployees.getSelectionModel().getSelectedItem()!=null) {
+        if(TableEmployees.getSelectionModel().getSelectedItem()!=null && chosenlist != null) {
         		int count = 0;
         		Employee_Shift_SchedulerModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
 	        	String sqlQuery = "select * FROM Employees_Schedule where ID = "+getSelectedRow.getEmployeesID()+" AND Date = '"+chosen.getText()+"';";
@@ -427,16 +484,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
 		            e.printStackTrace();
 		            
 		        }
-	        	
-	        	 TableEmployees.setDisable(true);
-	             rdPM_Shift.setDisable(true);
-	             rdAM_Shift.setDisable(true);
-	             btAdd_Employee.setDisable(true);
-	             btSearch_Employee.setDisable(true);
-	             txtSearch.setDisable(true);
-	             btDelete.setDisable(true);
-	             btRefresh.setDisable(true);
-	        	 
+	               	 
 	             setLoadListSun();
 	             setLoadListMon();
 	             setLoadListTues();
@@ -445,11 +493,19 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	             setLoadListFri();
 	             setLoadListSat();
         }
+        else if(chosenlist == null){
+        		NotificationType notificationType = NotificationType.ERROR;
+        		TrayNotification tray = new TrayNotification();
+        		tray.setTitle("No Day");
+        		tray.setMessage("Please select a Day to add Employee to");
+        		tray.setNotificationType(notificationType);
+        		tray.showAndDismiss(Duration.millis(5000));
+        }
         else{
         	    NotificationType notificationType = NotificationType.ERROR;
 	            TrayNotification tray = new TrayNotification();
 	            tray.setTitle("No Employee Selected");
-	            tray.setMessage("Please select an Employee from the table to schedule for this date");
+	            tray.setMessage("Please select an Employee");
 	            tray.setNotificationType(notificationType);
 	            tray.showAndDismiss(Duration.millis(5000));
         }
@@ -549,23 +605,15 @@ public class Employee_Shift_SchedulerController implements Initializable {
    
    @FXML
    private void schedulerDelete(Event event){
-	 	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
-	 		Employee_Shift_SchedulerModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
-	 		String sqlQuery = "delete FROM Employees_Schedule where ID = "+getSelectedRow.getEmployeesID()+" AND Date = '"+chosen.getText()+"';";
+	 	if(chosenlist.getSelectionModel().getSelectedItem()!=null){
+	 		String getSelectedRow = chosenlist.getSelectionModel().getSelectedItem().substring(0,1);
+	 		String sqlQuery = "delete FROM Employees_Schedule where ID = "+getSelectedRow+" AND Date = '"+chosen.getText()+"';";
 	        try {
 	        	connection = SqliteConnection.Connector();
 		        statement = connection.createStatement();
 	             
-	            statement.executeUpdate(sqlQuery);
-	            //statement.executeUpdate("delete from Employees where ID ='"+getSelectedRow.getEmployeesID()+"';");
-	             TableEmployees.setDisable(true);
-	             rdPM_Shift.setDisable(true);
-	             rdAM_Shift.setDisable(true);
-	             btAdd_Employee.setDisable(true);
-	             btSearch_Employee.setDisable(true);
-	             txtSearch.setDisable(true);
-	             btDelete.setDisable(true);
-	             btRefresh.setDisable(true);
+	             statement.executeUpdate(sqlQuery);
+	             
 	        	 
 	             setLoadListSun();
 	             setLoadListMon();
@@ -584,13 +632,13 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	        }
 
 
-	        //adminTableView.setItems(getDataFromSqlAndAddToObservableList(sqlQuery));
+	        
 	 	}
 	 	else{
 	 		NotificationType notificationType = NotificationType.ERROR;
 	 		TrayNotification tray = new TrayNotification();
 	 		tray.setTitle("No Date Selected");
-	 		tray.setMessage("To delete a Customer, please select a day to delete from");
+	 		tray.setMessage("To delete a Customer, chose from list above");
 	 		tray.setNotificationType(notificationType);
 	 		tray.showAndDismiss(Duration.millis(5000));
 	 	}        
@@ -671,28 +719,5 @@ public class Employee_Shift_SchedulerController implements Initializable {
 			 return false;
 		 }
 		 
-	 }
-
-    
-   
-   
+	 }  
 }
-	
-
-
-   	                 
-   	           
-   	       
-   	        
-            
-            
-            
-            
-            
-        
-	
-	
-	
-	
-	
-
