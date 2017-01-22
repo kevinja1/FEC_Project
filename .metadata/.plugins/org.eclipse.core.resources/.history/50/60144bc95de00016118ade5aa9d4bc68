@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -446,7 +445,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 }
 	 
 	 private boolean validatePhone(){
-		 Pattern p = Pattern.compile("[0-9]{3}[-][0-9]{3}[-][0-9]{4}");
+		 Pattern p = Pattern.compile("[0-9]{3,12}");
 		 Matcher m = p.matcher(txtPhone.getText());
 		 if(m.find() && m.group().equals(txtPhone.getText())){
 			 return true;
@@ -455,7 +454,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 Alert alert = new Alert(AlertType.WARNING);
 			 alert.setTitle("Validate Phone Number");
 			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
+			 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
 			 alert.showAndWait();
 			 txtPhone.clear();
 			 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -520,35 +519,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 txtPhone.positionCaret(8);
 		 }
 	 }
-	 
-	 @FXML
-	 public void handleDoubleClick(MouseEvent mouseEvent) throws IOException {
-	        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-	            if(mouseEvent.getClickCount() == 2){
-	            	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
-	    			 	Employee_Profile_ViewModel info = new Employee_Profile_ViewModel(TableEmployees.getSelectionModel().getSelectedItem().getEmployeesID().toString());
-	    			 	FXMLLoader loader = new FXMLLoader();
-	    		        loader.setLocation(getClass().getResource("Employee_Profile_View.fxml"));
-	    		        loader.load();
-	    		        Parent p = loader.getRoot();
-	    		        Stage stage = new Stage();
-	    		        stage.setScene(new Scene(p));
-
-	    		        Employee_Profile_ViewController profileView = loader.getController();
-	    		        profileView.setCurrentInfo(info);
-	    		        stage.show();
-	    		 }
-	    		 else{
-	    			    NotificationType notificationType = NotificationType.ERROR;
-	    	            TrayNotification tray = new TrayNotification();
-	    	            tray.setTitle("No Employee Selected");
-	    	            tray.setMessage("Select Employee to View");
-	    	            tray.setNotificationType(notificationType);
-	    	            tray.showAndDismiss(Duration.millis(5000));
-	    		 }
-	            }
-	        }
-	    }
 }
 
 	 

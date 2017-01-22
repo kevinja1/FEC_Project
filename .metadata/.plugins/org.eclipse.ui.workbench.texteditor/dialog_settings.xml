@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="saturday = " key="selection"/>
+		<item value="setOnPhone" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="setOnPhone"/>
+			<item value="seriesAM"/>
+			<item value="lineChartAttendance.getData().addAll(seriesAM);   "/>
+			<item value="LocalDate.now()"/>
+			<item value="now"/>
+			<item value="listSun"/>
 			<item value="lblSat.setText"/>
 			<item value="lblFri.setText"/>
-			<item value="lblThurs.setText"/>
-			<item value="lblWed.setText"/>
-			<item value="lblTues.setText"/>
-			<item value="lblMon.setText"/>
-			<item value="lblSun.setText"/>
-			<item value="Schedule"/>
 		</list>
 		<list key="replacehistory">
+			<item value="dtWeek.getValue()"/>
+			<item value="day_of_week"/>
 			<item value="saturday = "/>
 			<item value="friday = "/>
 			<item value="thursday = "/>
 			<item value="wednesday = "/>
 			<item value="tuesday = "/>
 			<item value="monday = "/>
-			<item value="sunday = "/>
-			<item value="Week"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
@@ -33,6 +33,6 @@
 		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText" key="DIALOG_FONT_NAME"/>
 		<item value="409" key="DIALOG_HEIGHT"/>
 		<item value="116" key="DIALOG_X_ORIGIN"/>
-		<item value="490" key="DIALOG_Y_ORIGIN"/>
+		<item value="465" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

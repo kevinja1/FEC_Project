@@ -621,7 +621,7 @@ public class Menu_CustomerController implements Initializable {
 				 Alert alert = new Alert(AlertType.WARNING);
 				 alert.setTitle("Validate Phone Number");
 				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
+				 alert.setContentText("Please Enter a Valid Phone Number (10 digits)");
 				 alert.showAndWait();
 				 txtPhone.clear();
 				 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");

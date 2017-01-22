@@ -25,13 +25,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 
@@ -265,25 +263,16 @@ public class Menu_CustomerController implements Initializable {
 
 		            statement.close();
 		            connection.close();
-		            
-		            CustomersSetAllClear();
-			        CustomersSetAllDisable();
-			        TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
-			        isCustomersEditButtonClick=false;
-			        isCustomersAddNewButtonClick = false;
-			        
-		            txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 	            }	        	
 	        }
 	        catch (SQLException e){
 	            e.printStackTrace();
 	        }
-	        
+	        CustomersSetAllClear();
+	        CustomersSetAllDisable();
+	        TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
+	        isCustomersEditButtonClick=false;
+	        isCustomersAddNewButtonClick = false;
 	    }
 	 
 	 @FXML
@@ -333,8 +322,7 @@ public class Menu_CustomerController implements Initializable {
 	 
 	 @FXML
 	    private void setCustomerDeleteButtonClick(Event event){
-		 TableCustomers.setPlaceholder(new Label("No Customers"));	
-		 if(TableCustomers.getSelectionModel().getSelectedItem()!=null){
+		 	if(TableCustomers.getSelectionModel().getSelectedItem()!=null){
 		 		Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 		        String sqlQuery = "delete from Customers where ID = '"+getSelectedRow.getCustomers_ID()+"';";
 		        String sqlQuery2 = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+"';";
@@ -385,21 +373,6 @@ public class Menu_CustomerController implements Initializable {
 	        TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));//sql Query
 	        txtSearch.clear();
 	    }
-	 
-	 @FXML
-	 public void setOnSearchKeyPressed(KeyEvent event) throws IOException{
-		 if(txtSearch.getText()!=""){
-			 String sqlQuery = "select * FROM Customers where First_Name like '%"+txtSearch.getText()+"%' OR "
-			 		+ "Last_Name like '%"+txtSearch.getText() + "%';";
-			 if(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery)==null){
-		    	 TableCustomers.setPlaceholder(new Label("No Customer With Given Name"));
-		     }
-			 TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
-		 }
-		 else{
-			 TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("select * FROM Customers"));
-		 }
-	 } 
 	 
 	 @FXML
 	    private void setCustomerAttendanceSaveButtonClick(Event event){
@@ -564,16 +537,14 @@ public class Menu_CustomerController implements Initializable {
 			 }
 			 else{
 				 Alert alert = new Alert(AlertType.WARNING);
-			   	 alert.setTitle("Validate Name");
-			   	 alert.setHeaderText(null);
+				 alert.setTitle("Validate Name");
+				 alert.setHeaderText(null);
 				 alert.setContentText("Please Enter a Valid First Name");
 				 alert.showAndWait();
-				 txtFirst_Name.clear();
-				 txtFirst_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
-			}
+			 }
 		}
-		
 		 
 		 private boolean validateLastName(){
 			 Pattern p = Pattern.compile("[a-zA-z]+");
@@ -587,8 +558,7 @@ public class Menu_CustomerController implements Initializable {
 				 alert.setHeaderText(null);
 				 alert.setContentText("Please Enter a Valid Last Name");
 				 alert.showAndWait();
-				 txtLast_Name.clear();
-				 txtLast_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
 			 }
 		 }
@@ -605,14 +575,13 @@ public class Menu_CustomerController implements Initializable {
 				 alert.setHeaderText(null);
 				 alert.setContentText("Please Enter a Valid Email");
 				 alert.showAndWait();
-				 txtEmail.clear();
-				 txtEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
 			 }
 		 }
 		 
 		 private boolean validatePhone(){
-			 Pattern p = Pattern.compile("[0-9]{3}[-][0-9]{3}[-][0-9]{4}");
+			 Pattern p = Pattern.compile("[0-9]{3,12}");
 			 Matcher m = p.matcher(txtPhone.getText());
 			 if(m.find() && m.group().equals(txtPhone.getText())){
 				 return true;
@@ -621,10 +590,9 @@ public class Menu_CustomerController implements Initializable {
 				 Alert alert = new Alert(AlertType.WARNING);
 				 alert.setTitle("Validate Phone Number");
 				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
+				 alert.setContentText("Please Enter a Valid Phone Number (no hyphen)");
 				 alert.showAndWait();
-				 txtPhone.clear();
-				 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
 			 }
 		 }
@@ -639,7 +607,7 @@ public class Menu_CustomerController implements Initializable {
 				 alert.setHeaderText(null);
 				 alert.setContentText("Please Enter a DOB");
 				 alert.showAndWait();
-				 dtDOB.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
 			 }
 			 
@@ -655,9 +623,10 @@ public class Menu_CustomerController implements Initializable {
 				 alert.setHeaderText(null);
 				 alert.setContentText("Please Enter an Address");
 				 alert.showAndWait();
-				 txtAddress.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				 
 				 return false;
-			 } 
+			 }
+			 
 		 }
 		 
 		 private boolean validateAttendanceDate(){
@@ -672,18 +641,11 @@ public class Menu_CustomerController implements Initializable {
 				 alert.showAndWait();
 				 
 				 return false;
-			 }			 
-		 }
-			 
-			 @FXML
-			 public void setOnPhoneKeyReleased(KeyEvent event) throws IOException{
-				 if(txtPhone.getText().length()==3){
-					 txtPhone.setText(txtPhone.getText()+"-");
-					 txtPhone.positionCaret(4);
-				 }
-				 else if(txtPhone.getText().length()==7){
-					 txtPhone.setText(txtPhone.getText()+"-");
-					 txtPhone.positionCaret(8);
-				 }
 			 }
+			 
+		 }
+
+	 
+	 
+
 }

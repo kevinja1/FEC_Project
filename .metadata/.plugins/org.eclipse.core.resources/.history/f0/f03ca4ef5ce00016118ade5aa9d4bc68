@@ -621,7 +621,7 @@ public class Menu_CustomerController implements Initializable {
 				 Alert alert = new Alert(AlertType.WARNING);
 				 alert.setTitle("Validate Phone Number");
 				 alert.setHeaderText(null);
-				 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
+				 alert.setContentText("Please Enter a Valid Phone Number");
 				 alert.showAndWait();
 				 txtPhone.clear();
 				 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -672,18 +672,11 @@ public class Menu_CustomerController implements Initializable {
 				 alert.showAndWait();
 				 
 				 return false;
-			 }			 
-		 }
-			 
-			 @FXML
-			 public void setOnPhoneKeyReleased(KeyEvent event) throws IOException{
-				 if(txtPhone.getText().length()==3){
-					 txtPhone.setText(txtPhone.getText()+"-");
-					 txtPhone.positionCaret(4);
-				 }
-				 else if(txtPhone.getText().length()==7){
-					 txtPhone.setText(txtPhone.getText()+"-");
-					 txtPhone.positionCaret(8);
-				 }
 			 }
+			 
+		 }
+
+	 
+	 
+
 }

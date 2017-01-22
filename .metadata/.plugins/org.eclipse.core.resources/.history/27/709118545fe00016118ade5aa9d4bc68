@@ -521,8 +521,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 }
 	 }
 	 
-	 @FXML
-	 public void handleDoubleClick(MouseEvent mouseEvent) throws IOException {
+	 public void handle(MouseEvent mouseEvent) throws IOException {
 	        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
 	            if(mouseEvent.getClickCount() == 2){
 	            	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
