@@ -8,7 +8,6 @@ INDEX VERSION 1.129+/Users/Kevin/github/FBLA FEC/.metadata/.plugins/org.eclipse.
 4059364602.index
 3199462873.index
 2147531794.index
-751876142.index
 346711152.index
 786462423.index
 4082578982.index
