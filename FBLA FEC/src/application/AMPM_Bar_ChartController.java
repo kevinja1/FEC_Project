@@ -26,6 +26,7 @@ public class AMPM_Bar_ChartController implements Initializable{
 	private BarChart<String,Integer> barChartAttendance;
 	
 	//This is what will be loaded when the screen is opened
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
 		
