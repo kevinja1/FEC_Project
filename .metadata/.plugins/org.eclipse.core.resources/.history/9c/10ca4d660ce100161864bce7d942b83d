@@ -138,7 +138,6 @@ public class Employee_Shift_SchedulerController implements Initializable {
    
         rdAM_Shift.setSelected(true);
         dtSchedule.setEditable(false);
-        dtSchedule.setDisable(false);
         
         String now = LocalDate.now().getDayOfWeek().toString();
         if(now == "SUNDAY"){
