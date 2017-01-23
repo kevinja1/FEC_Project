@@ -497,8 +497,8 @@ public class Employee_Shift_SchedulerController implements Initializable {
         else if(chosenlist == null){
         		NotificationType notificationType = NotificationType.ERROR;
         		TrayNotification tray = new TrayNotification();
-        		tray.setTitle("No Day Selected");
-        		tray.setMessage("Please click on a Day from the above Schedule");
+        		tray.setTitle("No Day");
+        		tray.setMessage("Please select a Day to add Employee to");
         		tray.setNotificationType(notificationType);
         		tray.showAndDismiss(Duration.millis(5000));
         }

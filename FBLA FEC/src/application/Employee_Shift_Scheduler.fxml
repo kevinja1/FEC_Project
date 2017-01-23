@@ -49,7 +49,7 @@
                               <TableColumn fx:id="EmployeesID" prefWidth="135.0" text="ID" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btAdd_Employee" layoutX="16.0" layoutY="665.0" mnemonicParsing="false" onAction="#addEmployeeClicked" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee" textFill="WHITE" />
+                        <Button fx:id="btAdd_Employee" layoutX="16.0" layoutY="665.0" mnemonicParsing="false" onAction="#addEmployeeClicked" prefHeight="27.0" prefWidth="193.0" style="-fx-background-color: #09B28C;" text="Add Employee to Schedule" textFill="WHITE" />
                         <RadioButton fx:id="rdAM_Shift" layoutX="237.0" layoutY="670.0" mnemonicParsing="false" text="AM Shift">
                            <toggleGroup>
                               <ToggleGroup fx:id="group" />
@@ -164,7 +164,7 @@
                         </Text>
                         <Separator layoutX="41.0" layoutY="361.0" prefHeight="6.0" prefWidth="1015.0" />
                         <Button fx:id="btPrintSchedule" layoutX="878.0" layoutY="665.0" mnemonicParsing="false" onAction="#doPrint" prefHeight="27.0" prefWidth="129.0" style="-fx-background-color: #09B28C;" text="Print Schedule" textFill="WHITE" />
-                        <Button fx:id="btDelete" layoutX="439.0" layoutY="666.0" mnemonicParsing="false" onAction="#schedulerDelete" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: #FF5151;" text="delete" textFill="WHITE" />
+                        <Button fx:id="btDelete" layoutX="439.0" layoutY="666.0" mnemonicParsing="false" onAction="#schedulerDelete" prefHeight="27.0" prefWidth="221.0" style="-fx-background-color: #FF5151;" text="Delete Employee From Schedule" textFill="WHITE" />
                      </children>
                   </AnchorPane>
               </items>
