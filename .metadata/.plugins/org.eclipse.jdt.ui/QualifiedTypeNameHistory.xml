@@ -21,7 +21,6 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 <fullyQualifiedTypeName name="java.awt.print.PageFormat"/>
 <fullyQualifiedTypeName name="javafx.print.PageOrientation"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.AnchorPane"/>
 <fullyQualifiedTypeName name="javafx.scene.text.Font"/>
 <fullyQualifiedTypeName name="javafx.print.Printer"/>
 <fullyQualifiedTypeName name="javafx.print.PageLayout"/>
@@ -54,4 +53,9 @@
 <fullyQualifiedTypeName name="javafx.scene.input.MouseButton"/>
 <fullyQualifiedTypeName name="javafx.scene.input.MouseEvent"/>
 <fullyQualifiedTypeName name="javafx.scene.control.MultipleSelectionModel"/>
+<fullyQualifiedTypeName name="javafx.scene.chart.NumberAxis"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ScrollPane"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.AnchorPane"/>
+<fullyQualifiedTypeName name="java.awt.Insets"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
 </qualifiedTypeNameHistroy>

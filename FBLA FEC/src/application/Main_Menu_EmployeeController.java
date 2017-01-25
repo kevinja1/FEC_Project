@@ -411,6 +411,14 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 txtFirst_Name.clear();
 			 txtFirst_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 txtFirst_Name.requestFocus();
+			 
+			 //txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 	
 			 return false;
 		}
 	}
@@ -431,6 +439,14 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 txtLast_Name.clear();
 			 txtLast_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 txtLast_Name.requestFocus();
+			 
+			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 //txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 
 			 return false;
 		 }
 	 }
@@ -450,6 +466,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 txtEmail.clear();
 			 txtEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 txtEmail.requestFocus();
+			 
+			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 //txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			 return false;
 		 }
 	 }
@@ -469,7 +492,15 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 txtPhone.clear();
 			 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 txtPhone.requestFocus();
+			 
+			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 //txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			 return false;
+			 
 		 }
 	 }
 	 
@@ -484,6 +515,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter a DOB");
 			 alert.showAndWait();
 			 dtDOB.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 
+			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 //dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			 return false;
 		 }
 		 
@@ -501,6 +539,14 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.showAndWait();
 			 txtAddress.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 txtAddress.requestFocus();
+			 
+			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 //txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 
 			 return false;
 		 } 
 	 }

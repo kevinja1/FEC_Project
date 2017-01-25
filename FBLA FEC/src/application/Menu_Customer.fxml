@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1127.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Menu_CustomerController">
+<AnchorPane fx:id="ancPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Menu_CustomerController">
    <children>
-      <SplitPane dividerPositions="0.6614699331848553" layoutX="227.0" orientation="VERTICAL" prefHeight="903.0" prefWidth="900.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+      <SplitPane dividerPositions="0.4938956714761376" layoutX="227.0" orientation="VERTICAL" prefHeight="695.0" prefWidth="902.0">
+         <items>
+            <AnchorPane prefHeight="487.0" prefWidth="900.0">
                <children>
-                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="900.0">
                      <center>
-                        <SplitPane dividerPositions="0.3685968819599109" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <SplitPane dividerPositions="0.3685968819599109" prefHeight="448.0" prefWidth="893.0" BorderPane.alignment="CENTER">
                            <items>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="327.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="327.0">
                                  <children>
                                     <Button fx:id="txtAdd" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#setCustomersAddNewButtonClick" prefHeight="27.0" prefWidth="69.0" style="-fx-background-color: #09B28C;" text="Add" textFill="WHITE" />
                                     <Button layoutX="124.0" layoutY="14.0" mnemonicParsing="false" onAction="#setCustomerEditButtonClick" prefHeight="27.0" prefWidth="69.0" style="-fx-background-color: #09B28C;" text="Edit" textFill="WHITE" />
@@ -94,23 +94,12 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Text>
-                                    <GridPane layoutX="21.0" layoutY="489.0" prefHeight="21.0" prefWidth="286.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="43.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="135.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="61.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="61.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                    </GridPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="559.0" prefWidth="574.0">
+                              <AnchorPane prefHeight="487.0" prefWidth="564.0">
                                  <children>
                                     <TextField fx:id="txtSearch" layoutX="370.0" layoutY="14.0" onKeyReleased="#setOnSearchKeyPressed" promptText="Customer Name" />
-                                    <TableView fx:id="TableCustomers" layoutY="54.0" onMouseClicked="#setOnCustomerSelected" prefHeight="538.0" prefWidth="563.0">
+                                    <TableView fx:id="TableCustomers" layoutY="54.0" onMouseClicked="#setOnCustomerSelected" prefHeight="380.0" prefWidth="563.0">
                                        <columns>
                                           <TableColumn fx:id="CustomersID" prefWidth="40.0" text="ID" />
                                           <TableColumn fx:id="CustomersFirst_Name" prefWidth="130.0" text="First Name" />
@@ -134,15 +123,15 @@
                   </BorderPane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <AnchorPane>
                <children>
-                  <TableView fx:id="TableCustomerAttendance" layoutX="249.0" layoutY="50.0" prefHeight="184.0" prefWidth="633.0" AnchorPane.bottomAnchor="67.0">
-                    <columns>
-                      <TableColumn fx:id="CustomerAttFirst_Name" prefWidth="224.0" text="First Name" />
+                  <TableView fx:id="TableCustomerAttendance" layoutX="253.0" layoutY="61.0" prefHeight="190.0" prefWidth="633.0" AnchorPane.bottomAnchor="-7.0">
+                     <columns>
+                        <TableColumn fx:id="CustomerAttFirst_Name" prefWidth="224.0" text="First Name" />
                         <TableColumn fx:id="CustomerAttLast_Name" maxWidth="3000.0" minWidth="0.0" prefWidth="192.0" text="Last Name" />
                         <TableColumn fx:id="CustomerAttDate" prefWidth="139.0" text="Date" />
                         <TableColumn fx:id="CustomerAttAMPM" prefWidth="77.0" text="AM/PM" />
-                    </columns>
+                     </columns>
                   </TableView>
                   <Text fill="#0091ea" layoutX="393.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Attendance">
                      <font>
@@ -166,9 +155,9 @@
                   <Button fx:id="SaveAttendanceButton" layoutX="32.0" layoutY="181.0" mnemonicParsing="false" onAction="#setCustomerAttendanceSaveButtonClick" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #408E2F;" text="Add" textFill="WHITE" />
                </children>
             </AnchorPane>
-        </items>
+         </items>
       </SplitPane>
-      <VBox prefHeight="907.0" prefWidth="228.0">
+      <VBox prefHeight="695.0" prefWidth="228.0">
          <children>
             <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity FEC" textAlignment="CENTER" wrappingWidth="226.4951171875">
                <font>
@@ -188,12 +177,12 @@
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="228.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Weekly)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="228.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report (Line Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="227.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Total)" textFill="WHITE">
+            <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="227.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report  (Bar Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>

@@ -144,6 +144,8 @@ public class AMPM_Bar_ChartController implements Initializable{
 		
 		@FXML
 		public void addDataToXYChart(){
+			//seriesAM.getData().clear();
+			//seriesPM.getData().clear();
 			
 			//Calculates the amount of AM Customer Attendances for each day of the Week
 			//The calcNumAM methods are in the Customer_Attendance_Line_ChartModel class

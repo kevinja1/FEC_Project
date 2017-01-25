@@ -15,7 +15,6 @@ import javafx.print.Paper;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -37,9 +36,6 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 	
 	@FXML
 	private Pane Screen;
-	
-	@FXML
-	private NumberAxis CustomerNumberAxis;
 	
 	//Array of Strings where String[0] is Sunday, String[1] is Monday, ...
 	private String[] week = new String[7];
@@ -69,7 +65,6 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		addDataToXYChart();
 		lineChartAttendance.getData().addAll(seriesAM);   
 		lineChartAttendance.getData().addAll(seriesPM);  
-
 	}
 	
 	//Set days of week's string values to their respective dates
@@ -150,8 +145,7 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		seriesAM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumAMSunday(week[0])));
 		seriesAM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumAMMonday(week[1])));
 		seriesAM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumAMTuesday(week[2])));
-		seriesAM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumAMWednesday(week[3])));			
-		seriesAM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumAMThursday(week[4])));
+		seriesAM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumAMWednesday(week[3])));			seriesAM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumAMThursday(week[4])));
 		seriesAM.getData().add(new XYChart.Data<>("Friday", linechart.calcNumAMFriday(week[5])));
 		seriesAM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumAMSaturday(week[6])));
 		

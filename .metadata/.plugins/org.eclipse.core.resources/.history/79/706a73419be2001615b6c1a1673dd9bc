@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,8 +27,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -37,7 +34,6 @@ import tray.notification.TrayNotification;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
@@ -47,8 +43,6 @@ public class Menu_CustomerController implements Initializable {
 	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	public Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
 
-	@FXML
-	AnchorPane ancpane;
 	@FXML
 	private Button txtAdd;
 	@FXML
@@ -139,7 +133,7 @@ public class Menu_CustomerController implements Initializable {
 
 		dtDOB.setEditable(false);
 		dtAttendance.setEditable(false);
-		
+
 	}
 
 	@FXML

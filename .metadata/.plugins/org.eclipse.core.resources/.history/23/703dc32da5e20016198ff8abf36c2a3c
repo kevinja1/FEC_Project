@@ -55,9 +55,24 @@ public class AMPM_Bar_ChartController implements Initializable{
 	XYChart.Series<String, Integer> seriesAM;
 	XYChart.Series<String, Integer> seriesPM;
 	
+	//This is what will be loaded when the screen is opened
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
+		/*
+		//The x axis, AM or PM, are strings, while the y axis, the number of customers, is an integer
+		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		
+		//Calculates number of AM Customer Attendances vs PM Customer Attendances from Database
+		barchart.calcNumAMPM();
+		
+		//Adding the data to the XYChart, series, based on the calculations from the AMPM_Bar_ChartModel class
+		series.getData().add(new XYChart.Data<>("AM", barchart.getnumAM()));
+		series.getData().add(new XYChart.Data<>("PM", barchart.getnumPM()));
+		
+		//This, essentially, displays the data on the barChartAttendance to be viewed by the User
+		barChartAttendance.getData().addAll(series);   
+		*/
 		
 		seriesAM = new XYChart.Series<>();
 		seriesPM = new XYChart.Series<>();
@@ -71,7 +86,8 @@ public class AMPM_Bar_ChartController implements Initializable{
         //Loads in this week's data
 		setDates(LocalDate.now());	   
 		addDataToXYChart();
-		barChartAttendance.getData().addAll(seriesAM, seriesPM);     
+		lineChartAttendance.getData().addAll(seriesAM);   
+		lineChartAttendance.getData().addAll(seriesPM);  
 	}
 	
 	//Set days of week's string values to their respective dates
@@ -144,26 +160,27 @@ public class AMPM_Bar_ChartController implements Initializable{
 		
 		@FXML
 		public void addDataToXYChart(){
+			seriesAM.getData().clear();
+			seriesPM.getData().clear();
 			
 			//Calculates the amount of AM Customer Attendances for each day of the Week
 			//The calcNumAM methods are in the Customer_Attendance_Line_ChartModel class
-			seriesAM.getData().add(new XYChart.Data<>("Sunday", barchart.calcNumAMSunday(week[0])));
-			seriesAM.getData().add(new XYChart.Data<>("Monday", barchart.calcNumAMMonday(week[1])));
-			seriesAM.getData().add(new XYChart.Data<>("Tuesday", barchart.calcNumAMTuesday(week[2])));
-			seriesAM.getData().add(new XYChart.Data<>("Wednesday", barchart.calcNumAMWednesday(week[3])));			
-			seriesAM.getData().add(new XYChart.Data<>("Thursday", barchart.calcNumAMThursday(week[4])));
-			seriesAM.getData().add(new XYChart.Data<>("Friday", barchart.calcNumAMFriday(week[5])));
-			seriesAM.getData().add(new XYChart.Data<>("Saturday", barchart.calcNumAMSaturday(week[6])));
+			seriesAM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumAMSunday(week[0])));
+			seriesAM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumAMMonday(week[1])));
+			seriesAM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumAMTuesday(week[2])));
+			seriesAM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumAMWednesday(week[3])));			seriesAM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumAMThursday(week[4])));
+			seriesAM.getData().add(new XYChart.Data<>("Friday", linechart.calcNumAMFriday(week[5])));
+			seriesAM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumAMSaturday(week[6])));
 			
 			//Calculates the amount of PM Customer Attendances for each day of the Week
 			//The calcNumPM methods are in the Customer_Attendance_Line_ChartModel class
-			seriesPM.getData().add(new XYChart.Data<>("Sunday", barchart.calcNumPMSunday(week[0])));
-			seriesPM.getData().add(new XYChart.Data<>("Monday", barchart.calcNumPMMonday(week[1])));
-			seriesPM.getData().add(new XYChart.Data<>("Tuesday", barchart.calcNumPMTuesday(week[2])));
-			seriesPM.getData().add(new XYChart.Data<>("Wednesday", barchart.calcNumPMWednesday(week[3])));
-			seriesPM.getData().add(new XYChart.Data<>("Thursday", barchart.calcNumPMThursday(week[4])));
-			seriesPM.getData().add(new XYChart.Data<>("Friday", barchart.calcNumPMFriday(week[5])));
-			seriesPM.getData().add(new XYChart.Data<>("Saturday", barchart.calcNumPMSaturday(week[6])));
+			seriesPM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumPMSunday(week[0])));
+			seriesPM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumPMMonday(week[1])));
+			seriesPM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumPMTuesday(week[2])));
+			seriesPM.getData().add(new XYChart.Data<>("Wednesday", linechart.calcNumPMWednesday(week[3])));
+			seriesPM.getData().add(new XYChart.Data<>("Thursday", linechart.calcNumPMThursday(week[4])));
+			seriesPM.getData().add(new XYChart.Data<>("Friday", linechart.calcNumPMFriday(week[5])));
+			seriesPM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumPMSaturday(week[6])));
 		}
 			
 		//Method Called when a date is Chosen

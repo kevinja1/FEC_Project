@@ -131,12 +131,12 @@
                         <Insets top="50.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="200.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Weekly)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="200.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report (Line Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <VBox.margin>
                         <Insets top="50.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="201.0" style="-fx-background-color: #408E2F;" text="Attendance Report (Total)" textFill="WHITE">
+                  <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="201.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report (Bar Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <VBox.margin>
                         <Insets top="50.0" />
                      </VBox.margin>
@@ -146,7 +146,4 @@
          </children>
       </Pane>
    </left>
-   <right>
-      <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

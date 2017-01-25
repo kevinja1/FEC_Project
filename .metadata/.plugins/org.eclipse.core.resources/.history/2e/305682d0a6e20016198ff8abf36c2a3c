@@ -55,9 +55,24 @@ public class AMPM_Bar_ChartController implements Initializable{
 	XYChart.Series<String, Integer> seriesAM;
 	XYChart.Series<String, Integer> seriesPM;
 	
+	//This is what will be loaded when the screen is opened
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
+		/*
+		//The x axis, AM or PM, are strings, while the y axis, the number of customers, is an integer
+		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		
+		//Calculates number of AM Customer Attendances vs PM Customer Attendances from Database
+		barchart.calcNumAMPM();
+		
+		//Adding the data to the XYChart, series, based on the calculations from the AMPM_Bar_ChartModel class
+		series.getData().add(new XYChart.Data<>("AM", barchart.getnumAM()));
+		series.getData().add(new XYChart.Data<>("PM", barchart.getnumPM()));
+		
+		//This, essentially, displays the data on the barChartAttendance to be viewed by the User
+		barChartAttendance.getData().addAll(series);   
+		*/
 		
 		seriesAM = new XYChart.Series<>();
 		seriesPM = new XYChart.Series<>();
@@ -71,7 +86,8 @@ public class AMPM_Bar_ChartController implements Initializable{
         //Loads in this week's data
 		setDates(LocalDate.now());	   
 		addDataToXYChart();
-		barChartAttendance.getData().addAll(seriesAM, seriesPM);     
+		barChartAttendance.getData().addAll(seriesAM);   
+		barChartAttendance.getData().addAll(seriesPM);  
 	}
 	
 	//Set days of week's string values to their respective dates
@@ -144,6 +160,8 @@ public class AMPM_Bar_ChartController implements Initializable{
 		
 		@FXML
 		public void addDataToXYChart(){
+			seriesAM.getData().clear();
+			seriesPM.getData().clear();
 			
 			//Calculates the amount of AM Customer Attendances for each day of the Week
 			//The calcNumAM methods are in the Customer_Attendance_Line_ChartModel class

@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Delete" key="selection"/>
+		<item value="barchart" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="linechart"/>
 			<item value="delete"/>
 			<item value="setOnCustomerSelected"/>
 			<item value="addEmployee"/>
@@ -15,9 +16,9 @@
 			<item value="delet"/>
 			<item value="btSearch"/>
 			<item value="choose"/>
-			<item value="popu"/>
 		</list>
 		<list key="replacehistory">
+			<item value="barchart"/>
 			<item value="dtWeek.getValue()"/>
 			<item value="day_of_week"/>
 			<item value="saturday = "/>
@@ -25,7 +26,6 @@
 			<item value="thursday = "/>
 			<item value="wednesday = "/>
 			<item value="tuesday = "/>
-			<item value="monday = "/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

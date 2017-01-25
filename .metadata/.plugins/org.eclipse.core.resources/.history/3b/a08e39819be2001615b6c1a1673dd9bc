@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -29,7 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -140,6 +138,9 @@ public class Menu_CustomerController implements Initializable {
 		dtDOB.setEditable(false);
 		dtAttendance.setEditable(false);
 		
+		ScrollPane scrollPane = new ScrollPane(ancpane);
+	    scrollPane.setFitToHeight(true);
+
 	}
 
 	@FXML

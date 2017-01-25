@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,8 +27,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -37,7 +34,6 @@ import tray.notification.TrayNotification;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
@@ -47,8 +43,6 @@ public class Menu_CustomerController implements Initializable {
 	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	public Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
 
-	@FXML
-	AnchorPane ancpane;
 	@FXML
 	private Button txtAdd;
 	@FXML
@@ -139,7 +133,7 @@ public class Menu_CustomerController implements Initializable {
 
 		dtDOB.setEditable(false);
 		dtAttendance.setEditable(false);
-		
+
 	}
 
 	@FXML
@@ -573,14 +567,6 @@ public class Menu_CustomerController implements Initializable {
 			txtFirst_Name.clear();
 			txtFirst_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			txtFirst_Name.requestFocus();
-			
-			//txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			
 			return false;
 		}
 	}
@@ -601,13 +587,6 @@ public class Menu_CustomerController implements Initializable {
 			txtLast_Name.clear();
 			txtLast_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			txtLast_Name.requestFocus();
-			
-			txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			//txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			return false;
 		}
 	}
@@ -627,13 +606,6 @@ public class Menu_CustomerController implements Initializable {
 			txtEmail.clear();
 			txtEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			txtEmail.requestFocus();
-			
-			txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			//txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			return false;
 		}
 	}
@@ -653,13 +625,6 @@ public class Menu_CustomerController implements Initializable {
 			txtPhone.clear();
 			txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			txtPhone.requestFocus();
-			
-			txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			//txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			return false;
 		}
 	}
@@ -675,13 +640,6 @@ public class Menu_CustomerController implements Initializable {
 			alert.setContentText("Please Enter a DOB");
 			alert.showAndWait();
 			dtDOB.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			
-			txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			//dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			return false;
 		}
 
@@ -699,13 +657,6 @@ public class Menu_CustomerController implements Initializable {
 			alert.showAndWait();
 			txtAddress.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			txtAddress.requestFocus();
-			
-			txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			//txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			return false;
 		} 
 	}

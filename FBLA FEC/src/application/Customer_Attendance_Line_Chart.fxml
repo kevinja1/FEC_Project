@@ -16,7 +16,7 @@
                 <CategoryAxis label="Day of Week" side="BOTTOM" styleClass=".axis" stylesheets="@application.css" />
               </xAxis>
               <yAxis>
-                <NumberAxis label="Number of Customers" side="LEFT" styleClass=".axis" stylesheets="@application.css" />
+                <NumberAxis fx:id="CustomerNumberAxis" label="Number of Customers" side="LEFT" styleClass=".axis" stylesheets="@application.css" />
               </yAxis>
             </LineChart>
             <DatePicker fx:id="dtWeek" editable="false" layoutX="254.0" layoutY="37.0" onAction="#setOnDatePickerChosen" />
