@@ -16,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 
 public class Menu_Customer_AttendanceModel {
+	//Information variables for customer attendances
+	
 	private final SimpleIntegerProperty Customers_ID;
 	private final SimpleStringProperty Customers_Date;
 	private final SimpleStringProperty Customers_AMPM;
@@ -27,9 +29,8 @@ public class Menu_Customer_AttendanceModel {
     private Statement statement;
     private ResultSet resultSet;
     
+    //Constructors
     public Menu_Customer_AttendanceModel(int CustomersID, String CustomersDate, String CustomersAMPM, String Customers_FirstName, String Customers_LastName){
-
-		
 		this.Customers_Date = new SimpleStringProperty(CustomersDate);
 		this.Customers_AMPM = new SimpleStringProperty(CustomersAMPM);		
 		this.Customers_ID = new SimpleIntegerProperty(CustomersID);
@@ -46,7 +47,7 @@ public class Menu_Customer_AttendanceModel {
 		this.Customers_LastName = new SimpleStringProperty("");	
 	}
 	
-
+	 //Adds the customer attendances to an Observable List to eventually display on the table 
 	 public ObservableList getDataFromSqlAndAddToObservableList(String query){
 	        ObservableList<Menu_Customer_AttendanceModel> customerAttendanceTableData = FXCollections.observableArrayList();
 	        try {
@@ -76,7 +77,8 @@ public class Menu_Customer_AttendanceModel {
 
 	    }
 	 
-	 public String getCustomers_Date() {
+	 	//setters and getters
+	    public String getCustomers_Date() {
 	        return Customers_Date.get();
 	    }
 

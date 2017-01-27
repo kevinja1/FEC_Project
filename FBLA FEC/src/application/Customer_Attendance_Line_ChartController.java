@@ -44,7 +44,7 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 	//Array of Strings where String[0] is Sunday, String[1] is Monday, ...
 	private String[] week = new String[7];
 	
-	Customer_Attendance_Line_ChartModel linechart = new Customer_Attendance_Line_ChartModel();
+	Customer_Attendance_Report_Model linechart = new Customer_Attendance_Report_Model();
 	
 	//XYChart Series for AM Customer Attendances and PM Customer Attendances
 	XYChart.Series<String, Integer> seriesAM;
@@ -146,7 +146,7 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		seriesPM.getData().clear();
 		
 		//Calculates the amount of AM Customer Attendances for each day of the Week
-		//The calcNumAM methods are in the Customer_Attendance_Line_ChartModel class
+		//The calcNumAM methods are in the Customer_Attendance_Report_Model class
 		seriesAM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumAMSunday(week[0])));
 		seriesAM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumAMMonday(week[1])));
 		seriesAM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumAMTuesday(week[2])));
@@ -156,7 +156,7 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		seriesAM.getData().add(new XYChart.Data<>("Saturday", linechart.calcNumAMSaturday(week[6])));
 		
 		//Calculates the amount of PM Customer Attendances for each day of the Week
-		//The calcNumPM methods are in the Customer_Attendance_Line_ChartModel class
+		//The calcNumPM methods are in the Customer_Attendance_Report_Model class
 		seriesPM.getData().add(new XYChart.Data<>("Sunday", linechart.calcNumPMSunday(week[0])));
 		seriesPM.getData().add(new XYChart.Data<>("Monday", linechart.calcNumPMMonday(week[1])));
 		seriesPM.getData().add(new XYChart.Data<>("Tuesday", linechart.calcNumPMTuesday(week[2])));

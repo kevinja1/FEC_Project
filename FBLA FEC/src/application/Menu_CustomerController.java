@@ -46,7 +46,8 @@ public class Menu_CustomerController implements Initializable {
 
 	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	public Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
-
+	
+	//UI Features
 	@FXML
 	AnchorPane ancpane;
 	@FXML
@@ -117,7 +118,7 @@ public class Menu_CustomerController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		//Get data from adminTableData ObservableList and set this data on JavaFX table column
+		//"Configures" the value of each column in the table
 
 		CustomersFirst_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersFirst_Name")); 
 		CustomersLast_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersLast_Name"));
@@ -129,12 +130,13 @@ public class Menu_CustomerController implements Initializable {
 		CustomerAttDate.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel,String>("Customers_Date"));
 		CustomerAttAMPM.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel,String>("Customers_AMPM"));
 
+		//Fills in the customers in the customer table
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers"));
-		//TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance"));
+		
+		//Fills in the Customer Attendance Tables
 		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
 				+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
 		CustomersAttendanceSetAllDisable();
-		btShowAllAtt.setDisable(false); 
 		rdAM.setSelected(true);
 
 		dtDOB.setEditable(false);
@@ -142,12 +144,14 @@ public class Menu_CustomerController implements Initializable {
 		
 	}
 
+	//Method called when the user wishes to add a new customer
 	@FXML
 	private void setCustomersAddNewButtonClick(Event event){
 		CustomersSetAllEnable();
 		isCustomersAddNewButtonClick = true;
 	}
 
+	//Enables the text fields for users to enter information
 	private void CustomersSetAllEnable(){
 		txtFirst_Name.setDisable(false);
 		txtLast_Name.setDisable(false);
@@ -162,6 +166,7 @@ public class Menu_CustomerController implements Initializable {
 
 	}
 
+	//Disables Customer text fields
 	private void CustomersSetAllDisable(){
 		txtFirst_Name.setDisable(true);
 		txtLast_Name.setDisable(true);
@@ -170,13 +175,12 @@ public class Menu_CustomerController implements Initializable {
 		txtAddress.setDisable(true);
 		dtDOB.setDisable(true);
 
-
-
 		CustomerSaveButton.setDisable(true);
 		CustomerClearButton.setDisable(true);
 
 	}
 
+	//Display Customer Attendance Text Fields
 	private void CustomersAttendanceSetAllDisable(){
 		//DeleteAttendanceButton.setDisable(true);
 		dtAttendance.setDisable(true);
@@ -186,7 +190,7 @@ public class Menu_CustomerController implements Initializable {
 		//TableCustomerAttendance.setDisable(true);
 	}
 
-
+	//Enable CustomerAttendance Fields
 	private void CustomersAttendanceSetAllEnable(){
 		DeleteAttendanceButton.setDisable(false);
 		dtAttendance.setDisable(false);
@@ -196,9 +200,7 @@ public class Menu_CustomerController implements Initializable {
 		//TableCustomerAttendance.setDisable(false);
 	}
 
-
-
-
+	//Clear Customer Fields
 	private void CustomersSetAllClear(){
 		txtFirst_Name.clear();
 		txtLast_Name.clear();
@@ -206,16 +208,14 @@ public class Menu_CustomerController implements Initializable {
 		txtPhone.clear();
 		txtAddress.clear();
 		dtDOB.setValue(null);
-
-
-
 	}
 
+	//Disables date picker for adding attendance
 	private void CustomersAttendanceSetAllClear(){
 		dtAttendance.setValue(null);
-
 	}
 
+	//Method called when clear button is clicked
 	@FXML
 	private void CustomersSetAllClear(Event event){
 		txtFirst_Name.clear();
@@ -231,10 +231,9 @@ public class Menu_CustomerController implements Initializable {
 		txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 		txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 		dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-
-
 	}
 
+	//Method called when user saves a new customer
 	@FXML
 	private void setCustomerSaveButtonClick(Event event){
 		try{	       
@@ -297,6 +296,7 @@ public class Menu_CustomerController implements Initializable {
 
 	}
 
+	//Loads in customer data to text field when user wishes to edit a Customer's information
 	@FXML
 	private void setCustomerEditButtonClick(Event event){
 
@@ -339,6 +339,7 @@ public class Menu_CustomerController implements Initializable {
 
 	}
 
+	//Method called when user wishes to delete a customer
 	@FXML
 	private void setCustomerDeleteButtonClick(Event event){
 		TableCustomers.setPlaceholder(new Label("No Customers"));	
@@ -369,8 +370,6 @@ public class Menu_CustomerController implements Initializable {
 				e.printStackTrace();
 			}
 
-
-			//adminTableView.setItems(getDataFromSqlAndAddToObservableList(sqlQuery));
 		}
 		else{
 			NotificationType notificationType = NotificationType.ERROR;
@@ -382,18 +381,21 @@ public class Menu_CustomerController implements Initializable {
 		}        
 	}
 
+	//Method to search for Customer by given ID
 	@FXML
 	private void setCustomerSearchButtonClick(Event event){
 		String sqlQuery = "select * FROM Customers where ID = '"+txtSearch.getText()+"';";
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 	}
 
+	//Method called to refresh Customer Table
 	@FXML
 	private void setCustomerRefreshButtonClick(Event event){
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));//sql Query
 		txtSearch.clear();
 	}
 
+	//Method to search for a Customer based on typed name
 	@FXML
 	public void setOnSearchKeyPressed(KeyEvent event) throws IOException{
 		if(txtSearch.getText()!=""){
@@ -409,6 +411,7 @@ public class Menu_CustomerController implements Initializable {
 		}
 	} 
 
+	//Method to save a new Customer Attendance
 	@FXML
 	private void setCustomerAttendanceSaveButtonClick(Event event){
 		try{	       
@@ -446,6 +449,7 @@ public class Menu_CustomerController implements Initializable {
 	}
 
 
+	//method called when the add new attendance button is clicked
 	private void setAddDeleteAttendance(){
 		btShowAllAtt.setDisable(true);
 		CustomersAttendanceSetAllEnable();
@@ -457,6 +461,7 @@ public class Menu_CustomerController implements Initializable {
 
 	}
 
+	//Checks to see whether AM or PM is selected
 	public String AMPM(){
 		if(rdAM.isSelected())
 		{
@@ -467,6 +472,7 @@ public class Menu_CustomerController implements Initializable {
 		}
 	}
 
+	//Following launch methods are to load other windows for various parts of the program
 	@FXML
 	private void launchScheduler(Event event) throws IOException{
 		((Node)event.getSource()).getScene().getWindow().hide();
@@ -515,6 +521,7 @@ public class Menu_CustomerController implements Initializable {
 		stage.show();
 	}
 
+	//Method for deleting a customer attendance
 	@FXML
 	private void setCustomerAttendanceDeleteButtonClick(Event event){
 		if(TableCustomerAttendance.getSelectionModel().getSelectedItem()!=null){
@@ -552,12 +559,15 @@ public class Menu_CustomerController implements Initializable {
 		}     	 	
 	}
 
+	//Method to refresh customer attendance table
 	@FXML
 	private void setShowAllAttClick(Event event){
 		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
 				+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
 	}
 
+	//Following validate methods are to make sure the required info is provided in the correct format,
+	//otherwise show an alert
 	private boolean validateFirstName(){
 		Pattern p = Pattern.compile("[a-zA-z]+");
 		Matcher m = p.matcher(txtFirst_Name.getText());
@@ -726,6 +736,7 @@ public class Menu_CustomerController implements Initializable {
 		}			 
 	}
 
+	//Method to automatically add dashes when user types in a phone number
 	@FXML
 	public void setOnPhoneKeyReleased(KeyEvent event) throws IOException{
 		if(txtPhone.getText().length()==3){
@@ -742,6 +753,7 @@ public class Menu_CustomerController implements Initializable {
 		}
 	}
 
+	//Method called when a user selects a customer from the table
 	@FXML
 	public void setOnCustomerSelected(MouseEvent event) throws IOException{
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {

@@ -12,6 +12,7 @@ public class LoginScreenModel {
 		}
 	}
 	
+	//Checks to see whether the database connection is successful/is open
 	public boolean isDbConnected(){
 		try{
 			return !connection.isClosed();
@@ -23,10 +24,12 @@ public class LoginScreenModel {
 		}
 	}
 	
+	//return database connection
 	public Connection getConnection(){
 		return connection;
 	}
 	
+	//Checks to see if username and password match the one in the database
 	public boolean isLogin(String user, String pass) throws SQLException{
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

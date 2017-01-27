@@ -31,7 +31,7 @@ public class Menu_CustomerModel{
     private ResultSet resultSet;
    
     
-    
+    //constructors
 	public Menu_CustomerModel(String CustomersFirst_Name, String CustomersLast_Name, String CustomersAddress, String CustomersEmail, 
 			String CustomersPhone, String CustomersDOB, Integer CustomersID){
 
@@ -56,6 +56,7 @@ public class Menu_CustomerModel{
 	}
 	
 
+	//Adds the customers to an Observable List to eventually display on the table 
 	 public ObservableList getDataFromSqlAndAddToObservableList(String query){
 	        ObservableList<Menu_CustomerModel> customerTableData = FXCollections.observableArrayList();
 	        try {
@@ -92,7 +93,7 @@ public class Menu_CustomerModel{
 	    }
 
 	
-	    
+	    //getters and setters
 	    public String getCustomersFirst_Name() {
 	        return CustomersFirst_Name.get();
 	    }

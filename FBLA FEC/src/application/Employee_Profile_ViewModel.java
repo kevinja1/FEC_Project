@@ -6,21 +6,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Employee_Profile_ViewModel {
-    private String ID, Name, Email, Phone, Address, DOB ;
+    //Employee information variables
+	private String ID, Name, Email, Phone, Address, DOB ;
     
     Connection connection;
     Statement statement;
     ResultSet resultSet;
-
+    
+    // constructors
     public Employee_Profile_ViewModel() {
     }
-
+    
     public Employee_Profile_ViewModel(String id) {
         this.ID = id;
         setValues();
     }
 
-
+    //setters
     private void setValues(){
         try {
             connection = SqliteConnection.Connector();
@@ -45,7 +47,7 @@ public class Employee_Profile_ViewModel {
 
 
 
-
+    //getters
     public String getId() {
         return ID;
     }

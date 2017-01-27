@@ -38,6 +38,8 @@ public class LoginScreenController implements Initializable {
 			
 		}
 		
+		//Method that launches the next screen when sign in button is pressed
+		//and if login is successful, if not, it gives an alert
 		public void Login (ActionEvent event) throws IOException, SQLException
 		{
 			try{
@@ -68,6 +70,7 @@ public class LoginScreenController implements Initializable {
 			}
 		}	
 		
+		//Method to listen for Enter key and use it as a way to login as well
 		@FXML
 		public void handleEnterPressed(KeyEvent event) throws IOException, SQLException{
 		    if (event.getCode() == KeyCode.ENTER) {

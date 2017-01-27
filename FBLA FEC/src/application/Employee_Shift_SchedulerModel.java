@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+//Employee information including shifts(AM vs PM) and Scheduled Date
 public class Employee_Shift_SchedulerModel {
 	private final SimpleIntegerProperty EmployeesID;
 	private final SimpleStringProperty EmployeesFirst_Name;
@@ -22,7 +23,7 @@ public class Employee_Shift_SchedulerModel {
     private Statement statement;
     private ResultSet resultSet;
     
-    
+    //Constructors
     public Employee_Shift_SchedulerModel(int EmployeesID, String Date, String Shift, String LastName, String FirstName){
 
 		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
@@ -50,6 +51,7 @@ public class Employee_Shift_SchedulerModel {
 		this.EmployeesScheduleShift = new SimpleStringProperty("");
 	}
 	
+	//Adds new Employees to Observable List to eventually be loaded into the table
 	public ObservableList getDataFromSqlAndAddToObservableList(String query){
         ObservableList<Employee_Shift_SchedulerModel> employeeTableData = FXCollections.observableArrayList();
         try {
@@ -76,6 +78,7 @@ public class Employee_Shift_SchedulerModel {
 
     }
 	
+	//Add new Employees to the Employees_Schedule Table with their scheduler information
 	public ObservableList getDataFromSqlAndAddToObservableListSchedule(String query){
 		ObservableList<String> employeeTableData = FXCollections.observableArrayList();
         try {
@@ -100,8 +103,9 @@ public class Employee_Shift_SchedulerModel {
         return employeeTableData;
 
     }
-	
-	 public Integer getEmployeesID() {
+
+		// getters and setters
+	    public Integer getEmployeesID() {
 	        return EmployeesID.get();
 	    }
 

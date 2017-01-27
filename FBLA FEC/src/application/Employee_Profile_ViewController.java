@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+//This is the mini-window that appears when for extra employee details
 public class Employee_Profile_ViewController {
 	@FXML
 	private ImageView profilePic;
@@ -27,7 +28,7 @@ public class Employee_Profile_ViewController {
 	private Label label;
 	
 	private Employee_Profile_ViewModel Info;
-
+	//Method to display the information for the given employee: Employee_Profile_ViewModel
     public void setCurrentInfo(Employee_Profile_ViewModel currentInfo) {
         txtID.setText("Employee ID: " + currentInfo.getId());
         txtName.setText("Name: " + currentInfo.getName());

@@ -55,6 +55,8 @@ import javafx.print.PrinterJob;
 public class Employee_Shift_SchedulerController implements Initializable {
 	
 	public Employee_Shift_SchedulerModel Scheduler_Table = new Employee_Shift_SchedulerModel();
+	
+	//Features of the UI
 	@FXML
 	ToggleGroup group = new ToggleGroup();
 	
@@ -128,18 +130,19 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
+		//setting the values of each column in the table
 		EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesLast_Name"));
         EmployeesID.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesID"));
         
-            
+        //loading the employee information into the table 
         TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
    
         rdAM_Shift.setSelected(true);
         dtSchedule.setEditable(false);
         dtSchedule.setDisable(false);
         
+        //checking what day it is today and loading the respective schedule
         String now = LocalDate.now().getDayOfWeek().toString();
         if(now == "SUNDAY"){
 			
@@ -218,6 +221,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
 			lblFri.setText(LocalDate.now().minusDays(1).toString());
 		}
         
+        //Loading each of the days with the employees scheduled that day
         setLoadListSun();
         setLoadListMon();
         setLoadListTues();
@@ -228,6 +232,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
         
     }
 	
+	//Method that is run when a date is chosen on the date picker
 	@FXML
 	public void setOnDatePickerChosen(Event event)
 	{
@@ -312,6 +317,8 @@ public class Employee_Shift_SchedulerController implements Initializable {
 
 				}
 				
+				 //Loads in employee information based on given date
+				
 				 setLoadListSun();
 		         setLoadListMon();
 		         setLoadListTues();
@@ -332,6 +339,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	        btDelete.setDisable(false);
 	}
 	
+	//Based on what day is chosen, the respective chooseEmp__ is called which shows to the user that the day is selected to schedule
 	@FXML 
 	private void chooseEmpSun(Event event){
 		 	setAllEnable();
@@ -438,6 +446,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
 			listSun.setStyle("-fx-background-color: white;");
 	}
 	
+	//Adds an employee to the schedule if it was selected from bottom table
 	@FXML 
 	private void addEmployeeClicked(Event event){
 		
@@ -495,12 +504,11 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	             setLoadListSat();
         }
         else if(chosenlist == null){
-        		NotificationType notificationType = NotificationType.ERROR;
-        		TrayNotification tray = new TrayNotification();
-        		tray.setTitle("No Day Selected");
-        		tray.setMessage("Please click on a Day from the above Schedule");
-        		tray.setNotificationType(notificationType);
-        		tray.showAndDismiss(Duration.millis(5000));
+        	 Alert alert = new Alert(AlertType.WARNING);
+			 alert.setTitle("No date selected");
+			 alert.setHeaderText(null);
+			 alert.setContentText("Please select a date by clicking on the list below the desired date on the weekly schedule");
+			 alert.showAndWait();
         }
         else{
         	    NotificationType notificationType = NotificationType.ERROR;
@@ -525,10 +533,8 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	}
 	
 	
+	//Methods to load the employees into the schedule
     private void setLoadListSun(){
-        //String sqlQuery = "select * FROM Employees_Schedule where Date = '"+lblSun.getText()+"';";
-        //listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableList(sqlQuery)));
-    	
     	listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
         		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSun.getText()+"';")));
     }
@@ -563,7 +569,8 @@ public class Employee_Shift_SchedulerController implements Initializable {
         		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSat.getText()+"';")));
     }
     
-   @FXML  
+    //Method to print the schedule
+    @FXML  
     private void doPrint(Event event) throws InvocationTargetException{
 	   Printer printer = Printer.getDefaultPrinter();
 	   PrinterJob job = PrinterJob.createPrinterJob();
@@ -603,7 +610,7 @@ public class Employee_Shift_SchedulerController implements Initializable {
     	
     }
    
-   
+   //Method called when user wants to delete an employee schedule on a certain day
    @FXML
    private void schedulerDelete(Event event){
 	 	if(chosenlist.getSelectionModel().getSelectedItem()!=null){
@@ -639,12 +646,13 @@ public class Employee_Shift_SchedulerController implements Initializable {
 	 		NotificationType notificationType = NotificationType.ERROR;
 	 		TrayNotification tray = new TrayNotification();
 	 		tray.setTitle("No Date Selected");
-	 		tray.setMessage("To delete a Customer, chose from list above");
+	 		tray.setMessage("To delete, please select from weekly schedule list");
 	 		tray.setNotificationType(notificationType);
-	 		tray.showAndDismiss(Duration.millis(5000));
+	 		tray.showAndDismiss(Duration.millis(25000));
 	 	}        
    }
-   
+    
+    //Following methods launch the other screens for various parts of the program
    	@FXML
 	private void launchEmployeeMainMenu(Event event) throws IOException{
 	   ((Node)event.getSource()).getScene().getWindow().hide();
@@ -694,18 +702,21 @@ public class Employee_Shift_SchedulerController implements Initializable {
        stage.show();
    }
    
+   //Re-loads in the employees to the employee table
    @FXML
    private void setRefreshButtonClick(Event event){
        TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));//sql Query
        txtSearch.clear();
    }
    
+   //Searches for a customer
    @FXML
    private void setSearchButtonClick(Event event){
        String sqlQuery = "select * FROM Employees where ID = '"+txtSearch.getText()+"';";
        TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList(sqlQuery));
    }
    
+   //Gives an alert if a user tries to schedule without selecting a date
    private boolean validateDate(){
 		 if(dtSchedule.getValue() != null){
 			 return true;

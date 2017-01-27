@@ -48,6 +48,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	
 	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
 	
+	//Features of the UI
 	@FXML
 	private Button txtAdd;
 	@FXML
@@ -91,18 +92,19 @@ public class Main_Menu_EmployeeController implements Initializable {
 	
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //Get data from adminTableData ObservableList and set this data on JavaFX table column
+    	//"Configures" the value of each column in the table
 
         EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesLast_Name"));
         EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesID"));
         EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesEmail"));
         
+        //Sets the values of the table from the Employee Screen
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
         dtDOB.setEditable(false);
     }
 	
+    //Method that runs when user wishes to add a new employee
 	@FXML
     private void setMainMenuAddNewButtonClick(Event event){
         MainMenuSetAllEnable();
@@ -110,6 +112,7 @@ public class Main_Menu_EmployeeController implements Initializable {
         isMainMenuAddNewButtonClick = true;
     }
 	
+	//Enables the field so the user can type the employee information
 	private void MainMenuSetAllEnable(){
         txtFirst_Name.setDisable(false);
         txtLast_Name.setDisable(false);
@@ -124,6 +127,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 
     }
 	
+	//Disables all text fields
 	private void MainMenuSetAllDisable(){
         txtFirst_Name.setDisable(true);
         txtLast_Name.setDisable(true);
@@ -138,7 +142,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 
     }
 	
-	
+	 //Clears all text fields
 	 private void MainMenuSetAllClear(){
 		 	txtFirst_Name.clear();
 	        txtLast_Name.clear();
@@ -150,6 +154,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	       	        
 	    }
 	 
+	 //Method called when clear button is clicked
 	 @FXML
 	 private void MainMenuSetAllClear(Event event){
 		 	txtFirst_Name.clear();
@@ -168,6 +173,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	       	        
 	    }
 	
+	//Saves the given employee information to the Employee database and loads it into the table
 	 @FXML
 	    private void setMainMenuSaveButtonClick(Event event){
 	        try{	       
@@ -228,7 +234,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	            
 	            
 	            
-	 
+	 //Loads in the information into the text fields of the employee that is trying to be edited
 	 @FXML
 	    private void setMainMenuEditButtonClick(Event event){
 	        
@@ -271,6 +277,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 		
 	    }
 	 
+	 //Deletes an employee from the Employee Database and refreshes the table
 	 @FXML
 	    private void setMainMenuDeleteButtonClick(Event event){
 		 	TableEmployees.setPlaceholder(new Label("No Employees"));
@@ -285,7 +292,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		             
 		            statement.executeUpdate(sqlQuery);
 		            statement.executeUpdate(sqlQuery2);
-		            //statement.executeUpdate("delete from Employees where ID ='"+getSelectedRow.getEmployeesID()+"';");
+		       
 		            TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
 		            statement.close();
 		            connection.close();
@@ -294,9 +301,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 		        catch (SQLException e) {
 		            e.printStackTrace();
 		        }
-
-
-		        //adminTableView.setItems(getDataFromSqlAndAddToObservableList(sqlQuery));
 		 	}
 		 	else{
 		 		NotificationType notificationType = NotificationType.ERROR;
@@ -308,18 +312,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 	}        
 	    }
 	 
+	 //Method to search for an employee based on given ID
 	 @FXML
 	    private void setMainMenuSearchButtonClick(Event event){
 	        String sqlQuery = "select * FROM Employees where ID = '"+txtSearch.getText()+"';";
 	        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 	    }
 	 
+	 //Method to refresh employee table
 	 @FXML
 	    private void setMainMenuRefreshButtonClick(Event event){
 	        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));//sql Query
 	        txtSearch.clear();
 	    }
 	 
+	 //The following launch methods are for loading other screens in the program when their respective buttons are clicked
 	 @FXML
 	    private void launchScheduler(Event event) throws IOException{
 		 	((Node)event.getSource()).getScene().getWindow().hide();
@@ -369,6 +376,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	        stage.show();
 	    }
 
+	 //Shows the extra employee information by launching a mini-window
 	 @FXML
 	    private void setMainMenuViewButtonClick(Event event) throws IOException {
 
@@ -396,6 +404,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	        
 	    }
 	 
+	 //The following validate methods check to see whether the Employee information is valid/ given in the right format
 	 private boolean validateFirstName(){
 		 Pattern p = Pattern.compile("[a-zA-z]+");
 		 Matcher m = p.matcher(txtFirst_Name.getText());
@@ -551,6 +560,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 } 
 	 }
 	 
+	 //Method to seach for employee based on name
 	 @FXML
 	 public void setOnSearchKeyPressed(KeyEvent event) throws IOException{
 		 if(txtSearch.getText()!=""){
@@ -566,6 +576,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 }
 	 } 
 	 
+	 //Method to automatically put in dashes when the user types in the phone number
 	 @FXML
 	 public void setOnPhoneKeyReleased(KeyEvent event) throws IOException{
 		 if(txtPhone.getText().length()==3){
@@ -582,6 +593,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 		 }
 	 }
 	 
+	 //Method to launch extra employee information window if the employee is double clicked on the table
 	 @FXML
 	 public void handleDoubleClick(MouseEvent mouseEvent) throws IOException {
 	        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){

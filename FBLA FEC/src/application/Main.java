@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+//Main class that launches login screen
 public class Main extends Application {
 
     public static void main(String[] args) {

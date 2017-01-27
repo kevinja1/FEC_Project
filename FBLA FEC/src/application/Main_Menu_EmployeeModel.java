@@ -15,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 
 public class Main_Menu_EmployeeModel{
+	
+	//Employee information variables
 	private final SimpleIntegerProperty EmployeesID;
 	private final SimpleStringProperty EmployeesFirst_Name;
 	private final SimpleStringProperty EmployeesLast_Name;
@@ -27,7 +29,7 @@ public class Main_Menu_EmployeeModel{
     private Statement statement;
     private ResultSet resultSet;
     
-    
+    //Constructors
 	public Main_Menu_EmployeeModel(int EmployeesID, String EmployeesFirst_Name, String EmployeesLast_Name, String EmployeesEmail, String EmployeesPhone, String EmployeesAddress, String EmployeesDOB){
 
 		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
@@ -51,7 +53,8 @@ public class Main_Menu_EmployeeModel{
 	}
 	
 
-	 public ObservableList getDataFromSqlAndAddToObservableList(String query){
+	//Adds the employees to an Observable List to eventually display on the table 
+	public ObservableList getDataFromSqlAndAddToObservableList(String query){
 	        ObservableList<Main_Menu_EmployeeModel> employeeTableData = FXCollections.observableArrayList();
 	        try {
 	        	connection = SqliteConnection.Connector();
@@ -86,77 +89,7 @@ public class Main_Menu_EmployeeModel{
 
 	    }
 
-	
-	 
-/*
-	//getters
-	
-	public SimpleIntegerProperty getEmployeesID() {
-		return EmployeesID.get();
-	}
-	
-	public SimpleStringProperty getEmployeesFirst_Name() {
-		return EmployeesFirst_Name;
-	}
-	
-	public SimpleStringProperty getEmployeesLast_Name() {
-		return EmployeesLast_Name;
-	}
-	
-	public SimpleStringProperty getEmployeesEmail() {
-		return EmployeesEmail;
-	}
-	
-	public SimpleStringProperty getEmployeesPhone() {
-		return EmployeesPhone;
-	}
-	
-	public SimpleStringProperty getEmployeesAddress() {
-		return EmployeesAddress;
-	}
-	
-	public SimpleStringProperty getEmployeesDOB() {
-		return EmployeesDOB;
-	}
-	
-	public SimpleIntegerProperty getEmployeesisActive() {
-		return EmployeesisActive;
-	}
-	
-	//setters
-	
-	public void setEmployeesID(int EmployeesID) {
-		this.EmployeesID.set(EmployeesID);
-	}
-	
-	public void setEmployeesFirst_Name(String First_Name) {
-		this.EmployeesFirst_Name.set(First_Name);
-	}
-	
-	public void setEmployeesLast_Name(String Last_Name) {
-		this.EmployeesLast_Name.set(Last_Name);
-	}
-	
-	public void setEmployeesEmail(String Email) {
-		this.EmployeesEmail.set(Email);
-	}
-	
-	public void setEmployeesPhone(String Phone) {
-		this.EmployeesPhone.set(Phone);
-	}
-	
-	public void setEmployeesAddress(String Address) {
-		this.EmployeesAddress.set(Address);
-	}
-	
-	public void setEmployeesDOB(String DOB) {
-		this.EmployeesDOB.set(DOB);
-	}
-	
-	public void setEmployeesisActive(int isActive) {
-		this.EmployeesisActive.set(isActive);
-	}
-*/
+	    //getters and setters
 	    public Integer getEmployeesID() {
 	        return EmployeesID.get();
 	    }
