@@ -49,7 +49,7 @@ public class LoginScreenController implements Initializable {
 				if(loginModel.isLogin(txtUsername.getText(), txtPassword.getText())){
 						loginModel.getConnection().close();
 						((Node)event.getSource()).getScene().getWindow().hide();
-					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 					    Scene MainMenu = new Scene(Main_Menu);
                         Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         mainMenu.hide();
@@ -81,7 +81,7 @@ public class LoginScreenController implements Initializable {
 					if(loginModel.isLogin(txtUsername.getText(), txtPassword.getText())){
 						loginModel.getConnection().close();
 						((Node)event.getSource()).getScene().getWindow().hide();
-					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+					    Parent Main_Menu = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 					    Scene MainMenu = new Scene(Main_Menu);
 	                    Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	                    mainMenu.hide();

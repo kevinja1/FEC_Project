@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" style="-fx-background-color: FDF5E6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
+<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" style="-fx-background-color: FDF5E6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-4.0" layoutY="16.0" prefHeight="80.0" prefWidth="634.0" style="-fx-font-family: &quot;Helvetica Neue&quot;; -fx-font-size: 25px;" text="Infinity Family Entertainment Center">
          <font>
