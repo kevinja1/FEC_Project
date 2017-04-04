@@ -5,6 +5,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,10 +31,10 @@ public class LoginScreenController implements Initializable {
 		public LoginScreenModel loginModel = new LoginScreenModel();
 		
 		@FXML
-		private TextField txtUsername;
+		private JFXTextField txtUsername;
 		
 		@FXML 
-		private PasswordField txtPassword;
+		private JFXPasswordField txtPassword;
 		
 		@Override
 		public void initialize(URL location, ResourceBundle resources){

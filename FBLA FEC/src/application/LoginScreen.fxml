@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
@@ -9,9 +10,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" style="-fx-background-color: FDF5E6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="16.0" prefHeight="80.0" prefWidth="353.0" text="Infinity Family Entertainment Center">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-4.0" layoutY="16.0" prefHeight="80.0" prefWidth="634.0" style="-fx-font-family: &quot;Helvetica Neue&quot;; -fx-font-size: 25px;" text="Infinity Family Entertainment Center">
          <font>
             <Font size="19.0" />
          </font>
@@ -19,29 +20,14 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </Label>
-      <VBox layoutX="253.0" layoutY="169.0" prefHeight="62.0" prefWidth="95.0">
+      <VBox layoutX="205.0" layoutY="181.0" prefHeight="114.0" prefWidth="190.0">
          <children>
-            <TextField fx:id="txtUsername" prefHeight="26.0" prefWidth="95.0" promptText="Username">
-               <font>
-                  <Font size="10.0" />
-               </font></TextField>
-            <PasswordField fx:id="txtPassword" promptText="Password">
-               <VBox.margin>
-                  <Insets top="4.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </PasswordField>
+            <JFXTextField fx:id="txtUsername" alignment="CENTER" prefHeight="43.0" prefWidth="190.0" promptText="Username" />
+            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" prefHeight="46.0" prefWidth="190.0" promptText="Password" />
          </children>
       </VBox>
-      <Ellipse fill="#1fd7ff" layoutX="300.0" layoutY="115.0" radiusX="39.0" radiusY="31.0" stroke="BLACK" strokeType="INSIDE" />
-      <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" layoutX="301.0" layoutY="115.0" startX="-150.0" stroke="BLACK" />
-      <Button layoutX="267.0" layoutY="239.0" mnemonicParsing="false" onAction="#Login" text="Sign In" />
-      <Label layoutX="6.0" layoutY="272.0" text="Powered by Infinity Systems">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Label>
+      <Ellipse fill="#1fd7ff" layoutX="300.0" layoutY="115.0" radiusX="39.0" radiusY="31.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: C0C0C0;" />
+      <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" layoutX="301.0" layoutY="115.0" startX="-150.0" stroke="BLACK" style="-fx-fill: DCDCDC;" />
+      <JFXButton layoutX="558.0" layoutY="254.0" onAction="#Login" ripplerFill="#e47804" style="-fx-background-color: DCDCDC;" text="Log in" />
    </children>
 </Pane>
