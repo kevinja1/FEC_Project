@@ -54,7 +54,7 @@ public class LoginScreenController implements Initializable {
                         Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         mainMenu.hide();
                         mainMenu.setScene(MainMenu);
-                        mainMenu.setTitle("Main Menu");
+                        mainMenu.setTitle("Infinity Family Entertainment Center");
                         mainMenu.show();
 				} 
 				else{

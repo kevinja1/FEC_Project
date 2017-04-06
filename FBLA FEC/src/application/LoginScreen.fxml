@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" style="-fx-background-color: FDF5E6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
+<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEnterPressed" prefHeight="295.0" prefWidth="628.0" style="-fx-background-color: #FDFEFE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginScreenController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-4.0" layoutY="16.0" prefHeight="80.0" prefWidth="634.0" style="-fx-font-family: &quot;Helvetica Neue&quot;; -fx-font-size: 25px;" text="Infinity Family Entertainment Center">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" prefHeight="80.0" prefWidth="634.0" style="-fx-font-family: &quot;Calibri&quot;; -fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: #154360;" text="Infinity Family Entertainment Center">
          <font>
             <Font size="19.0" />
          </font>
@@ -26,8 +26,11 @@
             <JFXPasswordField fx:id="txtPassword" alignment="CENTER" prefHeight="46.0" prefWidth="190.0" promptText="Password" />
          </children>
       </VBox>
-      <Ellipse fill="#1fd7ff" layoutX="300.0" layoutY="115.0" radiusX="39.0" radiusY="31.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: C0C0C0;" />
-      <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" layoutX="301.0" layoutY="115.0" startX="-150.0" stroke="BLACK" style="-fx-fill: DCDCDC;" />
-      <JFXButton layoutX="558.0" layoutY="254.0" onAction="#Login" ripplerFill="#e47804" style="-fx-background-color: DCDCDC;" text="Log in" />
+      <Ellipse fill="#1fd7ff" layoutX="300.0" layoutY="115.0" radiusX="39.0" radiusY="31.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #1F618D;" />
+      <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="150.0" fill="DODGERBLUE" layoutX="301.0" layoutY="115.0" startX="-150.0" stroke="BLACK" style="-fx-fill: #B9770E;" />
+      <JFXButton layoutX="550.0" layoutY="252.0" onAction="#Login" ripplerFill="#da7837" style="-fx-background-color: #FDFEFE; -fx-font-weight: bold; -fx-font-family: &quot;Calibri&quot;; -fx-text-fill: #154360; -fx-font-size: 15px;" text="Log in">
+         <font>
+            <Font size="14.0" />
+         </font></JFXButton>
    </children>
 </Pane>
