@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -20,14 +22,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -126,10 +133,35 @@ public class Employee_Shift_SchedulerController implements Initializable {
     private Statement statement;
     private ResultSet resultSet;
     private PageFormat format;
+    
+	@FXML
+	private TreeTableView<String> treeTableMenu;
+	@FXML
+	private TreeTableColumn<String, String> treeTableMenuColumn;
+	
+	public static boolean isSplashLoaded;
+	
+	TreeItem<String> item_l1 = new TreeItem<>("Scheduler");
+	TreeItem<String> item_l2 = new TreeItem<>("Managing");
+	TreeItem<String> parent1 = new TreeItem<>("Employee Management");
+	
+	TreeItem<String> item_r1 = new TreeItem<>("Attendance");
+	TreeItem<String> item_r2 = new TreeItem<>("Bar Chart");
+	TreeItem<String> item_r3 = new TreeItem<>("Line Chart");
+	TreeItem<String> parent2 = new TreeItem<>("Customer Management");
+	
+	TreeItem<String> rootie = new TreeItem<>("Menu");
+	
+	@FXML
+	private AnchorPane root;
+	
+	public static AnchorPane rootP;
+	
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
-
+		
+		
 		//setting the values of each column in the table
 		EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesLast_Name"));
@@ -229,6 +261,94 @@ public class Employee_Shift_SchedulerController implements Initializable {
         setLoadListThurs();
         setLoadListFri();
         setLoadListSat();
+        
+        parent1.getChildren().setAll(item_l1, item_l2);
+		parent2.getChildren().setAll(item_r1, item_r2, item_r3);
+		rootie.getChildren().setAll(parent1, parent2);
+		
+		treeTableMenuColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<String, String>, ObservableValue<String>>(){
+			@Override
+			public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<String, String> param){
+				return new SimpleStringProperty(param.getValue().getValue());
+				
+			}
+		});
+	
+		treeTableMenu.setRoot(rootie);
+		treeTableMenu.setShowRoot(false);
+		parent1.setExpanded(true);
+		parent2.setExpanded(true);
+		rootP = root;
+		treeTableMenu.getSelectionModel().select(item_l1);
+
+		 treeTableMenu.getSelectionModel()
+	        .selectedItemProperty()
+	        .addListener((observable, oldValue, newValue) -> {
+	        	if(newValue.getValue() == "Managing"){
+	        		BorderPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Scheduler"){
+	        		AnchorPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Attendance"){
+	        		AnchorPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Bar Chart"){
+	        		FXMLLoader loader = new FXMLLoader();
+	    	        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
+	    	        try {
+						loader.load();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    	        Parent p = loader.getRoot();
+	    	        Stage stage = new Stage();
+	    	        stage.setScene(new Scene(p));
+	    	        stage.setTitle("All Customer Attendance Data");
+	    	        stage.show();
+	        	}
+	        	else if(newValue.getValue() == "Line Chart"){
+	        		FXMLLoader loader = new FXMLLoader();
+	    	        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+	    	        try {
+						loader.load();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    	        Parent p = loader.getRoot();
+	    	        Stage stage = new Stage();
+	    	        stage.setScene(new Scene(p));
+	    	        stage.setTitle("Week Customer Attendance Data");
+	    	        stage.show();
+	        	}
+	        }
+	        );
         
     }
 	

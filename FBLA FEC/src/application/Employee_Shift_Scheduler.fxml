@@ -8,12 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ancpn" prefHeight="720.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Shift_SchedulerController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Employee_Shift_SchedulerController">
    <children>
-      <BorderPane layoutX="220.0" prefHeight="720.0" prefWidth="1080.0">
-         <top>
-            <VBox BorderPane.alignment="CENTER" />
-         </top>
+      <BorderPane prefHeight="720.0" prefWidth="1301.0">
          <center>
             <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <items>
@@ -170,38 +167,13 @@
               </items>
             </SplitPane>
          </center>
+         <left>
+            <TreeTableView fx:id="treeTableMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TreeTableColumn fx:id="treeTableMenuColumn" prefWidth="200.0" text="Menu" />
+              </columns>
+            </TreeTableView>
+         </left>
       </BorderPane>
-      <VBox prefHeight="720.0" prefWidth="220.0">
-         <children>
-            <Text fill="#0091ea" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity FEC" textAlignment="CENTER" wrappingWidth="220.4951171875">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </Text>
-            <Button fx:id="btAdd_Employee1" mnemonicParsing="false" onAction="#launchEmployeeMainMenu" prefHeight="52.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Main Menu (Employees)" textFill="WHITE">
-               <VBox.margin>
-                  <Insets top="25.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btAdd_Employee111" mnemonicParsing="false" onAction="#launchCustomerScreen" prefHeight="57.0" prefWidth="220.0" style="-fx-background-color: #408E2F#09B28C;" text="Customer Attendance" textFill="WHITE">
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btAdd_Employee11111" mnemonicParsing="false" onAction="#launchLineChart" prefHeight="62.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report (Line Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="btAdd_Employee1111" mnemonicParsing="false" onAction="#launchBarChart" prefHeight="60.0" prefWidth="220.0" style="-fx-background-color: #408E2F;" text="Customer Attendance Report (Bar Chart)" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
    </children>
 </AnchorPane>

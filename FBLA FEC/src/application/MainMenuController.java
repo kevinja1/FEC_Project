@@ -90,10 +90,76 @@ public class MainMenuController implements Initializable {
 			/*if(!isSplashLoaded){
 				loadSplashScreen();
 			}
-			*/
+*/
+			
 			 treeTableMenu.getSelectionModel()
 	        .selectedItemProperty()
-	        .addListener((observable, oldValue, newValue) -> System.out.println("Selected Text : " + newValue.getValue()));
+	        .addListener((observable, oldValue, newValue) -> {
+	        	if(newValue.getValue() == "Managing"){
+	        		BorderPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Scheduler"){
+	        		AnchorPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Attendance"){
+	        		AnchorPane pane;
+					try {
+						pane = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+						root.getChildren().setAll(pane);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+	        	}
+	        	else if(newValue.getValue() == "Bar Chart"){
+	        		FXMLLoader loader = new FXMLLoader();
+	    	        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
+	    	        try {
+						loader.load();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    	        Parent p = loader.getRoot();
+	    	        Stage stage = new Stage();
+	    	        stage.setScene(new Scene(p));
+	    	        stage.setTitle("All Customer Attendance Data");
+	    	        stage.show();
+	        	}
+	        	else if(newValue.getValue() == "Line Chart"){
+	        		FXMLLoader loader = new FXMLLoader();
+	    	        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+	    	        try {
+						loader.load();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    	        Parent p = loader.getRoot();
+	    	        Stage stage = new Stage();
+	    	        stage.setScene(new Scene(p));
+	    	        stage.setTitle("Week Customer Attendance Data");
+	    	        stage.show();
+	        	}
+	        }
+	        );
 	      
 			
 		}
@@ -105,12 +171,12 @@ public class MainMenuController implements Initializable {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource("WelcomeSplashScreen.fxml"));
 				root.getChildren().setAll(pane);
 				
-				FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
+				FadeTransition fadeIn = new FadeTransition(Duration.seconds(1.5), pane);
 				fadeIn.setFromValue(0);
 				fadeIn.setToValue(1);
 				fadeIn.setCycleCount(1);
 				
-				FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), pane);
+				FadeTransition fadeOut = new FadeTransition(Duration.seconds(1.5), pane);
 				fadeOut.setFromValue(1);
 				fadeOut.setToValue(0);
 				fadeOut.setCycleCount(1);
