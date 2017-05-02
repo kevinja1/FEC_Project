@@ -58,4 +58,5 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.AnchorPane"/>
 <fullyQualifiedTypeName name="java.awt.Insets"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
 </qualifiedTypeNameHistroy>

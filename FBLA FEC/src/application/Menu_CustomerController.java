@@ -129,13 +129,13 @@ public class Menu_CustomerController implements Initializable {
 	public static boolean isSplashLoaded;
 	
 	TreeItem<String> item_l1 = new TreeItem<>("Scheduler");
-	TreeItem<String> item_l2 = new TreeItem<>("Managing");
-	TreeItem<String> parent1 = new TreeItem<>("Employee Management");
+	TreeItem<String> item_l2 = new TreeItem<>("Details");
+	TreeItem<String> parent1 = new TreeItem<>("Employee");
 	
 	TreeItem<String> item_r1 = new TreeItem<>("Attendance");
 	TreeItem<String> item_r2 = new TreeItem<>("Bar Chart");
 	TreeItem<String> item_r3 = new TreeItem<>("Line Chart");
-	TreeItem<String> parent2 = new TreeItem<>("Customer Management");
+	TreeItem<String> parent2 = new TreeItem<>("Customer");
 	
 	TreeItem<String> rootie = new TreeItem<>("Menu");
 	
@@ -150,7 +150,9 @@ public class Menu_CustomerController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	
 		//"Configures" the value of each column in the table
-		
+		treeTableMenu.setStyle("-fx-focus-color: transparent;");
+    	treeTableMenuColumn.setStyle("-fx-focus-color: transparent;");
+
 		CustomersFirst_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersFirst_Name")); 
 		CustomersLast_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersLast_Name"));
 		CustomersID.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("Customers_ID"));
@@ -173,7 +175,7 @@ public class Menu_CustomerController implements Initializable {
 		dtDOB.setEditable(false);
 		dtAttendance.setEditable(false);
 		
-		 parent1.getChildren().setAll(item_l1, item_l2);
+		 parent1.getChildren().setAll(item_l2, item_l1);
 			parent2.getChildren().setAll(item_r1, item_r2, item_r3);
 			rootie.getChildren().setAll(parent1, parent2);
 			
@@ -194,7 +196,7 @@ public class Menu_CustomerController implements Initializable {
 			 treeTableMenu.getSelectionModel()
 		        .selectedItemProperty()
 		        .addListener((observable, oldValue, newValue) -> {
-		        	if(newValue.getValue() == "Managing"){
+		        	if(newValue.getValue() == "Details"){
 		        		BorderPane pane;
 						try {
 							pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));

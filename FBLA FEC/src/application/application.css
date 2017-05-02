@@ -1,5 +1,6 @@
 .root{
 	-fx-font-family:"Arial";
+	-fx-focus-color: transparent;
 }
 
 .axis {

@@ -38,6 +38,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.jfoenix.controls.JFXTextField;
 import com.sun.prism.paint.Color;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -64,15 +65,15 @@ public class Main_Menu_EmployeeController implements Initializable {
 	@FXML
 	private Button MainMenuClearButton;
 	@FXML
-	private TextField txtFirst_Name;
+	private JFXTextField txtFirst_Name;
 	@FXML
-	private TextField txtLast_Name;
+	private JFXTextField txtLast_Name;
 	@FXML
-	private TextField txtEmail;
+	private JFXTextField txtEmail;
 	@FXML
-	private TextField txtPhone;
+	private JFXTextField txtPhone;
 	@FXML
-	private TextField txtAddress;
+	private JFXTextField txtAddress;
 	@FXML
 	private TextField txtSearch;
 	@FXML
@@ -105,13 +106,13 @@ public class Main_Menu_EmployeeController implements Initializable {
 	
 	
 	TreeItem<String> item_l1 = new TreeItem<>("Scheduler");
-	TreeItem<String> item_l2 = new TreeItem<>("Managing");
-	TreeItem<String> parent1 = new TreeItem<>("Employee Management");
+	TreeItem<String> item_l2 = new TreeItem<>("Details");
+	TreeItem<String> parent1 = new TreeItem<>("Employee");
 	
 	TreeItem<String> item_r1 = new TreeItem<>("Attendance");
 	TreeItem<String> item_r2 = new TreeItem<>("Bar Chart");
 	TreeItem<String> item_r3 = new TreeItem<>("Line Chart");
-	TreeItem<String> parent2 = new TreeItem<>("Customer Management");
+	TreeItem<String> parent2 = new TreeItem<>("Customer");
 	
 	TreeItem<String> rootie = new TreeItem<>("Menu");
 	
@@ -124,8 +125,17 @@ public class Main_Menu_EmployeeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//"Configures" the value of each column in the table
+    	treeTableMenu.setStyle("-fx-focus-color: transparent;");
+    	treeTableMenuColumn.setStyle("-fx-focus-color: transparent;");
     	
-        
+    	txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+		dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+
+        MainMenuSetAllDisable();
     	EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesLast_Name"));
         EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesID"));
@@ -135,7 +145,7 @@ public class Main_Menu_EmployeeController implements Initializable {
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
         dtDOB.setEditable(false);
         
-        parent1.getChildren().setAll(item_l1, item_l2);
+        parent1.getChildren().setAll(item_l2, item_l1);
 		parent2.getChildren().setAll(item_r1, item_r2, item_r3);
 		rootie.getChildren().setAll(parent1, parent2);
 		
@@ -153,10 +163,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 		parent2.setExpanded(true);
 		rootP = root;
 		treeTableMenu.getSelectionModel().select(item_l2);
-		 treeTableMenu.getSelectionModel()
+		treeTableMenu.getSelectionModel()
 	        .selectedItemProperty()
 	        .addListener((observable, oldValue, newValue) -> {
-	        	if(newValue.getValue() == "Managing"){
+	        	if(newValue.getValue() == "Details"){
 	        		BorderPane pane;
 					try {
 						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
