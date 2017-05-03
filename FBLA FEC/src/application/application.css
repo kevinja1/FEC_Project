@@ -10,3 +10,9 @@
 .tree-cell:hover {
   -fx-background-color: #0093ff ;
 }
+
+
+.button:hover{
+	-fx-background-color: #00CED1 !important;
+	-fx-text-alignment: center;
+}

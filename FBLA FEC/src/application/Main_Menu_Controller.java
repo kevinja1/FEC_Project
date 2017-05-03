@@ -15,12 +15,15 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -38,6 +41,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
 import com.sun.prism.paint.Color;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -62,6 +67,12 @@ public class Main_Menu_Controller implements Initializable {
 	private TreeTableView<String> treeTableMenu;
 	@FXML
 	private TreeTableColumn<String, String> treeTableMenuColumn;
+	@FXML
+	private JFXDrawer topDrawer;
+	@FXML
+	private JFXButton button1;
+	@FXML
+	private HBox hbMenu;
 	
 	
 	TreeItem<String> item_l1 = new TreeItem<>("Scheduler");
@@ -84,11 +95,55 @@ public class Main_Menu_Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//"Configures" the value of each column in the table
+    	Image image = new Image(getClass().getResourceAsStream("/FBLA FEC/resources/ic_perm_identity_white_48pt_2x.png"));
+        button1.setGraphic(new ImageView(image));
+        
     	
-    	treeTableMenu.setStyle("-fx-focus-color: transparent;");
+    	/*treeTableMenu.setStyle("-fx-focus-color: transparent;");
     	treeTableMenuColumn.setStyle("-fx-focus-color: transparent;");
-
-        parent1.getChildren().setAll(item_l2, item_l1);
+*/
+    	for(Node node: hbMenu.getChildren()){
+    		if(node.getAccessibleText()!=null){
+    			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+    				switch(node.getAccessibleText()){
+    				case "Employee Details":
+    					BorderPane pane;
+    					try {
+    						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+    						root.getChildren().setAll(pane);
+    					} catch (IOException e3) {
+    						// TODO Auto-generated catch block
+    						e3.printStackTrace();
+    					}
+    				case "Schedule Employee":
+    					AnchorPane pane1;
+    					try {
+    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+    						root.getChildren().setAll(pane1);
+    					} catch (IOException e1) {
+    						// TODO Auto-generated catch block
+    						e1.printStackTrace();
+    					}
+    				case "Customer Attendance":
+    					AnchorPane pane2;
+    					try {
+    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+    						root.getChildren().setAll(pane2);
+    					} catch (IOException e2) {
+    						// TODO Auto-generated catch block
+    						e2.printStackTrace();
+    					}
+    				case "Reports":
+    				
+    				case "About":
+    				
+    				case "Exit":
+    				}
+    			});
+    		}
+    	}
+        /*
+    	parent1.getChildren().setAll(item_l2, item_l1);
 		parent2.getChildren().setAll(item_r1, item_r2, item_r3);
 		rootie.getChildren().setAll(parent1, parent2);
 		
@@ -175,7 +230,7 @@ public class Main_Menu_Controller implements Initializable {
 	        }
 	        );
 		
-		
+		*/
     }	
 }
 
