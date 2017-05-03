@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -70,7 +71,17 @@ public class Main_Menu_Controller implements Initializable {
 	@FXML
 	private JFXDrawer topDrawer;
 	@FXML
-	private JFXButton button1;
+	private JFXButton buttonDetails;
+	@FXML
+	private JFXButton buttonSchedule;
+	@FXML
+	private JFXButton buttonCustomer;
+	@FXML
+	private JFXButton buttonReports;
+	@FXML
+	private JFXButton buttonAbout;
+	@FXML
+	private JFXButton buttonExit;
 	@FXML
 	private HBox hbMenu;
 	
@@ -95,9 +106,15 @@ public class Main_Menu_Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//"Configures" the value of each column in the table
-    	Image image = new Image(getClass().getResourceAsStream("/FBLA FEC/resources/ic_perm_identity_white_48pt_2x.png"));
-        button1.setGraphic(new ImageView(image));
+    	//Image image = new Image(getClass().getResourceAsStream("application/ic_perm_identity_white_48pt_2x.png"));
+        buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
+        buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
+        buttonCustomer.setGraphic(new ImageView("application/ic_credit_card_white_48pt.png"));
+        buttonReports.setGraphic(new ImageView("application/ic_trending_up_white_48pt.png"));
+        buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
+        buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
         
+
     	
     	/*treeTableMenu.setStyle("-fx-focus-color: transparent;");
     	treeTableMenuColumn.setStyle("-fx-focus-color: transparent;");

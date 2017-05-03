@@ -1,15 +1,24 @@
 package application;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXDialog.DialogTransition;
 
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +32,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
@@ -37,9 +49,15 @@ public class LoginScreenController implements Initializable {
 		@FXML 
 		private JFXPasswordField txtPassword;
 		
+		@FXML 
+		private Pane rootpane;
+		
+		@FXML 
+		private StackPane stack;
+		
 		@Override
 		public void initialize(URL location, ResourceBundle resources){
-			txtPassword.requestFocus();
+			Platform.runLater( () -> rootpane.requestFocus() );
 		}
 		
 		//Method that launches the next screen when sign in button is pressed
@@ -59,11 +77,22 @@ public class LoginScreenController implements Initializable {
                         mainMenu.show();
 				} 
 				else{
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Error Login");
-					alert.setHeaderText(null);
-					alert.setContentText("Incorrect Username or Password");
-					alert.showAndWait();
+
+					JFXDialogLayout content = new JFXDialogLayout();
+					content.setHeading(new Text("Error Login"));
+					content.setBody(new Text("Incorrect Username or Password"));
+					JFXButton button = new JFXButton("Okay");
+					JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+					button.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event){
+							dialog.close();
+						}
+					});
+					content.setActions(button);
+					
+					dialog.show();
+					 
 					 
 			        txtUsername.clear();
 			        txtPassword.clear();
@@ -87,15 +116,25 @@ public class LoginScreenController implements Initializable {
 	                    Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	                    mainMenu.hide();
 	                    mainMenu.setScene(MainMenu);
-	                    mainMenu.setTitle("Main Menu");
+	                    mainMenu.setTitle("Infinity Family Entertainment Center");
 	                    mainMenu.show();
 					} 
 					else{
-						Alert alert = new Alert(AlertType.WARNING);
-						alert.setTitle("Error Login");
-						alert.setHeaderText(null);
-						alert.setContentText("Incorrect Username or Password");
-						alert.showAndWait();
+						
+						JFXDialogLayout content = new JFXDialogLayout();
+						content.setHeading(new Text("Error Login"));
+						content.setBody(new Text("Incorrect Username or Password"));
+						JFXButton button = new JFXButton("Okay");
+						JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+						button.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event){
+								dialog.close();
+							}
+						});
+						content.setActions(button);
+						
+						dialog.show();
 						 
 				        txtUsername.clear();
 				        txtPassword.clear();
