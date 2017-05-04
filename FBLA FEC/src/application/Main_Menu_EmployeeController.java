@@ -15,12 +15,14 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -38,7 +40,11 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableView;
 import com.sun.prism.paint.Color;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -77,7 +83,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	@FXML
 	private TextField txtSearch;
 	@FXML
-	private DatePicker dtDOB;
+	private JFXDatePicker dtDOB;
 	@FXML
 	private TableView<Main_Menu_EmployeeModel> TableEmployees;
 	@FXML
@@ -89,6 +95,22 @@ public class Main_Menu_EmployeeController implements Initializable {
 	@FXML
 	private TableColumn<Main_Menu_EmployeeModel, String> EmployeesEmail;
 	
+	@FXML
+	private JFXDrawer topDrawer;
+	@FXML
+	private JFXButton buttonDetails;
+	@FXML
+	private JFXButton buttonSchedule;
+	@FXML
+	private JFXButton buttonCustomer;
+	@FXML
+	private JFXButton buttonReports;
+	@FXML
+	private JFXButton buttonAbout;
+	@FXML
+	private JFXButton buttonExit;
+	@FXML
+	private HBox hbMenu;
 	
 	private boolean isMainMenuAddNewButtonClick;
 	private boolean isMainMenuEditButtonClick;
@@ -99,22 +121,7 @@ public class Main_Menu_EmployeeController implements Initializable {
     
     private int temp;
     
-    @FXML
-	private TreeTableView<String> treeTableMenu;
-	@FXML
-	private TreeTableColumn<String, String> treeTableMenuColumn;
-	
-	
-	TreeItem<String> item_l1 = new TreeItem<>("Scheduler");
-	TreeItem<String> item_l2 = new TreeItem<>("Details");
-	TreeItem<String> parent1 = new TreeItem<>("Employee");
-	
-	TreeItem<String> item_r1 = new TreeItem<>("Attendance");
-	TreeItem<String> item_r2 = new TreeItem<>("Bar Chart");
-	TreeItem<String> item_r3 = new TreeItem<>("Line Chart");
-	TreeItem<String> parent2 = new TreeItem<>("Customer");
-	
-	TreeItem<String> rootie = new TreeItem<>("Menu");
+    
 	
 	@FXML
 	private BorderPane root;
@@ -125,16 +132,8 @@ public class Main_Menu_EmployeeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	//"Configures" the value of each column in the table
-    	treeTableMenu.setStyle("-fx-focus-color: transparent;");
-    	treeTableMenuColumn.setStyle("-fx-focus-color: transparent;");
     	
-    	txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-
+    	
         MainMenuSetAllDisable();
     	EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesFirst_Name")); 
         EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel,String>("EmployeesLast_Name"));
@@ -145,92 +144,57 @@ public class Main_Menu_EmployeeController implements Initializable {
         TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
         dtDOB.setEditable(false);
         
-        parent1.getChildren().setAll(item_l2, item_l1);
-		parent2.getChildren().setAll(item_r1, item_r2, item_r3);
-		rootie.getChildren().setAll(parent1, parent2);
+        buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
+        buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
+        buttonCustomer.setGraphic(new ImageView("application/ic_group_white_2x.png"));
+        buttonReports.setGraphic(new ImageView("application/ic_insert_chart_white_2x.png"));
+        buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
+        buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
 		
-		treeTableMenuColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<String, String>, ObservableValue<String>>(){
-			@Override
-			public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<String, String> param){
-				return new SimpleStringProperty(param.getValue().getValue());
-				
-			}
-		});
-	
-		treeTableMenu.setRoot(rootie);
-		treeTableMenu.setShowRoot(false);
-		parent1.setExpanded(true);
-		parent2.setExpanded(true);
-		rootP = root;
-		treeTableMenu.getSelectionModel().select(item_l2);
-		treeTableMenu.getSelectionModel()
-	        .selectedItemProperty()
-	        .addListener((observable, oldValue, newValue) -> {
-	        	if(newValue.getValue() == "Details"){
-	        		BorderPane pane;
-					try {
-						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
-						root.getChildren().setAll(pane);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-	        	}
-	        	else if(newValue.getValue() == "Scheduler"){
-	        		AnchorPane pane;
-					try {
-						pane = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-						root.getChildren().setAll(pane);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-	        	}
-	        	else if(newValue.getValue() == "Attendance"){
-	        		AnchorPane pane;
-					try {
-						pane = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
-						root.getChildren().setAll(pane);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-	        	}
-	        	else if(newValue.getValue() == "Bar Chart"){
-	        		FXMLLoader loader = new FXMLLoader();
-	    	        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
-	    	        try {
-						loader.load();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	    	        Parent p = loader.getRoot();
-	    	        Stage stage = new Stage();
-	    	        stage.setScene(new Scene(p));
-	    	        stage.setTitle("All Customer Attendance Data");
-	    	        stage.show();
-	        	}
-	        	else if(newValue.getValue() == "Line Chart"){
-	        		FXMLLoader loader = new FXMLLoader();
-	    	        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
-	    	        try {
-						loader.load();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	    	        Parent p = loader.getRoot();
-	    	        Stage stage = new Stage();
-	    	        stage.setScene(new Scene(p));
-	    	        stage.setTitle("Week Customer Attendance Data");
-	    	        stage.show();
-	        	}
-	        }
-	        );
+        for(Node node: hbMenu.getChildren()){
+    		if(node.getAccessibleText()!=null){
+    			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+    				System.out.println(node.getAccessibleText());
+    				switch(node.getAccessibleText()){
+    				case "Employee Details":
+    					BorderPane pane;
+    					try {
+    						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+    						root.getChildren().setAll(pane);
+    					} catch (IOException e3) {
+    						// TODO Auto-generated catch block
+    						e3.printStackTrace();
+    					}
+    					break;
+    				case "Schedule Employee":
+    					AnchorPane pane1;
+    					try {
+    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+    						root.getChildren().setAll(pane1);
+    					} catch (IOException e1) {
+    						// TODO Auto-generated catch block
+    						e1.printStackTrace();
+    					}
+    					break;
+    				case "Customer Attendance":
+    					AnchorPane pane2;
+    					try {
+    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+    						root.getChildren().setAll(pane2);
+    					} catch (IOException e2) {
+    						// TODO Auto-generated catch block
+    						e2.printStackTrace();
+    					}
+    					break;
+    				case "Reports":
+    				
+    				case "About":
+    				
+    				case "Exit":
+    				}
+    			});
+    		}
+    	}
 		
 		
     }
@@ -294,13 +258,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 	        txtAddress.clear();
 	        txtEmail.clear();
 	        dtDOB.setValue(null);
-	        
-	        txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 	       	        
 	    }
 	
@@ -347,14 +304,6 @@ public class Main_Menu_EmployeeController implements Initializable {
 			        TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
 			        isMainMenuEditButtonClick=false;
 			        isMainMenuAddNewButtonClick = false;
-			        
-					txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-					dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-
 	            }
 	        }
 		        catch (SQLException e){
@@ -458,6 +407,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 	    }
 	 
 	 //The following launch methods are for loading other screens in the program when their respective buttons are clicked
+	 
 	 @FXML
 	    private void launchScheduler(Event event) throws IOException{
 		 	((Node)event.getSource()).getScene().getWindow().hide();
@@ -549,15 +499,9 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter a Valid First Name");
 			 alert.showAndWait();
 			 txtFirst_Name.clear();
-			 txtFirst_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 
 			 txtFirst_Name.requestFocus();
 			 
-			 //txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			 	
 			 return false;
 		}
@@ -577,15 +521,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter a Valid Last Name");
 			 alert.showAndWait();
 			 txtLast_Name.clear();
-			 txtLast_Name.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			
 			 txtLast_Name.requestFocus();
 			 
-			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 //txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			
 			 
 			 return false;
 		 }
@@ -604,15 +543,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter a Valid Email");
 			 alert.showAndWait();
 			 txtEmail.clear();
-			 txtEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+		
 			 txtEmail.requestFocus();
 			 
-			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 //txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			
 			 return false;
 		 }
 	 }
@@ -630,15 +564,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
 			 alert.showAndWait();
 			 txtPhone.clear();
-			 txtPhone.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			
 			 txtPhone.requestFocus();
 			 
-			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 //txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			
 			 return false;
 			 
 		 }
@@ -654,14 +583,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter a DOB");
 			 alert.showAndWait();
-			 dtDOB.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			 
-			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 //dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
 			 return false;
 		 }
 		 
@@ -677,15 +599,10 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Enter an Address");
 			 alert.showAndWait();
-			 txtAddress.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			 
 			 txtAddress.requestFocus();
 			 
-			 txtFirst_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtLast_Name.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 //txtAddress.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 txtEmail.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-		   	 txtPhone.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
-			 dtDOB.setStyle("-fx-border-color: ccc; -fx-border-width: 1px ;");
+			 
 			 
 			 return false;
 		 } 

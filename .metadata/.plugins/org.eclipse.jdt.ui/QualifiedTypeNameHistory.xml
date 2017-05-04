@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.time.LocalDate"/>
 <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
 <fullyQualifiedTypeName name="javafx.print.PrinterJob"/>
 <fullyQualifiedTypeName name="javafx.scene.Node"/>
@@ -42,7 +41,6 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.AnchorPane"/>
 <fullyQualifiedTypeName name="java.awt.Insets"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
-<fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDrawer"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.HBox"/>
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXButton"/>
 <fullyQualifiedTypeName name="java.beans.EventHandler"/>
 <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXTreeTableView"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
 </qualifiedTypeNameHistroy>

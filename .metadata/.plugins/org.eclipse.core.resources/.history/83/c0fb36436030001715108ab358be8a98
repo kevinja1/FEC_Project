@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main_Menu_EmployeeController">
+   <center>
+      <SplitPane dividerPositions="0.33867735470941884" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="327.0">
+               <children>
+                  <Button fx:id="txtAd" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuAddNewButtonClick" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: #B9770E;" text="Add" textFill="WHITE" />
+                  <Button layoutX="114.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuEditButtonClick" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: #B9770E;" text="Edit" textFill="WHITE" />
+                  <Button layoutX="226.0" layoutY="14.0" mnemonicParsing="false" onAction="#setMainMenuDeleteButtonClick" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #B9770E;" text="Delete" textFill="WHITE" />
+                  <Separator layoutX="23.0" layoutY="99.0" prefHeight="2.0" prefWidth="272.0" />
+                  <GridPane layoutX="24.0" layoutY="132.0" onKeyReleased="#setOnPhoneKeyReleased" prefHeight="308.0" prefWidth="301.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DOB" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="dtDOB" disable="true" prefHeight="27.0" prefWidth="146.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <JFXTextField fx:id="txtFirst_Name" alignment="CENTER" prefHeight="43.0" prefWidth="190.0" GridPane.columnIndex="1" />
+                        <JFXTextField fx:id="txtLast_Name" alignment="CENTER" prefHeight="53.0" prefWidth="143.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <JFXTextField fx:id="txtEmail" alignment="CENTER" prefHeight="43.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <JFXTextField fx:id="txtPhone" alignment="CENTER" onKeyReleased="#setOnPhoneKeyReleased" prefHeight="43.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXTextField fx:id="txtAddress" alignment="CENTER" prefHeight="43.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Separator layoutX="23.0" layoutY="456.0" prefHeight="2.0" prefWidth="272.0" />
+                  <Button fx:id="MainMenuSaveButton" disable="true" layoutX="176.0" layoutY="479.0" mnemonicParsing="false" onAction="#setMainMenuSaveButtonClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #B9770E; -fx-text-fill: white;" text="Save" />
+                  <Button fx:id="MainMenuClearButton" disable="true" layoutX="64.0" layoutY="479.0" mnemonicParsing="false" onAction="#MainMenuSetAllClear" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #B9770E; -fx-text-fill: white;" text="Clear" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-9.0" layoutY="41.0" prefHeight="58.0" prefWidth="335.0" style="-fx-font-family: &quot;Calibri&quot;; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #154360;" text="Employee Details">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="675.0">
+               <children>
+                  <TextField fx:id="txtSearch" layoutX="459.0" layoutY="14.0" onKeyReleased="#setOnSearchKeyPressed" promptText="Employee Name" />
+                  <TableView fx:id="TableEmployees" layoutY="54.0" onMouseClicked="#handleDoubleClick" prefHeight="554.0" prefWidth="656.0">
+                     <columns>
+                        <TableColumn fx:id="EmployeesID" prefWidth="40.0" text="ID" />
+                        <TableColumn fx:id="EmployeesFirst_Name" prefWidth="178.0" text="First Name" />
+                        <TableColumn fx:id="EmployeesLast_Name" prefWidth="175.0" text="Last Name" />
+                        <TableColumn fx:id="EmployeesEmail" prefWidth="262.0" text="Email" />
+                     </columns>
+                  </TableView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="284.0" layoutY="-12.0" prefHeight="80.0" prefWidth="247.0" style="-fx-font-family: &quot;Calibri&quot;; -fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #154360;" text="Search">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+   <left>
+      <TreeTableView fx:id="treeTableMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TreeTableColumn fx:id="treeTableMenuColumn" editable="false" prefWidth="199.0" resizable="false" sortable="false" text="Menu" />
+         </columns>
+      </TreeTableView>
+   </left>
+</BorderPane>
