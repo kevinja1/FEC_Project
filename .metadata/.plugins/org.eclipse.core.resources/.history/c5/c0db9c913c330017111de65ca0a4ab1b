@@ -178,7 +178,7 @@ public class Menu_Customer_DetailsController implements Initializable {
     				case "Customer Attendance":
     					AnchorPane pane2;
     					try {
-    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
+    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
     						root.getChildren().setAll(pane2);
     					} catch (IOException e2) {
     						// TODO Auto-generated catch block
