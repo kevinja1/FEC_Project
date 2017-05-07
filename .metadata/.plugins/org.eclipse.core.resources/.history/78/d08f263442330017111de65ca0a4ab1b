@@ -81,8 +81,6 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private Button CustomerSaveButton;
 	@FXML
 	private Button CustomerClearButton;
-	@FXML
-	private Button btOK;
 	
 	@FXML
 	private TextField txtSearch;
@@ -627,7 +625,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 
 	//Method called when a user selects a customer from the table
 	@FXML
-	public void setOKClicked(Event event) throws IOException{
+	public void setOKClicked(MouseEvent event) throws IOException{
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
 			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 			
@@ -635,7 +633,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 			try {
 				FXMLLoader loader = new FXMLLoader(
 					    getClass().getResource(
-					      "Menu_Customer_Attendance.fxml"
+					      "Menu_Customer_Details.fxml"
 					    )
 					  );
 

@@ -627,7 +627,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 
 	//Method called when a user selects a customer from the table
 	@FXML
-	public void setOKClicked(Event event) throws IOException{
+	public void setOKClicked(MouseEvent event) throws IOException{
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
 			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 			

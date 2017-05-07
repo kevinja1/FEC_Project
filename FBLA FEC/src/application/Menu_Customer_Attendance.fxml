@@ -82,7 +82,7 @@
             <TableColumn fx:id="CustomerAttAMPM" prefWidth="94.0" text="AM/PM" />
          </columns>
       </TableView>
-      <Text fill="#0091ea" layoutX="922.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Attendance" wrappingWidth="193.712890625">
+      <Text fx:id="lblCustomerAtt" fill="#0091ea" layoutX="922.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Attendance" wrappingWidth="193.712890625">
          <font>
             <Font size="18.0" />
          </font>

@@ -146,9 +146,15 @@ public class Menu_CustomerController implements Initializable {
         buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
         buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
 	      
+        if(customerID != -1){
+        	TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
+					+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + customerID + ";"));
+        	CustomersAttendanceSetAllDisable();
+        	System.out.println(customerID);
+        }
 	      
 		rdAM.setSelected(true);
-		CustomersAttendanceSetAllDisable();
+
 			
 			dtAttendance.setEditable(false);
 			
@@ -202,16 +208,11 @@ public class Menu_CustomerController implements Initializable {
 
 	public void setCustomer(int ID){
 		this.customerID = ID;
-		
-		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-				+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + customerID + ";"));
-		CustomersAttendanceSetAllEnable();
-  
 	}
 
 	//Display Customer Attendance Text Fields
 	private void CustomersAttendanceSetAllDisable(){
-		DeleteAttendanceButton.setDisable(true);
+		//DeleteAttendanceButton.setDisable(true);
 		dtAttendance.setDisable(true);
 		SaveAttendanceButton.setDisable(true);
 		rdAM.setDisable(true);
@@ -241,48 +242,37 @@ public class Menu_CustomerController implements Initializable {
 	//Method to save a new Customer Attendance
 	@FXML
 	private void setCustomerAttendanceSaveButtonClick(Event event){
-		if(customerID != -1){
-			try{
-				if(validateAttendanceDate()){
-					connection = SqliteConnection.Connector();
-					statement = connection.createStatement();
+		try{	       
+			if(validateAttendanceDate()){
+				connection = SqliteConnection.Connector();
+				statement = connection.createStatement();
 
-					
+				
 
-					int rowsAffected = statement.executeUpdate("insert into`Customers_Attendance` "+
-							"(ID, `Date`,`AMPM`,`Day_of_Week`"+
-							""+
-							") "+
-							"values ("+customerID+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM() +"','" +dtAttendance.getValue().getDayOfWeek().toString()
-							+"'); ");
-
+				int rowsAffected = statement.executeUpdate("insert into`Customers_Attendance` "+
+						"(ID, `Date`,`AMPM`,`Day_of_Week`"+
+						""+
+						") "+
+						"values ("+customerID+ ",'"+dtAttendance.getValue().toString()+"','"+AMPM() +"','" +dtAttendance.getValue().getDayOfWeek().toString()
+						+"'); ");
 
 
-					
-					TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-							+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + customerID + ";"));
 
-					/*CustomersAttendanceSetAllClear();
-					btShowAllAtt.setDisable(false);*/
-					statement.close();
-					connection.close();
-				}
+				TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers_Attendance where ID = " + customerID + ";"));
+				TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
+						+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + customerID + ";"));
 
+				/*CustomersAttendanceSetAllClear();
+				btShowAllAtt.setDisable(false);*/
+				statement.close();
+				connection.close();
 			}
-			catch (SQLException e){
-				e.printStackTrace();
-			}
-    
+
 		}
-		else{
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("No Customer Selected");
-			tray.setMessage("To add, please select an Customer first");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(5000));
+		catch (SQLException e){
+			e.printStackTrace();
 		}
-		
+
 	}
 
 
@@ -333,7 +323,7 @@ public class Menu_CustomerController implements Initializable {
 				statement.executeUpdate(sqlQuery);
 
 				TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList("SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-						+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = " + customerID + ";"));
+						+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
 				statement.close();
 				connection.close();
 

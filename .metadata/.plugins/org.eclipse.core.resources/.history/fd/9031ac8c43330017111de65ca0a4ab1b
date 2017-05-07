@@ -627,7 +627,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 
 	//Method called when a user selects a customer from the table
 	@FXML
-	public void setOKClicked(Event event) throws IOException{
+	public void setOKClicked(MouseEvent event) throws IOException{
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
 			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 			
@@ -642,7 +642,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 				pane = loader.load();
 				Menu_CustomerController controller = 
 					    loader.<Menu_CustomerController>getController();
-			   controller.setCustomer(getSelectedRow.getCustomers_ID());
+			   //controller.setCustomer(getSelectedRow.getCustomers_ID());
 			   root.getChildren().setAll(pane);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

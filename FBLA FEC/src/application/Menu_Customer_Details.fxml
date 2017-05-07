@@ -94,7 +94,7 @@
                         <TableColumn fx:id="CustomersEmail" prefWidth="273.0" text="Email" />
                      </columns>
                   </TableView>
-                  <Button layoutX="14.0" layoutY="499.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="OK" textFill="WHITE">
+                  <Button fx:id="btOK" layoutX="14.0" layoutY="499.0" mnemonicParsing="false" onAction="#setOKClicked" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="OK" textFill="WHITE">
                      <padding>
                         <Insets left="1.0" right="1.0" />
                      </padding>

@@ -643,6 +643,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 				Menu_CustomerController controller = 
 					    loader.<Menu_CustomerController>getController();
 			   controller.setCustomer(getSelectedRow.getCustomers_ID());
+			   System.out.println(getSelectedRow.getCustomers_ID());
 			   root.getChildren().setAll(pane);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
