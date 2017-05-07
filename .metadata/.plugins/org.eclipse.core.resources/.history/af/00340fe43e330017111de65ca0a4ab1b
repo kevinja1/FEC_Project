@@ -105,6 +105,7 @@ public class Main_Menu_Controller implements Initializable {
         for(Node node: hbMenu.getChildren()){
     		if(node.getAccessibleText()!=null){
     			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+
     				switch(node.getAccessibleText()){
     				case "Employee Details":
     					BorderPane pane;
