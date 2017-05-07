@@ -141,7 +141,7 @@ public class Menu_Customer_DetailsController implements Initializable {
 		
 
 		//Fills in the customers in the customer table
-		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers"));
+		//TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers"));
 		
 		buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
         buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));

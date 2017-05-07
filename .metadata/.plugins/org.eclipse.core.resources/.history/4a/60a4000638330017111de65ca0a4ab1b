@@ -179,7 +179,7 @@ public class Menu_CustomerController implements Initializable {
 	    				case "Customer Attendance":
 	    					AnchorPane pane2;
 	    					try {
-	    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
+	    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
 	    						root.getChildren().setAll(pane2);
 	    					} catch (IOException e2) {
 	    						// TODO Auto-generated catch block
@@ -296,7 +296,7 @@ public class Menu_CustomerController implements Initializable {
 	 	Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	 	Customer_Screen.hide();
 	 	Customer_Screen.setScene(customer_screen);
-	 	Customer_Screen.setTitle("Infinity Family Entertainment Center");
+	 	Customer_Screen.setTitle("Customer Screen");
 	 	Customer_Screen.show();
 	 	
 	}

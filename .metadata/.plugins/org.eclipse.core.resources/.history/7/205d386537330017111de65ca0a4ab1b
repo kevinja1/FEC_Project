@@ -179,7 +179,7 @@ public class Menu_CustomerController implements Initializable {
 	    				case "Customer Attendance":
 	    					AnchorPane pane2;
 	    					try {
-	    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
+	    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
 	    						root.getChildren().setAll(pane2);
 	    					} catch (IOException e2) {
 	    						// TODO Auto-generated catch block
@@ -289,15 +289,15 @@ public class Menu_CustomerController implements Initializable {
 	}
 
 	@FXML
-	private void LaunchCustomerDetails(Event event) throws IOException{
-		((Node)event.getSource()).getScene().getWindow().hide();
-	 	Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer_Details.fxml"));
-	 	Scene customer_screen = new Scene(CustomerScreen);
-	 	Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	 	Customer_Screen.hide();
-	 	Customer_Screen.setScene(customer_screen);
-	 	Customer_Screen.setTitle("Infinity Family Entertainment Center");
-	 	Customer_Screen.show();
+	private void LaunchCustomerDetails(Event event){
+		BorderPane pane2;
+		try {
+			pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Details.fxml"));
+			root.getChildren().setAll(pane2);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 	 	
 	}
 

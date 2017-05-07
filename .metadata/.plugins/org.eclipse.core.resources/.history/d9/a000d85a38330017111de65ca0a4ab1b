@@ -61,8 +61,8 @@ public class Menu_Customer_DetailsController implements Initializable {
 	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	
 	//UI Features
-	//@FXML
-	//BorderPane ancpane;
+	@FXML
+	AnchorPane ancpane;
 	
 	@FXML
 	private JFXTextField txtFirst_Name;
@@ -122,9 +122,9 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private HBox hbMenu;
 	
 	@FXML
-	private BorderPane root;
+	private AnchorPane root;
 	
-	public static BorderPane rootP;
+	public static AnchorPane rootP;
 	
 
 
