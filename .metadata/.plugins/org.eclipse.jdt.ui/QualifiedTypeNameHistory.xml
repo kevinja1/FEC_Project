@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javafx.scene.control.Button"/>
-<fullyQualifiedTypeName name="javafx.print.PrinterJob"/>
 <fullyQualifiedTypeName name="javafx.scene.Node"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 <fullyQualifiedTypeName name="java.awt.print.PageFormat"/>
@@ -55,9 +53,11 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialogLayout"/>
 <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
-<fullyQualifiedTypeName name="com.jfoenix.controls.JFXButton"/>
 <fullyQualifiedTypeName name="java.beans.EventHandler"/>
 <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTreeTableView"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXRadioButton"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXButton"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXTextField"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;FBLA FEC/src/application/Menu_Customer1.fxml&apos; to &apos;Menu_Customer_Details.fxml&apos;" description="Rename resource &apos;Menu_Customer1.fxml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/application/Menu_Customer1.fxml" name="Menu_Customer_Details.fxml" stamp="1494166253306" updateReferences="true"/>
+</session>

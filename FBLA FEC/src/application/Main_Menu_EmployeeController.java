@@ -154,7 +154,7 @@ public class Main_Menu_EmployeeController implements Initializable {
         for(Node node: hbMenu.getChildren()){
     		if(node.getAccessibleText()!=null){
     			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-    				System.out.println(node.getAccessibleText());
+    				
     				switch(node.getAccessibleText()){
     				case "Employee Details":
     					BorderPane pane;
@@ -179,7 +179,7 @@ public class Main_Menu_EmployeeController implements Initializable {
     				case "Customer Attendance":
     					AnchorPane pane2;
     					try {
-    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
     						root.getChildren().setAll(pane2);
     					} catch (IOException e2) {
     						// TODO Auto-generated catch block
