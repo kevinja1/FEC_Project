@@ -86,7 +86,7 @@
             <AnchorPane>
                <children>
                   <JFXTextField fx:id="txtSearch" layoutX="14.0" layoutY="30.0" onKeyReleased="#setOnSearchKeyPressed" prefHeight="25.0" prefWidth="705.0" promptText="Search Customer Name..." />
-                  <TableView fx:id="TableEmployees" layoutX="-3.0" layoutY="76.0" prefHeight="416.0" prefWidth="745.0">
+                  <TableView fx:id="TableCustomers" layoutX="-3.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="745.0">
                      <columns>
                         <TableColumn fx:id="CustomersID" prefWidth="40.0" text="ID" />
                         <TableColumn fx:id="CustomersFirst_Name" prefWidth="178.0" text="First Name" />
