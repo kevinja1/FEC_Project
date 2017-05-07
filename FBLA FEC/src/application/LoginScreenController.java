@@ -83,6 +83,7 @@ public class LoginScreenController implements Initializable {
 					content.setBody(new Text("Incorrect Username or Password"));
 					JFXButton button = new JFXButton("Okay");
 					JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+					content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 					button.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent event){
@@ -126,6 +127,7 @@ public class LoginScreenController implements Initializable {
 						content.setBody(new Text("Incorrect Username or Password"));
 						JFXButton button = new JFXButton("Okay");
 						JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+						content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 						button.setOnAction(new EventHandler<ActionEvent>() {
 							@Override
 							public void handle(ActionEvent event){
@@ -135,6 +137,7 @@ public class LoginScreenController implements Initializable {
 						content.setActions(button);
 						
 						dialog.show();
+						 
 						 
 				        txtUsername.clear();
 				        txtPassword.clear();

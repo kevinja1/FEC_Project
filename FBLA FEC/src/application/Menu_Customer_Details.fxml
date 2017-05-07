@@ -83,7 +83,7 @@
    <center>
       <SplitPane dividerPositions="0.6218697829716193" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
-            <AnchorPane>
+            <AnchorPane prefHeight="521.0" prefWidth="742.0">
                <children>
                   <JFXTextField fx:id="txtSearch" layoutX="14.0" layoutY="30.0" onKeyReleased="#setOnSearchKeyPressed" prefHeight="25.0" prefWidth="705.0" promptText="Search Customer Name..." />
                   <TableView fx:id="TableCustomers" layoutX="-3.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="745.0">
@@ -143,7 +143,7 @@
                               <Cursor fx:constant="OPEN_HAND" />
                            </cursor>
                         </Button>
-                        <Button layoutX="106.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerEditButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="Edit" textFill="WHITE">
+                        <Button fx:id="txtEdit" layoutX="106.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerEditButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="Edit" textFill="WHITE">
                            <padding>
                               <Insets left="1.0" right="1.0" />
                            </padding>
@@ -153,7 +153,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <Button layoutX="185.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerDeleteButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #DC143C;" text="Delete" textFill="WHITE">
+                  <Button fx:id="txtDelete" layoutX="185.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerDeleteButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #DC143C;" text="Delete" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
@@ -166,7 +166,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="txtAd" layoutX="8.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomersAddNewButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #1E90FF;" text="Add" textFill="WHITE">
+                  <Button fx:id="txtAdd" layoutX="8.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomersAddNewButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #1E90FF;" text="Add" textFill="WHITE">
                      <padding>
                         <Insets right="1.0" />
                      </padding>

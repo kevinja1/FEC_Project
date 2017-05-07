@@ -188,9 +188,24 @@ public class Menu_CustomerController implements Initializable {
 	    					}
 	    					break;
 	    				case "Reports":
-	    				
+	    					BorderPane pane3;
+	    					try {
+	    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
+	    						root.getChildren().setAll(pane3);
+	    					} catch (IOException e4) {
+	    						// TODO Auto-generated catch block
+	    						e4.printStackTrace();
+	    					}
+	    					break;
 	    				case "About":
-	    				
+	    					BorderPane pane4;
+	    					try {
+	    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
+	    						root.getChildren().setAll(pane4);
+	    					} catch (IOException e5) {
+	    						// TODO Auto-generated catch block
+	    						e5.printStackTrace();
+	    					}
 	    				case "Exit":
 	    				}
 	    			});

@@ -128,8 +128,12 @@ public class Menu_Customer_DetailsController implements Initializable {
 	
 	public static BorderPane rootP;
 	
-
-
+	@FXML
+	private Button txtAdd;
+	@FXML
+	private Button txtEdit;
+	@FXML
+	private Button txtDelete;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
@@ -188,9 +192,24 @@ public class Menu_Customer_DetailsController implements Initializable {
     					}
     					break;
     				case "Reports":
-    				
+    					BorderPane pane3;
+    					try {
+    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
+    						root.getChildren().setAll(pane3);
+    					} catch (IOException e4) {
+    						// TODO Auto-generated catch block
+    						e4.printStackTrace();
+    					}
+    					break;
     				case "About":
-    				
+    					BorderPane pane4;
+    					try {
+    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
+    						root.getChildren().setAll(pane4);
+    					} catch (IOException e5) {
+    						// TODO Auto-generated catch block
+    						e5.printStackTrace();
+    					}
     				case "Exit":
     				}
     			});
@@ -203,6 +222,8 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private void setCustomersAddNewButtonClick(Event event){
 		CustomersSetAllEnable();
 		isCustomersAddNewButtonClick = true;
+		txtEdit.setDisable(true);
+		txtDelete.setDisable(true);
 	}
 
 	//Enables the text fields for users to enter information
@@ -269,6 +290,8 @@ public class Menu_Customer_DetailsController implements Initializable {
 
 				if(isCustomersAddNewButtonClick){
 					isCustomersEditButtonClick = true;
+					txtEdit.setDisable(false);
+					txtDelete.setDisable(false);
 					int rowsAffected = statement.executeUpdate("insert into`Customers` "+
 							"(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
 							"`Address`,`DOB`"+
@@ -284,6 +307,8 @@ public class Menu_Customer_DetailsController implements Initializable {
 				}
 				else if (isCustomersEditButtonClick){
 					isCustomersAddNewButtonClick = false;
+					txtAdd.setDisable(false);
+					txtDelete.setDisable(false);;
 					int rowsAffected = statement.executeUpdate("update Customers set "+
 							"First_Name = '"+txtFirst_Name.getText()+"',"+
 							"Last_Name = '"+txtLast_Name.getText()+"',"+
@@ -320,6 +345,8 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private void setCustomerEditButtonClick(Event event){
 
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
+			txtAdd.setDisable(true);
+			txtDelete.setDisable(true);
 			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
 			String sqlQuery = "select * FROM Customers where ID = "+getSelectedRow.getCustomers_ID()+";"; 
 			try {

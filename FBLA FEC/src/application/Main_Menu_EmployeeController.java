@@ -23,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -42,6 +44,8 @@ import java.util.regex.Pattern;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -51,6 +55,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 
 import javafx.scene.control.DatePicker;
@@ -66,6 +71,12 @@ public class Main_Menu_EmployeeController implements Initializable {
 	//Features of the UI
 	@FXML
 	private Button txtAdd;
+	@FXML
+	private StackPane stack;
+	@FXML
+	private Button txtEdit;
+	@FXML
+	private Button txtDelete;
 	@FXML
 	private Button MainMenuSaveButton;
 	@FXML
@@ -187,9 +198,24 @@ public class Main_Menu_EmployeeController implements Initializable {
     					}
     					break;
     				case "Reports":
-    				
+    					BorderPane pane3;
+    					try {
+    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
+    						root.getChildren().setAll(pane3);
+    					} catch (IOException e4) {
+    						// TODO Auto-generated catch block
+    						e4.printStackTrace();
+    					}
+    					break;
     				case "About":
-    				
+    					BorderPane pane4;
+    					try {
+    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
+    						root.getChildren().setAll(pane4);
+    					} catch (IOException e5) {
+    						// TODO Auto-generated catch block
+    						e5.printStackTrace();
+    					}
     				case "Exit":
     				}
     			});
@@ -204,6 +230,8 @@ public class Main_Menu_EmployeeController implements Initializable {
     private void setMainMenuAddNewButtonClick(Event event){
         MainMenuSetAllEnable();
         MainMenuSetAllClear();
+        txtEdit.setDisable(true);
+        txtDelete.setDisable(true);
         isMainMenuAddNewButtonClick = true;
     }
 	
@@ -272,6 +300,8 @@ public class Main_Menu_EmployeeController implements Initializable {
 		            statement = connection.createStatement();
 		            
 	            	if(isMainMenuAddNewButtonClick){
+	            		txtEdit.setDisable(false);
+	            		txtDelete.setDisable(false);
 		                int rowsAffected = statement.executeUpdate("insert into`Employees` "+
 		                        "(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
 		                        "`Address`,`DOB`"+
@@ -284,7 +314,8 @@ public class Main_Menu_EmployeeController implements Initializable {
 		           
 		            }
 		            else if (isMainMenuEditButtonClick){
-
+		            	txtAdd.setDisable(false);
+		            	txtDelete.setDisable(false);
 		                int rowsAffected = statement.executeUpdate("update Employees set "+
 		                        "First_Name = '"+txtFirst_Name.getText()+"',"+
 		                        "Last_Name = '"+txtLast_Name.getText()+"',"+                      
@@ -319,6 +350,8 @@ public class Main_Menu_EmployeeController implements Initializable {
 	    private void setMainMenuEditButtonClick(Event event){
 	        
 	     if(TableEmployees.getSelectionModel().getSelectedItem()!=null) {
+	    	 txtAdd.setDisable(true);
+	    	 txtDelete.setDisable(true);
 	    	 Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
 	        	String sqlQuery = "select * FROM Employees where ID = "+getSelectedRow.getEmployeesID()+";";
 	        	 
@@ -347,12 +380,22 @@ public class Main_Menu_EmployeeController implements Initializable {
 
 	     }
 	     else{
-	    	    NotificationType notificationType = NotificationType.ERROR;
-	            TrayNotification tray = new TrayNotification();
-	            tray.setTitle("No Employee Selected");
-	            tray.setMessage("To edit, please select an Employee from the table");
-	            tray.setNotificationType(notificationType);
-	            tray.showAndDismiss(Duration.millis(5000));
+	    	 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("No Employee Selected"));
+				content.setBody(new Text("To edit please select an employee from the  table"));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
+			
 	     }
 		 		
 	    }
@@ -383,12 +426,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 		        }
 		 	}
 		 	else{
-		 		NotificationType notificationType = NotificationType.ERROR;
-	            TrayNotification tray = new TrayNotification();
-	            tray.setTitle("No Employee Selected");
-	            tray.setMessage("To delete, please select an Employee from the table");
-	            tray.setNotificationType(notificationType);
-	            tray.showAndDismiss(Duration.millis(5000));
+		 		JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("No Employee Selected"));
+				content.setBody(new Text("To delete, please select an employee from the  table"));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 		 	}        
 	    }
 	 
@@ -475,12 +527,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 		        stage.show();
 		 }
 		 else{
-			    NotificationType notificationType = NotificationType.ERROR;
-	            TrayNotification tray = new TrayNotification();
-	            tray.setTitle("No Employee Selected");
-	            tray.setMessage("Select Employee to View");
-	            tray.setNotificationType(notificationType);
-	            tray.showAndDismiss(Duration.millis(5000));
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("No Employee Selected"));
+				content.setBody(new Text("Please select an employee to view"));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 		 }
 	        
 	    }
@@ -493,11 +554,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-		   	 alert.setTitle("Validate Name");
-		   	 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid First Name");
-			 alert.showAndWait();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error First Name"));
+				content.setBody(new Text("Please enter a valid first name."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 			 txtFirst_Name.clear();
 			 
 			 txtFirst_Name.requestFocus();
@@ -515,11 +586,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Name");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Last Name");
-			 alert.showAndWait();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Last Name"));
+				content.setBody(new Text("Please enter a valid last name."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 			 txtLast_Name.clear();
 			
 			 txtLast_Name.requestFocus();
@@ -537,12 +618,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Email");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Email");
-			 alert.showAndWait();
-			 txtEmail.clear();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Email"));
+				content.setBody(new Text("Please enter a valid email address."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 		
 			 txtEmail.requestFocus();
 			 
@@ -558,11 +648,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Phone Number");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
-			 alert.showAndWait();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Phone Number"));
+				content.setBody(new Text("Please enter a valid phone number (aaa-aaa-aaaa)."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 			 txtPhone.clear();
 			
 			 txtPhone.requestFocus();
@@ -578,11 +678,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Date");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter a DOB");
-			 alert.showAndWait();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Date"));
+				content.setBody(new Text("Please enter a valid date."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 			 
 			 return false;
 		 }
@@ -594,11 +704,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("Validate Address");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please Enter an Address");
-			 alert.showAndWait();
+			 JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Address"));
+				content.setBody(new Text("Please enter a valid address."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 			 
 			 txtAddress.requestFocus();
 			 
@@ -660,12 +780,21 @@ public class Main_Menu_EmployeeController implements Initializable {
 	    		        stage.show();
 	    		 }
 	    		 else{
-	    			    NotificationType notificationType = NotificationType.ERROR;
-	    	            TrayNotification tray = new TrayNotification();
-	    	            tray.setTitle("No Employee Selected");
-	    	            tray.setMessage("Select Employee to View");
-	    	            tray.setNotificationType(notificationType);
-	    	            tray.showAndDismiss(Duration.millis(5000));
+	    			 JFXDialogLayout content = new JFXDialogLayout();
+	 				content.setHeading(new Text("No Employee Selected"));
+	 				content.setBody(new Text("Please select an employee to view."));
+	 				JFXButton button = new JFXButton("Okay");
+	 				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+	 				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+	 				button.setOnAction(new EventHandler<ActionEvent>() {
+	 					@Override
+	 					public void handle(ActionEvent event){
+	 						dialog.close();
+	 					}
+	 				});
+	 				content.setActions(button);
+	 				
+	 				dialog.show();
 	    		 }
 	            }
 	        }

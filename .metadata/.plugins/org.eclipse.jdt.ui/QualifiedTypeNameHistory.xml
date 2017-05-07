@@ -50,9 +50,7 @@
 <fullyQualifiedTypeName name="javafx.scene.control.Tooltip"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialog"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialog.DialogTransition"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialogLayout"/>
-<fullyQualifiedTypeName name="javafx.scene.text.Text"/>
 <fullyQualifiedTypeName name="java.beans.EventHandler"/>
 <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTreeTableView"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXButton"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTextField"/>
+<fullyQualifiedTypeName name="javafx.scene.text.Text"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
 </qualifiedTypeNameHistroy>
