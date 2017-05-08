@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javafx.scene.Node"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
-<fullyQualifiedTypeName name="java.awt.print.PageFormat"/>
-<fullyQualifiedTypeName name="javafx.print.PageOrientation"/>
-<fullyQualifiedTypeName name="javafx.scene.text.Font"/>
-<fullyQualifiedTypeName name="javafx.print.Printer"/>
-<fullyQualifiedTypeName name="javafx.print.PageLayout"/>
-<fullyQualifiedTypeName name="javafx.print.Paper"/>
-<fullyQualifiedTypeName name="javafx.print.PrinterAttributes"/>
 <fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
 <fullyQualifiedTypeName name="javafx.scene.transform.Scale"/>
-<fullyQualifiedTypeName name="javafx.scene.control.ToggleGroup"/>
-<fullyQualifiedTypeName name="javafx.scene.control.RadioButton"/>
 <fullyQualifiedTypeName name="javafx.scene.chart.BarChart"/>
 <fullyQualifiedTypeName name="java.net.URL"/>
 <fullyQualifiedTypeName name="java.util.ResourceBundle"/>
@@ -40,7 +29,6 @@
 <fullyQualifiedTypeName name="java.awt.Insets"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDrawer"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.HBox"/>
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 <fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
 <fullyQualifiedTypeName name="javafx.beans.property.BooleanProperty"/>
@@ -51,8 +39,6 @@
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialog"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialog.DialogTransition"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialogLayout"/>
-<fullyQualifiedTypeName name="java.beans.EventHandler"/>
-<fullyQualifiedTypeName name="javafx.event.EventHandler"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTreeTableView"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXRadioButton"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
@@ -60,4 +46,18 @@
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTextField"/>
 <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
+<fullyQualifiedTypeName name="javafx.beans.property.SimpleObjectProperty"/>
+<fullyQualifiedTypeName name="javafx.scene.control.TableCell"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.HBox"/>
+<fullyQualifiedTypeName name="javafx.geometry.Pos"/>
+<fullyQualifiedTypeName name="javafx.scene.control.RadioButton"/>
+<fullyQualifiedTypeName name="javafx.beans.value.ChangeListener"/>
+<fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ToggleGroup"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Toggle"/>
+<fullyQualifiedTypeName name="application.Employee_Shift_SchedulerModel.EmployeesScheduleShift"/>
+<fullyQualifiedTypeName name="application.Employee_Shift_SchedulerModel.RadioButtonCell"/>
+<fullyQualifiedTypeName name="java.util.EnumSet"/>
+<fullyQualifiedTypeName name="javafx.event.EventHandler"/>
+<fullyQualifiedTypeName name="java.beans.EventHandler"/>
 </qualifiedTypeNameHistroy>

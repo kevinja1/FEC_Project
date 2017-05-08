@@ -1,27 +1,25 @@
 package application;
 
 import java.awt.print.PageFormat;
-import java.beans.EventHandler;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.EnumSet;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDrawer;
 
-import application.Employee_Shift_SchedulerModel.EmployeesScheduleShift;
-import application.Employee_Shift_SchedulerModel.RadioButtonCell;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -29,9 +27,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -43,7 +38,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -54,6 +48,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
@@ -72,12 +67,21 @@ public class Employee_SchedulerController implements Initializable {
 	
 	public Employee_Shift_SchedulerModel Scheduler_Table = new Employee_Shift_SchedulerModel();
 	
-	//Features of the UI
 	@FXML
-	ToggleGroup group = new ToggleGroup();
+	private JFXDatePicker dtSchedule;
+	@FXML
+	private JFXComboBox<String> cbEmployee;
+	@FXML
+	private JFXComboBox<String> cbDOW;
+	@FXML
+	private JFXCheckBox cbAM;
+	@FXML
+	private JFXCheckBox cbPM;
+	@FXML
+	private Button txtAdd;
+	@FXML
+	private Button txtDelete;
 	
-	@FXML
-	private DatePicker dtSchedule;
 	
 	@FXML
 	private ListView<String> listSun;
@@ -96,34 +100,22 @@ public class Employee_SchedulerController implements Initializable {
 	@FXML
 	private ListView<String> chosenlist;
 	
+	@FXML
+	private Label lblSun;
+	@FXML
+	private Label lblMon;
+	@FXML
+	private Label lblTues;
+	@FXML
+	private Label lblWed;
+	@FXML
+	private Label lblThurs;
+	@FXML
+	private Label lblFri;
+	@FXML
+	private Label lblSat;
 	
-	@FXML
-	private TableView<Employee_Shift_SchedulerModel> TableEmployees;
-	@FXML
-	private TableColumn<Employee_Shift_SchedulerModel, String> EmployeesName;
-	@FXML
-	private TableColumn<Employee_Shift_SchedulerModel, String> EmployeesID;
-	@FXML
-	private TableColumn lblSun;
-	@FXML
-	private TableColumn lblMon;
-	@FXML
-	private TableColumn lblTues;
-	@FXML
-	private TableColumn lblWed;
-	@FXML
-	private TableColumn lblThurs;
-	@FXML
-	private TableColumn lblFri;
-	@FXML
-	private TableColumn lblSat;
 	
-	@FXML
-	private RadioButton rdAM;
-	@FXML
-	private RadioButton rdPM;
-	@FXML
-	private RadioButton rdNone;
 	
 	@FXML
 	private GridPane grSchedule;
@@ -151,110 +143,95 @@ public class Employee_SchedulerController implements Initializable {
 	@FXML
 	private HBox hbMenu;
 	
-	
 	@FXML
-	private BorderPane root;
+	private AnchorPane root;
 	
-	public static BorderPane rootP;
-	
+	public static AnchorPane rootP;
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
-		 
-		lblSun.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblMon.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblTues.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblWed.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblThurs.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblFri.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		lblSat.setCellFactory((param) -> new RadioButtonCell<Employee_Shift_SchedulerModel, EmployeesScheduleShift>(EnumSet.allOf(EmployeesScheduleShift.class)));
-		
+		dtSchedule.setValue(LocalDate.now());
 		buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
-	        buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
-	        buttonCustomer.setGraphic(new ImageView("application/ic_group_white_2x.png"));
-	        buttonReports.setGraphic(new ImageView("application/ic_insert_chart_white_2x.png"));
-	        buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
-	        buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
-	       
-	        for(Node node: hbMenu.getChildren()){
-	    		if(node.getAccessibleText()!=null){
-	    			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-	    				switch(node.getAccessibleText()){
-	    				case "Employee Details":
-	    					BorderPane pane;
-	    					try {
-	    						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
-	    						root.getChildren().setAll(pane);
-	    					} catch (IOException e3) {
-	    						// TODO Auto-generated catch block
-	    						e3.printStackTrace();
-	    					}
-	    					break;
-	    				case "Schedule Employee":
-	    					AnchorPane pane1;
-	    					try {
-	    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-	    						root.getChildren().setAll(pane1);
-	    					} catch (IOException e1) {
-	    						// TODO Auto-generated catch block
-	    						e1.printStackTrace();
-	    					}
-	    					break;
-	    				case "Customer Attendance":
-	    					AnchorPane pane2;
-	    					try {
-	    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
-	    						root.getChildren().setAll(pane2);
-	    					} catch (IOException e2) {
-	    						// TODO Auto-generated catch block
-	    						e2.printStackTrace();
-	    					}
-	    					break;
-	    				case "Reports":
-	    					BorderPane pane3;
-	    					try {
-	    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
-	    						root.getChildren().setAll(pane3);
-	    					} catch (IOException e4) {
-	    						// TODO Auto-generated catch block
-	    						e4.printStackTrace();
-	    					}
-	    					break;
-	    				case "About":
-	    					BorderPane pane4;
-	    					try {
-	    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
-	    						root.getChildren().setAll(pane4);
-	    					} catch (IOException e5) {
-	    						// TODO Auto-generated catch block
-	    						e5.printStackTrace();
-	    					}
-	    				
-	    				case "Exit":
-	    				}
-	    			});
-	    		}
-
-	    		
-		
-		//setting the values of each column in the table
-		EmployeesName.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesName")); 
-        EmployeesID.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel,String>("EmployeesID"));
-        lblSun.setCellValueFactory(new PropertyValueFactory<Employee_Shift_SchedulerModel, EmployeesScheduleShift>("Shift"));	
-        lblSun.setOnEditCommit(
-                new EventHandler<CellEditEvent<Employee_Shift_SchedulerModel, EmployeesScheduleShift>>() {
-                    @Override
-                    public void handle(CellEditEvent<Person, Participation> t) {
-                        ((Person) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                            ).setParticipation(t.getNewValue());
-                    }
-                }
-            );
+        buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
+        buttonCustomer.setGraphic(new ImageView("application/ic_group_white_2x.png"));
+        buttonReports.setGraphic(new ImageView("application/ic_insert_chart_white_2x.png"));
+        buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
+        buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
+       
+        for(Node node: hbMenu.getChildren()){
+    		if(node.getAccessibleText()!=null){
+    			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+    				switch(node.getAccessibleText()){
+    				case "Employee Details":
+    					BorderPane pane;
+    					try {
+    						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+    						root.getChildren().setAll(pane);
+    					} catch (IOException e3) {
+    						// TODO Auto-generated catch block
+    						e3.printStackTrace();
+    					}
+    					break;
+    				case "Schedule Employee":
+    					BorderPane pane1;
+    					try {
+    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Scheduler.fxml"));
+    						root.getChildren().setAll(pane1);
+    					} catch (IOException e1) {
+    						// TODO Auto-generated catch block
+    						e1.printStackTrace();
+    					}
+    					break;
+    				case "Customer Attendance":
+    					AnchorPane pane2;
+    					try {
+    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
+    						root.getChildren().setAll(pane2);
+    					} catch (IOException e2) {
+    						// TODO Auto-generated catch block
+    						e2.printStackTrace();
+    					}
+    					break;
+    				case "Reports":
+    					BorderPane pane3;
+    					try {
+    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
+    						root.getChildren().setAll(pane3);
+    					} catch (IOException e4) {
+    						// TODO Auto-generated catch block
+    						e4.printStackTrace();
+    					}
+    					break;
+    				case "About":
+    					BorderPane pane4;
+    					try {
+    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
+    						root.getChildren().setAll(pane4);
+    					} catch (IOException e5) {
+    						// TODO Auto-generated catch block
+    						e5.printStackTrace();
+    					}
+    				
+    				case "Exit":
+    				}
+    			});
+    		}
+        }
+        
         //loading the employee information into the table 
-        TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
-   
-        rdAM.setSelected(true);
+        cbEmployee.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
+        
+        ObservableList<String> options = 
+        	    FXCollections.observableArrayList(
+        	        "Sunday",
+        	        "Monday",
+        	        "Tuesday",
+        	        "Wednesday",
+        	        "Thursday",
+        	        "Friday",
+        	        "Saturday"      
+        	    );
+        cbDOW.getItems().addAll(options);
         dtSchedule.setEditable(false);
         dtSchedule.setDisable(false);
         
@@ -345,11 +322,8 @@ public class Employee_SchedulerController implements Initializable {
         setLoadListThurs();
         setLoadListFri();
         setLoadListSat();
-	   }
-        
-       
-        
-    }
+    		
+        }
 	
 	//Method that is run when a date is chosen on the date picker
 	@FXML
@@ -449,18 +423,92 @@ public class Employee_SchedulerController implements Initializable {
 		}		
 	}
 	
-
 	
+	
+	//Based on what day is chosen, the respective chooseEmp__ is called which shows to the user that the day is selected to schedule
+	@FXML 
+	private void chooseEmpSun(){
+		 	chosen = lblSun;
+		 	chosenlist = listSun;
+	
+			
+	}
+	
+	@FXML 
+	private void chooseEmpMon(){
+		 	chosen = lblMon;
+		 	chosenlist = listMon;
+		 	
+	}
+	
+	@FXML 
+	private void chooseEmpTues(){
+		 	chosen = lblTues;
+		 	chosenlist = listTues;
+		 	
+	}
+	
+	@FXML 
+	private void chooseEmpWed(){
+		 	chosen = lblWed;
+		 	chosenlist = listWed;
+		 	
+	}
+	
+	@FXML 
+	private void chooseEmpThurs(){
+		 	chosen = lblThurs;
+		 	chosenlist = listThurs;
+		 	
+	}
+	
+	@FXML 
+	private void chooseEmpFri(){
+		 	chosen = lblFri;
+		 	chosenlist = listFri;
+		 	
+	}
+	
+	@FXML 
+	private void chooseEmpSat(){
+		 	chosen = lblSat;
+		 	chosenlist = listSat;
+		 	
+	}
 	
 	//Adds an employee to the schedule if it was selected from bottom table
 	@FXML 
-	private void saveSchedule(Event event){
+	private void addEmployeeClicked(Event event){
 		
-        if(TableEmployees.getSelectionModel().getSelectedItem()!=null && chosenlist != null) {
+        if(cbEmployee.getValue()!=null && cbDOW.getValue() != null && validateDate() && validateAMPM()) {
+        		if(cbDOW.getValue().toString() == "Sunday"){
+        			chooseEmpSun();
+        		}
+        		else if(cbDOW.getValue().toString() == "Monday"){
+        			chooseEmpMon();
+        		}
+        		else if(cbDOW.getValue().toString() == "Tuesday"){
+        			chooseEmpMon();
+        		}
+        		else if(cbDOW.getValue().toString() == "Wednesday"){
+        			chooseEmpMon();
+        		}
+        		else if(cbDOW.getValue().toString() == "Thursday"){
+        			chooseEmpMon();
+        		}
+        		else if(cbDOW.getValue().toString() == "Friday"){
+        			chooseEmpMon();
+        		}
+        		else if(cbDOW.getValue().toString() == "Saturday"){
+        			chooseEmpMon();
+        		}
         		int count = 0;
-        		Employee_Shift_SchedulerModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
-	        	String sqlQuery = "select * FROM Employees_Schedule where ID = "+getSelectedRow.getEmployeesID()+" AND Date = '"+chosen.getText()+"';";
-	        	String sqlQuery1 = "select * FROM Employees where ID = "+getSelectedRow.getEmployeesID()+";";
+        		String str = cbEmployee.getValue().toString();
+        		int pos = str.indexOf(":");
+        		String id = str.substring(pos + 1);
+        		
+	        	String sqlQuery = "select * FROM Employees_Schedule where ID = "+id+" AND Date = '"+chosen.getText()+"';";
+	        	//String sqlQuery1 = "select * FROM Employees where ID = "+id+";";
 	        	 
 	        	try{
 	        		connection = SqliteConnection.Connector();
@@ -470,14 +518,14 @@ public class Employee_SchedulerController implements Initializable {
 		            while(resultSet.next()){
 		            	count++;
 		            }
-		            resultSet.close();
-		            resultSet = statement.executeQuery(sqlQuery1);
+		            //resultSet.close();
+		            //resultSet = statement.executeQuery(sqlQuery1);
 
 		            if(count == 0){
 		            	 int rowsAffected = statement.executeUpdate("insert into `Employees_Schedule` " +
 		            	
 	                     "(`ID`,`Date`, `AM/PM`)"+
-	                     "values ("+resultSet.getString("ID")+",'"+chosen.getText()+"','" + AMPM() + "'"
+	                     "values ("+id+",'"+chosen.getText()+"','" + AMPM() + "'"
 	                    
 	                     +");");
 		            }
@@ -509,13 +557,6 @@ public class Employee_SchedulerController implements Initializable {
 	             setLoadListFri();
 	             setLoadListSat();
         }
-        else if(chosenlist == null){
-        	 Alert alert = new Alert(AlertType.WARNING);
-			 alert.setTitle("No date selected");
-			 alert.setHeaderText(null);
-			 alert.setContentText("Please select a date by clicking on the list below the desired date on the weekly schedule");
-			 alert.showAndWait();
-        }
         else{
         	    NotificationType notificationType = NotificationType.ERROR;
 	            TrayNotification tray = new TrayNotification();
@@ -529,12 +570,18 @@ public class Employee_SchedulerController implements Initializable {
 	}
 	
 	public String AMPM(){
-		if(rdAM_Shift.isSelected())
+		if(cbAM.isSelected() && cbPM.isSelected())
 		{
+			return "AM/PM";
+		}
+		else if(cbAM.isSelected()){
 			return "AM";
 		}
-		else{
+		else if(cbPM.isSelected()){
 			return "PM";
+		}
+		else{
+			return "";
 		}
 	}
 	
@@ -708,20 +755,6 @@ public class Employee_SchedulerController implements Initializable {
        stage.show();
    }
    
-   //Re-loads in the employees to the employee table
-   @FXML
-   private void setRefreshButtonClick(Event event){
-       TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));//sql Query
-       txtSearch.clear();
-   }
-   
-   //Searches for a customer
-   @FXML
-   private void setSearchButtonClick(Event event){
-       String sqlQuery = "select * FROM Employees where ID = '"+txtSearch.getText()+"';";
-       TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList(sqlQuery));
-   }
-   
    //Gives an alert if a user tries to schedule without selecting a date
    private boolean validateDate(){
 		 if(dtSchedule.getValue() != null){
@@ -732,6 +765,22 @@ public class Employee_SchedulerController implements Initializable {
 			 alert.setTitle("Validate Date");
 			 alert.setHeaderText(null);
 			 alert.setContentText("Please Choose a Date");
+			 alert.showAndWait();
+			 
+			 return false;
+		 }
+		 
+	 }  
+   
+   private boolean validateAMPM(){
+		 if(AMPM() != ""){
+			 return true;
+		 }
+		 else{
+			 Alert alert = new Alert(AlertType.WARNING);
+			 alert.setTitle("Validate Shift");
+			 alert.setHeaderText(null);
+			 alert.setContentText("Please Choose a Shift (AM or PM)");
 			 alert.showAndWait();
 			 
 			 return false;

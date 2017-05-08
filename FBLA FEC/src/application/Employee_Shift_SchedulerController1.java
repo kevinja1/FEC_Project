@@ -113,10 +113,6 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 	@FXML
 	private TextField txtSearch;
 	@FXML
-	private RadioButton rdAM_Shift;
-	@FXML
-	private RadioButton rdPM_Shift;
-	@FXML
 	private Button btAdd_Employee;
 	@FXML
 	private Button btSearch_Employee;
@@ -172,7 +168,7 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
         //loading the employee information into the table 
         TableEmployees.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
    
-        rdAM_Shift.setSelected(true);
+        
         dtSchedule.setEditable(false);
         dtSchedule.setDisable(false);
         
@@ -256,13 +252,7 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 		}
         
         //Loading each of the days with the employees scheduled that day
-        setLoadListSun();
-        setLoadListMon();
-        setLoadListTues();
-        setLoadListWed();
-        setLoadListThurs();
-        setLoadListFri();
-        setLoadListSat();
+
         
         parent1.getChildren().setAll(item_l2, item_l1);
 		parent2.getChildren().setAll(item_r1, item_r2, item_r3);
@@ -441,21 +431,14 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 				
 				 //Loads in employee information based on given date
 				
-				 setLoadListSun();
-		         setLoadListMon();
-		         setLoadListTues();
-		         setLoadListWed();
-		         setLoadListThurs();
-		         setLoadListFri();
-		         setLoadListSat();
+				
 			}
 		}		
 	}
 	
 	@FXML 
 	private void setAllEnable(){
-		 	rdPM_Shift.setDisable(false);
-	        rdAM_Shift.setDisable(false);
+	
 	        btAdd_Employee.setDisable(false);
 	        TableEmployees.setDisable(false);
 	        btDelete.setDisable(false);
@@ -593,7 +576,7 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 		            	 int rowsAffected = statement.executeUpdate("insert into `Employees_Schedule` " +
 		            	
 	                     "(`ID`,`Date`, `AM/PM`)"+
-	                     "values ("+resultSet.getString("ID")+",'"+chosen.getText()+"','" + AMPM() + "'"
+	                     "values ("+resultSet.getString("ID")+",'"+chosen.getText()+"','" + "AM" + "'"
 	                    
 	                     +");");
 		            }
@@ -617,13 +600,7 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 		            
 		        }
 	               	 
-	             setLoadListSun();
-	             setLoadListMon();
-	             setLoadListTues();
-	             setLoadListWed();
-	             setLoadListThurs();
-	             setLoadListFri();
-	             setLoadListSat();
+	            
         }
         else if(chosenlist == null){
         	 Alert alert = new Alert(AlertType.WARNING);
@@ -644,53 +621,9 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
         
 	}
 	
-	public String AMPM(){
-		if(rdAM_Shift.isSelected())
-		{
-			return "AM";
-		}
-		else{
-			return "PM";
-		}
-	}
+
 	
-	
-	//Methods to load the employees into the schedule
-    private void setLoadListSun(){
-    	listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSun.getText()+"';")));
-    }
-    
-    private void setLoadListMon(){
-    	listMon.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblMon.getText()+"';")));
-    }
-    
-    private void setLoadListTues(){
-    	listTues.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblTues.getText()+"';")));
-    }
-    
-    private void setLoadListWed(){
-    	listWed.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblWed.getText()+"';")));
-    }
-    
-    private void setLoadListThurs(){
-    	listThurs.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblThurs.getText()+"';")));
-    }
-    
-    private void setLoadListFri(){
-    	listFri.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblFri.getText()+"';")));
-    }
-    
-    private void setLoadListSat(){
-    	listSat.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule("SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-        		+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '" +lblSat.getText()+"';")));
-    }
-    
+
     //Method to print the schedule
     @FXML  
     private void doPrint(Event event) throws InvocationTargetException{
@@ -745,13 +678,7 @@ public class Employee_Shift_SchedulerController1 implements Initializable {
 	             statement.executeUpdate(sqlQuery);
 	             
 	        	 
-	             setLoadListSun();
-	             setLoadListMon();
-	             setLoadListTues();
-	             setLoadListWed();
-	             setLoadListThurs();
-	             setLoadListFri();
-	             setLoadListSat();
+	             
 	            
 	             statement.close();
 	             connection.close();
