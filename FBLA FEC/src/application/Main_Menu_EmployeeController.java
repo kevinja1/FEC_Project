@@ -403,32 +403,56 @@ public class Main_Menu_EmployeeController implements Initializable {
 	 //Deletes an employee from the Employee Database and refreshes the table
 	 @FXML
 	    private void setMainMenuDeleteButtonClick(Event event){
-		 	TableEmployees.setPlaceholder(new Label("No Employees"));
-		 	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
-		 		Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
-		        String sqlQuery = "delete from Employees where ID = '"+getSelectedRow.getEmployeesID()+"';";
-		        String sqlQuery2 = "delete from Employees_Schedule where ID = '"+getSelectedRow.getEmployeesID()+"';";
-		        
-		        try {
-		        	connection = SqliteConnection.Connector();
-			        statement = connection.createStatement();
-		             
-		            statement.executeUpdate(sqlQuery);
-		            statement.executeUpdate(sqlQuery2);
-		       
-		            TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
-		            statement.close();
-		            connection.close();
+		 if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
+			 JFXDialogLayout content = new JFXDialogLayout();
+			 content.setHeading(new Text("Confirmation"));
+				content.setBody(new Text("Are you sure you want to delete this employee."));
+				JFXButton button = new JFXButton("Yes");
+				JFXButton button1 = new JFXButton("No");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						TableEmployees.setPlaceholder(new Label("No Employees"));
+					 	if(TableEmployees.getSelectionModel().getSelectedItem()!=null){
+					 		Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
+					        String sqlQuery = "delete from Employees where ID = '"+getSelectedRow.getEmployeesID()+"';";
+					        String sqlQuery2 = "delete from Employees_Schedule where ID = '"+getSelectedRow.getEmployeesID()+"';";
+					        
+					        try {
+					        	connection = SqliteConnection.Connector();
+						        statement = connection.createStatement();
+					             
+					            statement.executeUpdate(sqlQuery);
+					            statement.executeUpdate(sqlQuery2);
+					       
+					            TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
+					            statement.close();
+					            connection.close();
 
-		        }
-		        catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		 	}
-		 	else{
-		 		JFXDialogLayout content = new JFXDialogLayout();
+					        }
+					        catch (SQLException e) {
+					            e.printStackTrace();
+					        }
+					        dialog.close();
+					}
+					 	
+				}});
+				button1.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				
+				content.setActions(button, button1);
+				dialog.show();
+		 }
+		 else{
+			 JFXDialogLayout content = new JFXDialogLayout();
 				content.setHeading(new Text("No Employee Selected"));
-				content.setBody(new Text("To delete, please select an employee from the  table"));
+				content.setBody(new Text("To delete, please select a Employee"));
 				JFXButton button = new JFXButton("Okay");
 				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -441,8 +465,11 @@ public class Main_Menu_EmployeeController implements Initializable {
 				content.setActions(button);
 				
 				dialog.show();
+		 }
+			
+			
 		 	}        
-	    }
+	    
 	 
 	 //Method to search for an employee based on given ID
 	 @FXML
@@ -634,6 +661,7 @@ public class Main_Menu_EmployeeController implements Initializable {
 				
 				dialog.show();
 		
+				txtEmail.clear();
 			 txtEmail.requestFocus();
 			 
 			

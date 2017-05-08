@@ -14,12 +14,16 @@ import java.util.regex.Pattern;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXRadioButton;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -64,6 +69,8 @@ public class Menu_CustomerController implements Initializable {
 	//UI Features
 	@FXML
 	AnchorPane ancpane;
+	@FXML
+	StackPane stack;
 	@FXML
 	private Button txtAdd;
 	@FXML
@@ -290,12 +297,21 @@ public class Menu_CustomerController implements Initializable {
     
 		}
 		else{
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("No Customer Selected");
-			tray.setMessage("To add, please select an Customer first");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(5000));
+			JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("No Customer Selected"));
+				content.setBody(new Text("To add, please select a customer"));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 		}
 		
 	}
@@ -339,7 +355,13 @@ public class Menu_CustomerController implements Initializable {
 		if(TableCustomerAttendance.getSelectionModel().getSelectedItem()!=null){
 			Menu_Customer_AttendanceModel getSelectedRow = TableCustomerAttendance.getSelectionModel().getSelectedItem();
 			String sqlQuery = "delete from Customers_Attendance where ID = "+getSelectedRow.getCustomers_ID()+ " AND Date = '"+getSelectedRow.getCustomers_Date()+ "' AND AMPM = '"+getSelectedRow.getCustomers_AMPM()+ "';";
-
+			JFXDialogLayout content = new JFXDialogLayout();
+			 content.setHeading(new Text("Confirmation"));
+				content.setBody(new Text("Are you sure you want to delete this employee."));
+				JFXButton button = new JFXButton("Yes");
+				JFXButton button1 = new JFXButton("No");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 
 			try {
 				connection = SqliteConnection.Connector();
@@ -352,22 +374,39 @@ public class Menu_CustomerController implements Initializable {
 				statement.close();
 				connection.close();
 
-				CustomersAttendanceSetAllDisable();
 				btShowAllAtt.setDisable(false);
 
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
 			}
+			button1.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			
+			content.setActions(button, button1);
+			dialog.show();
 
 		}
 		else{
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("No Attendance Selected");
-			tray.setMessage("To delete, please select an attendance");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(5000));
+			JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("No Attendance Selected"));
+				content.setBody(new Text("Please select an attendance from the table."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 		}     	 	
 	}
 
@@ -384,11 +423,21 @@ public class Menu_CustomerController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Date");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter an Attendance Date");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+				content.setHeading(new Text("Error Date"));
+				content.setBody(new Text("Please select a valid date."));
+				JFXButton button = new JFXButton("Okay");
+				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				button.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event){
+						dialog.close();
+					}
+				});
+				content.setActions(button);
+				
+				dialog.show();
 
 			return false;
 		}			 

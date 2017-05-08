@@ -14,12 +14,16 @@ import java.util.regex.Pattern;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,6 +46,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -134,6 +140,9 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private Button txtEdit;
 	@FXML
 	private Button txtDelete;
+	
+	@FXML
+	private StackPane stack;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	
@@ -375,12 +384,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 
 		}
 		else{
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("No Customer Selected");
-			tray.setMessage("To edit, please select a Customer from the table");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(5000));
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("No Customer Selected"));
+			content.setBody(new Text("To edit please select a Customer"));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
 		}
 
 	}
@@ -388,42 +406,76 @@ public class Menu_Customer_DetailsController implements Initializable {
 	//Method called when user wishes to delete a customer
 	@FXML
 	private void setCustomerDeleteButtonClick(Event event){
-		TableCustomers.setPlaceholder(new Label("No Customers"));	
+		
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null){
-			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
-			String sqlQuery = "delete from Customers where ID = '"+getSelectedRow.getCustomers_ID()+"';";
-			String sqlQuery2 = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+"';";
+			TableCustomers.setPlaceholder(new Label("No Customers"));	
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Confirmation"));
+			content.setBody(new Text("Are you sure you want to delete this customer"));
+			JFXButton button = new JFXButton("Yes");
+			JFXButton button1 = new JFXButton("No");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
+					String sqlQuery = "delete from Customers where ID = '"+getSelectedRow.getCustomers_ID()+"';";
+					String sqlQuery2 = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+"';";
 
-			try {
-				connection = SqliteConnection.Connector();
-				statement = connection.createStatement();
+					try {
+						connection = SqliteConnection.Connector();
+						statement = connection.createStatement();
 
-				statement.executeUpdate(sqlQuery);
-				statement.executeUpdate("delete from Customers where ID ='"+getSelectedRow.getCustomers_ID()+"';");
-				TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
-				statement.close();
+						statement.executeUpdate(sqlQuery);
+						statement.executeUpdate("delete from Customers where ID ='"+getSelectedRow.getCustomers_ID()+"';");
+						TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
+						statement.close();
 
 
-				statement.executeUpdate(sqlQuery2);
+						statement.executeUpdate(sqlQuery2);
 
+						
+						statement.close();
+						connection.close();
+						dialog.close();
+					}
+					catch (SQLException e) {
+						e.printStackTrace();
+					}
+
+				}
 				
-				statement.close();
-				connection.close();
-
-			}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
+			});
+			button1.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			
+			content.setActions(button, button1);
+			dialog.show();
+				}	
 		else{
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("No Customer Selected");
-			tray.setMessage("To delete, please select a Customer from the table");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(5000));
-		}        
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("No Customer Selected"));
+			content.setBody(new Text("To delete, please select a Customer"));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
+		}
+		
 	}
 
 	//Method to search for Customer by given ID
@@ -520,11 +572,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Name");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter a Valid First Name");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error First Name"));
+			content.setBody(new Text("Please enter a valid first name."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
 			txtFirst_Name.clear();
 			txtFirst_Name.requestFocus();
 			
@@ -542,11 +604,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Name");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter a Valid Last Name");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error Last Name"));
+			content.setBody(new Text("Please enter a valid last name."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
 			txtLast_Name.clear();
 		
 			txtLast_Name.requestFocus();
@@ -563,11 +635,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Email");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter a Valid Email");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error Email"));
+			content.setBody(new Text("Please enter a valid email address."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
 			txtEmail.clear();
 	
 			txtEmail.requestFocus();
@@ -584,11 +666,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Phone Number");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter a Valid Phone Number (aaa-aaa-aaaa)");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error Phone Number"));
+			content.setBody(new Text("Please enter a valid phone number (aaa-aaa-aaaa)."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
 			txtPhone.clear();
 			
 			txtPhone.requestFocus();
@@ -603,13 +695,21 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Date");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter a DOB");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error Date"));
+			content.setBody(new Text("Please enter a valid date."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
 			
-			
+			dialog.show();
 			
 			return false;
 		}
@@ -621,11 +721,22 @@ public class Menu_Customer_DetailsController implements Initializable {
 			return true;
 		}
 		else{
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Validate Address");
-			alert.setHeaderText(null);
-			alert.setContentText("Please Enter an Address");
-			alert.showAndWait();
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("Error Address"));
+			content.setBody(new Text("Please enter a valid address."));
+			JFXButton button = new JFXButton("Okay");
+			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
+			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event){
+					dialog.close();
+				}
+			});
+			content.setActions(button);
+			
+			dialog.show();
+		 
 			
 			txtAddress.requestFocus();
 			
