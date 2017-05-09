@@ -156,8 +156,10 @@ public class Main_Menu_Controller implements Initializable {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
     					}
+    					break;
     				
     				case "Exit":
+    					System.exit(0);
     				}
     			});
     		}

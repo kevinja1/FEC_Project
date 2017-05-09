@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
-<fullyQualifiedTypeName name="javafx.scene.transform.Scale"/>
-<fullyQualifiedTypeName name="javafx.scene.chart.BarChart"/>
-<fullyQualifiedTypeName name="java.net.URL"/>
-<fullyQualifiedTypeName name="java.util.ResourceBundle"/>
-<fullyQualifiedTypeName name="javafx.scene.chart.XYChart"/>
-<fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Series"/>
 <fullyQualifiedTypeName name="javafx.scene.chart.LineChart"/>
 <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
 <fullyQualifiedTypeName name="javafx.scene.control.DatePicker"/>
@@ -32,7 +25,6 @@
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 <fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
 <fullyQualifiedTypeName name="javafx.beans.property.BooleanProperty"/>
-<fullyQualifiedTypeName name="javafx.beans.property.SimpleBooleanProperty"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
 <fullyQualifiedTypeName name="javafx.application.Platform"/>
 <fullyQualifiedTypeName name="javafx.scene.control.Tooltip"/>
@@ -41,13 +33,11 @@
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXDialogLayout"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTreeTableView"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXRadioButton"/>
-<fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXButton"/>
 <fullyQualifiedTypeName name="com.jfoenix.controls.JFXTextField"/>
 <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.StackPane"/>
 <fullyQualifiedTypeName name="javafx.beans.property.SimpleObjectProperty"/>
-<fullyQualifiedTypeName name="javafx.scene.control.TableCell"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.HBox"/>
 <fullyQualifiedTypeName name="javafx.geometry.Pos"/>
 <fullyQualifiedTypeName name="javafx.scene.control.RadioButton"/>
@@ -60,4 +50,14 @@
 <fullyQualifiedTypeName name="java.util.EnumSet"/>
 <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
 <fullyQualifiedTypeName name="java.beans.EventHandler"/>
+<fullyQualifiedTypeName name="javafx.scene.control.CheckBox"/>
+<fullyQualifiedTypeName name="javafx.scene.control.TableCell"/>
+<fullyQualifiedTypeName name="javafx.scene.control.cell.CheckBoxTableCell"/>
+<fullyQualifiedTypeName name="javafx.beans.property.SimpleBooleanProperty"/>
+<fullyQualifiedTypeName name="javafx.scene.control.TableColumn.CellDataFeatures"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXDatePicker"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXComboBox"/>
+<fullyQualifiedTypeName name="com.jfoenix.controls.JFXCheckBox"/>
+<fullyQualifiedTypeName name="javafx.collections.FXCollections"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ComboBox"/>
 </qualifiedTypeNameHistroy>

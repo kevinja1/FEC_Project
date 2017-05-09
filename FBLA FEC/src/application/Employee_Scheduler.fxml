@@ -168,6 +168,7 @@
                               <Cursor fx:constant="OPEN_HAND" />
                            </cursor>
                         </Button>
+                        <Button fx:id="btPrintSchedule" layoutX="1056.0" layoutY="506.0" mnemonicParsing="false" onAction="#doPrint" prefHeight="27.0" prefWidth="129.0" style="-fx-background-color: #09B28C;" text="Print Schedule" textFill="WHITE" />
                      </children>
                   </AnchorPane>
               </items>

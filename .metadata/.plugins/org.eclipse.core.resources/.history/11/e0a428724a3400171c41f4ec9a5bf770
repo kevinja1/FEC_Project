@@ -155,10 +155,8 @@ public class AboutScreenController implements Initializable {
     					} catch (IOException e5) {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
-    						break;
     					}
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}

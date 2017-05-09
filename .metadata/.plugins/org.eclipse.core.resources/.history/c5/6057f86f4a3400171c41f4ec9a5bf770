@@ -59,7 +59,7 @@ import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
 
-public class AboutScreenController implements Initializable {
+public class ReportScreenController implements Initializable {
 	
 	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
 	
@@ -86,6 +86,11 @@ public class AboutScreenController implements Initializable {
 	@FXML
 	private HBox hbMenu;
 	
+	@FXML
+	private Button btBar;
+	
+	@FXML
+	private Button btLine;
 	
 	@FXML
 	private BorderPane root;
@@ -147,6 +152,7 @@ public class AboutScreenController implements Initializable {
     						e4.printStackTrace();
     					}
     					break;
+    				
     				case "About":
     					BorderPane pane4;
     					try {
@@ -155,16 +161,40 @@ public class AboutScreenController implements Initializable {
     					} catch (IOException e5) {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
-    						break;
     					}
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}
     	}
     	
     }	
+    
+    @FXML
+	private void loadBar(Event event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
+        loader.load();
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.setTitle("All Customer Attendance Data");
+        stage.show();
+	}
+    
+    @FXML
+   	private void loadLine(Event event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+        loader.load();
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.setTitle("Week Customer Attendance Data");
+        stage.show();
+   	}
+    
+    
     
 }
 

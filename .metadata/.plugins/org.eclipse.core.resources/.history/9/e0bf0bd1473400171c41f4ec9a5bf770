@@ -59,7 +59,7 @@ import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
 
-public class AboutScreenController implements Initializable {
+public class Main_Menu_Controller implements Initializable {
 	
 	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
 	
@@ -155,10 +155,9 @@ public class AboutScreenController implements Initializable {
     					} catch (IOException e5) {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
-    						break;
     					}
+    				
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}

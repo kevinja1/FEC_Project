@@ -212,10 +212,8 @@ public class Employee_SchedulerController implements Initializable {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
     					}
-    					break;
     				
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}
@@ -527,7 +525,7 @@ public class Employee_SchedulerController implements Initializable {
 		            if(count == 0){
 		            	 int rowsAffected = statement.executeUpdate("insert into `Employees_Schedule` " +
 		            	
-	                     "(`ID`,`Date`, `Shift`)"+
+	                     "(`ID`,`Date`, `AM/PM`)"+
 	                     "values ("+id+",'"+chosen.getText()+"','" + AMPM() + "'"
 	                    
 	                     +");");
@@ -764,12 +762,11 @@ public class Employee_SchedulerController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 NotificationType notificationType = NotificationType.ERROR;
-		 		TrayNotification tray = new TrayNotification();
-		 		tray.setTitle("Validate Date");
-		 		tray.setMessage("Please select a valid date");
-		 		tray.setNotificationType(notificationType);
-		 		tray.showAndDismiss(Duration.millis(25000));
+			 Alert alert = new Alert(AlertType.WARNING);
+			 alert.setTitle("Validate Date");
+			 alert.setHeaderText(null);
+			 alert.setContentText("Please Choose a Date");
+			 alert.showAndWait();
 			 
 			 return false;
 		 }
@@ -781,12 +778,11 @@ public class Employee_SchedulerController implements Initializable {
 			 return true;
 		 }
 		 else{
-			 NotificationType notificationType = NotificationType.ERROR;
-		 		TrayNotification tray = new TrayNotification();
-		 		tray.setTitle("Validate Shift");
-		 		tray.setMessage("Please select a valid shift (AM, PM)");
-		 		tray.setNotificationType(notificationType);
-		 		tray.showAndDismiss(Duration.millis(25000));
+			 Alert alert = new Alert(AlertType.WARNING);
+			 alert.setTitle("Validate Shift");
+			 alert.setHeaderText(null);
+			 alert.setContentText("Please Choose a Shift (AM or PM)");
+			 alert.showAndWait();
 			 
 			 return false;
 		 }

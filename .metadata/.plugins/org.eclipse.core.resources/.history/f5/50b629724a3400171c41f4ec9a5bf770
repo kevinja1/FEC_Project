@@ -213,9 +213,7 @@ public class Menu_CustomerController implements Initializable {
 	    						// TODO Auto-generated catch block
 	    						e5.printStackTrace();
 	    					}
-	    					break;
 	    				case "Exit":
-	    					System.exit(0);
 	    				}
 	    			});
 		

@@ -120,7 +120,7 @@ public class AboutScreenController implements Initializable {
     				case "Schedule Employee":
     					AnchorPane pane1;
     					try {
-    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Scheduler.fxml"));
+    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
     						root.getChildren().setAll(pane1);
     					} catch (IOException e1) {
     						// TODO Auto-generated catch block
@@ -155,10 +155,8 @@ public class AboutScreenController implements Initializable {
     					} catch (IOException e5) {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
-    						break;
     					}
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}

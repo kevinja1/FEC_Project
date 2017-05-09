@@ -216,9 +216,7 @@ public class Main_Menu_EmployeeController implements Initializable {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
     					}
-    					break;
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}

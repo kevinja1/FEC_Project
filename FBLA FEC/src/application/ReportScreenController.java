@@ -125,7 +125,7 @@ public class ReportScreenController implements Initializable {
     				case "Schedule Employee":
     					AnchorPane pane1;
     					try {
-    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
+    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Scheduler.fxml"));
     						root.getChildren().setAll(pane1);
     					} catch (IOException e1) {
     						// TODO Auto-generated catch block
@@ -162,7 +162,9 @@ public class ReportScreenController implements Initializable {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
     					}
+    					break;
     				case "Exit":
+    					System.exit(0);
     				}
     			});
     		}

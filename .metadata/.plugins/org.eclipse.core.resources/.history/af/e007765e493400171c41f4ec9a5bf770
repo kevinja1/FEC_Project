@@ -212,10 +212,8 @@ public class Employee_SchedulerController implements Initializable {
     						// TODO Auto-generated catch block
     						e5.printStackTrace();
     					}
-    					break;
     				
     				case "Exit":
-    					System.exit(0);
     				}
     			});
     		}
@@ -527,7 +525,7 @@ public class Employee_SchedulerController implements Initializable {
 		            if(count == 0){
 		            	 int rowsAffected = statement.executeUpdate("insert into `Employees_Schedule` " +
 		            	
-	                     "(`ID`,`Date`, `Shift`)"+
+	                     "(`ID`,`Date`, `AM/PM`)"+
 	                     "values ("+id+",'"+chosen.getText()+"','" + AMPM() + "'"
 	                    
 	                     +");");
