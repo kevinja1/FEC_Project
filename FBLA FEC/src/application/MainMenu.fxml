@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main_Menu_Controller">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main_Menu_Controller">
    <center>
       <SplitPane prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -52,44 +52,32 @@
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip contentDisplay="TOP" graphicTextGap="10.0" text="Employee Details" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="buttonSchedule" accessibleText="Schedule Employee" minWidth="0.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1E90FF;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip text="Schedule Employee" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="buttonCustomer" accessibleText="Customer Attendance" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1E90FF;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip text="Customer Attendance" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="buttonReports" accessibleText="Reports" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1E90FF;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip text="Reports" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="buttonAbout" accessibleText="About" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1E90FF;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip text="About" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="buttonExit" accessibleText="Exit" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1E90FF;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                     <tooltip>
-                        <Tooltip text="Exit" />
-                     </tooltip></JFXButton>
+                  </JFXButton>
                </children>
             </HBox>
          </children>

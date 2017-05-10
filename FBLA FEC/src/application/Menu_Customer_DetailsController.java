@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -19,8 +18,6 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -30,39 +27,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
 
-import javafx.scene.control.TableColumn;
-
-public class Menu_Customer_DetailsController implements Initializable {
+public class Menu_Customer_DetailsController extends MenuBar implements Initializable {
 
 	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	
@@ -115,18 +97,6 @@ public class Menu_Customer_DetailsController implements Initializable {
 	@FXML
 	private JFXDrawer topDrawer;
 	@FXML
-	private JFXButton buttonDetails;
-	@FXML
-	private JFXButton buttonSchedule;
-	@FXML
-	private JFXButton buttonCustomer;
-	@FXML
-	private JFXButton buttonReports;
-	@FXML
-	private JFXButton buttonAbout;
-	@FXML
-	private JFXButton buttonExit;
-	@FXML
 	private HBox hbMenu;
 	
 	@FXML
@@ -145,87 +115,15 @@ public class Menu_Customer_DetailsController implements Initializable {
 	private StackPane stack;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
-		
-
 		CustomersFirst_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersFirst_Name")); 
 		CustomersLast_Name.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("CustomersLast_Name"));
 		CustomersID.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("Customers_ID"));
 		CustomersEmail.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("Customers_Email"));
 
-		
-
 		//Fills in the customers in the customer table
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers"));
 		
-		buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
-        buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
-        buttonCustomer.setGraphic(new ImageView("application/ic_group_white_2x.png"));
-        buttonReports.setGraphic(new ImageView("application/ic_insert_chart_white_2x.png"));
-        buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
-        buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
-       
-        for(Node node: hbMenu.getChildren()){
-    		if(node.getAccessibleText()!=null){
-    			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-    				
-    				switch(node.getAccessibleText()){
-    				case "Employee Details":
-    					BorderPane pane;
-    					try {
-    						pane = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
-    						root.getChildren().setAll(pane);
-    					} catch (IOException e3) {
-    						// TODO Auto-generated catch block
-    						e3.printStackTrace();
-    					}
-    					break;
-    				case "Schedule Employee":
-    					AnchorPane pane1;
-    					try {
-    						pane1 = FXMLLoader.load(getClass().getResource("Employee_Scheduler.fxml"));
-    						root.getChildren().setAll(pane1);
-    					} catch (IOException e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					}
-    					break;
-    				case "Customer Attendance":
-    					AnchorPane pane2;
-    					try {
-    						pane2 = FXMLLoader.load(getClass().getResource("Menu_Customer_Attendance.fxml"));
-    						root.getChildren().setAll(pane2);
-    					} catch (IOException e2) {
-    						// TODO Auto-generated catch block
-    						e2.printStackTrace();
-    					}
-    					break;
-    				case "Reports":
-    					BorderPane pane3;
-    					try {
-    						pane3 = FXMLLoader.load(getClass().getResource("ReportScreen.fxml"));
-    						root.getChildren().setAll(pane3);
-    					} catch (IOException e4) {
-    						// TODO Auto-generated catch block
-    						e4.printStackTrace();
-    					}
-    					break;
-    				case "About":
-    					BorderPane pane4;
-    					try {
-    						pane4 = FXMLLoader.load(getClass().getResource("About.fxml"));
-    						root.getChildren().setAll(pane4);
-    					} catch (IOException e5) {
-    						// TODO Auto-generated catch block
-    						e5.printStackTrace();
-    					}
-    					break;
-    				case "Exit":
-    					System.exit(0);
-    				}
-    			});
-    		}
-        }
+		initToolbar(root, hbMenu);
 	}
 
 	//Method called when the user wishes to add a new customer
