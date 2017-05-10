@@ -45,12 +45,21 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 public class Menu_Customer_DetailsController extends MenuBar implements Initializable {
-
-	public Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
+	private static final String CUSTOMER_SELECT_ALL_SQL = "SELECT * FROM Customers;";
+	private static final String CUSTOMER_SELECT_BY_ID = "SELECT * FROM Customers WHERE ID = %s;";
 	
-	//UI Features
-	//@FXML
-	//BorderPane ancpane;
+	private static final String CUSTOMER_SEARCH_SQL = "SELECT * FROM Customers WHERE First_Name like '%%%s%%' OR Last_Name like '%%%s%%';";
+	
+	private static final String CUSTOMER_INSERT_SQL =
+		"INSERT INTO `Customers` (`First_Name`,`Last_Name`,`Email`,`Phone`,`Address`,`DOB`) VALUES ('%s','%s','%s','%s','%s','%s');";
+	
+	private static final String CUSTOMER_UPDATE_SQL =
+		"UPDATE Customers SET First_Name = '%s', Last_Name = '%s', Email = '%s', Phone = '%s', Address = '%s', DOB = '%s' where ID = %s";
+		
+	private static final String CUSTOMER_DELETE_SQL = "DELETE FROM Customers WHERE ID = %s;";
+	private static final String CUSTOMER_ATTENDANCE_DELETE_SQL = "DELETE FROM Customers_Attendance WHERE ID = %s;";
+	
+	private Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	
 	@FXML
 	private JFXTextField txtFirst_Name;
@@ -66,9 +75,9 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	private JFXDatePicker dtDOB;
 	
 	@FXML
-	private Button CustomerSaveButton;
+	private Button btnSave;
 	@FXML
-	private Button CustomerClearButton;
+	private Button btnClear;
 	@FXML
 	private Button btOK;
 	
@@ -92,7 +101,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	private Statement statement;
 	private ResultSet resultSet;
 
-	private int temp;
+	private int selectedCustomerId;
 	
 	@FXML
 	private JFXDrawer topDrawer;
@@ -105,11 +114,11 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	public static BorderPane rootP;
 	
 	@FXML
-	private Button txtAdd;
+	private Button btnAdd;
 	@FXML
-	private Button txtEdit;
+	private Button btnEdit;
 	@FXML
-	private Button txtDelete;
+	private Button btnDelete;
 	
 	@FXML
 	private StackPane stack;
@@ -121,9 +130,20 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		CustomersEmail.setCellValueFactory(new PropertyValueFactory<Menu_CustomerModel,String>("Customers_Email"));
 
 		//Fills in the customers in the customer table
-		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers"));
+		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 		
 		initToolbar(root, hbMenu);
+	}
+	
+	private void disableAddEditDeleteButtons(boolean enableInd) {
+		btnAdd.setDisable(enableInd);
+		btnEdit.setDisable(enableInd);
+		btnDelete.setDisable(enableInd);
+	}
+	
+	private void disableSaveClearButtons(boolean enableInd) {
+		btnSave.setDisable(enableInd);
+		btnClear.setDisable(enableInd);
 	}
 
 	//Method called when the user wishes to add a new customer
@@ -131,8 +151,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	private void setCustomersAddNewButtonClick(Event event){
 		CustomersSetAllEnable();
 		isCustomersAddNewButtonClick = true;
-		txtEdit.setDisable(true);
-		txtDelete.setDisable(true);
+		disableAddEditDeleteButtons(true);
 	}
 
 	//Enables the text fields for users to enter information
@@ -144,10 +163,8 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		txtAddress.setDisable(false);
 		dtDOB.setDisable(false);
 
-
-		CustomerSaveButton.setDisable(false);
-		CustomerClearButton.setDisable(false);
-
+		disableSaveClearButtons(false);
+		disableAddEditDeleteButtons(true);
 	}
 
 	//Disables Customer text fields
@@ -159,12 +176,9 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		txtAddress.setDisable(true);
 		dtDOB.setDisable(true);
 
-		CustomerSaveButton.setDisable(true);
-		CustomerClearButton.setDisable(true);
-
+		disableSaveClearButtons(true);
+		disableAddEditDeleteButtons(false);
 	}
-
-	
 
 	//Clear Customer Fields
 	private void CustomersSetAllClear(){
@@ -176,8 +190,6 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		dtDOB.setValue(null);
 	}
 
-	
-
 	//Method called when clear button is clicked
 	@FXML
 	private void CustomersSetAllClear(Event event){
@@ -187,6 +199,9 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		txtPhone.clear();
 		txtAddress.clear();
 		dtDOB.setValue(null);
+		
+		disableSaveClearButtons(true);
+		disableAddEditDeleteButtons(false);
 	}
 
 	//Method called when user saves a new customer
@@ -199,38 +214,30 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 
 				if(isCustomersAddNewButtonClick){
 					isCustomersEditButtonClick = true;
-					txtEdit.setDisable(false);
-					txtDelete.setDisable(false);
-					int rowsAffected = statement.executeUpdate("insert into`Customers` "+
-							"(`First_Name`,`Last_Name`,`Email`,`Phone`,"+
-							"`Address`,`DOB`"+
-							") "+
-							"values ('"+txtFirst_Name.getText()+"','"+txtLast_Name.getText()+"','"+txtEmail.getText()
-							+"','"+txtPhone.getText()
-							+"','"+txtAddress.getText()
-							+"','"+dtDOB.getValue().toString()
-
-
-							+"'); ");
-
+					btnEdit.setDisable(false);
+					btnDelete.setDisable(false);
+					statement.executeUpdate(
+						String.format(CUSTOMER_INSERT_SQL, 
+							txtFirst_Name.getText(), 
+							txtLast_Name.getText(),
+							txtEmail.getText(),
+							txtPhone.getText(),
+							txtAddress.getText(),
+							dtDOB.getValue().toString()));
 				}
 				else if (isCustomersEditButtonClick){
 					isCustomersAddNewButtonClick = false;
-					txtAdd.setDisable(false);
-					txtDelete.setDisable(false);;
-					int rowsAffected = statement.executeUpdate("update Customers set "+
-							"First_Name = '"+txtFirst_Name.getText()+"',"+
-							"Last_Name = '"+txtLast_Name.getText()+"',"+
-							"Email = '"+txtEmail.getText()+"',"+
-							"Phone = '"+txtPhone.getText()+"',"+
-							"Address = '"+txtAddress.getText()+"',"+
-							"DOB = '"+dtDOB.getValue()+
-							"' where ID = '"+
-							temp+"';");
-					/* if (temp.equals(txtID.getText())){
-		                    statement.executeUpdate("update studentgpa set dbstudentgpaID ='"+adminTFStudentID.getText()+"' where dbStudentID = '"+ temp+"';");
-		                }
-					 */
+					btnAdd.setDisable(false);
+					btnDelete.setDisable(false);;
+					statement.executeUpdate(
+						String.format(CUSTOMER_UPDATE_SQL, 
+							txtFirst_Name.getText(),
+							txtLast_Name.getText(),
+							txtEmail.getText(),
+							txtPhone.getText(),
+							txtAddress.getText(),
+							dtDOB.getValue(),
+							selectedCustomerId));
 				}
 
 				statement.close();
@@ -238,7 +245,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 
 				CustomersSetAllClear();
 				CustomersSetAllDisable();
-				TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
+				TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 				isCustomersEditButtonClick=false;
 				isCustomersAddNewButtonClick = false;
 			}	        	
@@ -254,14 +261,14 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	private void setCustomerEditButtonClick(Event event){
 
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
-			txtAdd.setDisable(true);
-			txtDelete.setDisable(true);
-			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
-			String sqlQuery = "select * FROM Customers where ID = "+getSelectedRow.getCustomers_ID()+";"; 
+			btnAdd.setDisable(true);
+			btnDelete.setDisable(true);
+			Menu_CustomerModel selectedCustomer = TableCustomers.getSelectionModel().getSelectedItem();
+
 			try {
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
-				resultSet = statement.executeQuery(sqlQuery);
+				resultSet = statement.executeQuery(String.format(CUSTOMER_SELECT_BY_ID, selectedCustomer.getCustomers_ID()));
 
 				CustomersSetAllEnable();
 				while(resultSet.next()) {
@@ -271,10 +278,8 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 					txtPhone.setText(resultSet.getString("Phone"));
 					txtAddress.setText(resultSet.getString("Address"));
 					dtDOB.setValue(LocalDate.parse(resultSet.getString("DOB")));
-					temp = resultSet.getInt("ID");
-
+					selectedCustomerId = resultSet.getInt("ID");
 				}
-
 
 				isCustomersEditButtonClick = true;
 			}
@@ -320,25 +325,19 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event){
-					Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
-					String sqlQuery = "delete from Customers where ID = '"+getSelectedRow.getCustomers_ID()+"';";
-					String sqlQuery2 = "delete from Customers_Attendance where ID = '"+getSelectedRow.getCustomers_ID()+"';";
-
+					Menu_CustomerModel selectedCustomer = TableCustomers.getSelectionModel().getSelectedItem();
+					
 					try {
 						connection = SqliteConnection.Connector();
 						statement = connection.createStatement();
 
-						statement.executeUpdate(sqlQuery);
-						statement.executeUpdate("delete from Customers where ID ='"+getSelectedRow.getCustomers_ID()+"';");
-						TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));
-						statement.close();
-
-
-						statement.executeUpdate(sqlQuery2);
-
+						statement.executeUpdate(CUSTOMER_DELETE_SQL, selectedCustomer.getCustomers_ID());
+						statement.executeUpdate(CUSTOMER_ATTENDANCE_DELETE_SQL, selectedCustomer.getCustomers_ID());
 						
 						statement.close();
 						connection.close();
+						
+						TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 						dialog.close();
 					}
 					catch (SQLException e) {
@@ -381,14 +380,14 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	//Method to search for Customer by given ID
 	@FXML
 	private void setCustomerSearchButtonClick(Event event){
-		String sqlQuery = "select * FROM Customers where ID = '"+txtSearch.getText()+"';";
+		String sqlQuery = String.format(CUSTOMER_SELECT_BY_ID, txtSearch.getText());
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 	}
 
 	//Method called to refresh Customer Table
 	@FXML
 	private void setCustomerRefreshButtonClick(Event event){
-		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Customers;"));//sql Query
+		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));//sql Query
 		txtSearch.clear();
 	}
 
@@ -396,20 +395,16 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	@FXML
 	public void setOnSearchKeyPressed(KeyEvent event) throws IOException{
 		if(txtSearch.getText()!=""){
-			String sqlQuery = "select * FROM Customers where First_Name like '%"+txtSearch.getText()+"%' OR "
-					+ "Last_Name like '%"+txtSearch.getText() + "%';";
+			String sqlQuery = String.format(CUSTOMER_SEARCH_SQL, txtSearch.getText(), txtSearch.getText());
 			if(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery)==null){
 				TableCustomers.setPlaceholder(new Label("No Customer With Given Name"));
 			}
 			TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 		}
 		else{
-			TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList("select * FROM Customers"));
+			TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 		}
 	} 
-
-	
-
 
 	//Following launch methods are to load other windows for various parts of the program
 	@FXML
@@ -460,9 +455,6 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		stage.show();
 	}
 
-	
-
-
 	//Following validate methods are to make sure the required info is provided in the correct format,
 	//otherwise show an alert
 	private boolean validateFirstName(){
@@ -478,19 +470,12 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
 			txtFirst_Name.clear();
 			txtFirst_Name.requestFocus();
-			
-			
 			
 			return false;
 		}
@@ -510,19 +495,12 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
 			txtLast_Name.clear();
-		
 			txtLast_Name.requestFocus();
-			
 			
 			return false;
 		}
@@ -541,19 +519,12 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
 			txtEmail.clear();
-	
 			txtEmail.requestFocus();
-			
 			
 			return false;
 		}
@@ -572,20 +543,13 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
-			txtPhone.clear();
-			
+			txtPhone.clear();		
 			txtPhone.requestFocus();
-			
-			
+	
 			return false;
 		}
 	}
@@ -601,12 +565,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
@@ -627,17 +586,11 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 			
 			dialog.show();
-		 
-			
+		
 			txtAddress.requestFocus();
 			
 			return false;
@@ -671,11 +624,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			
 			AnchorPane pane;
 			try {
-				FXMLLoader loader = new FXMLLoader(
-					    getClass().getResource(
-					      "Menu_Customer_Attendance.fxml"
-					    )
-					  );
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("Menu_Customer_Attendance.fxml"));
 
 				pane = loader.load();
 				Menu_CustomerController controller = 
@@ -683,7 +632,6 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			   controller.setCustomer(getSelectedRow.getCustomers_ID());
 			   root.getChildren().setAll(pane);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		

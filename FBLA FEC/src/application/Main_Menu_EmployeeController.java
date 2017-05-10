@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -44,8 +43,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Main_Menu_EmployeeController extends MenuBar implements Initializable {
-
-	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
+	private static final String EMP_SELECT_ALL_SQL = "SELECT * FROM Employees;";
+	private static final String EMP_SELECT_BY_ID_SQL = "SELECT * FROM Employees where ID = %s;";
+	
+	private static final String EMP_SEARCH_SQL =
+		"SELECT * FROM Employees WHERE First_Name like '%%%s%%' OR Last_Name like '%%%s%%';";
+			
+	private static final String EMP_INSERT_SQL =
+		"INSERT INTO `Employees` (`First_Name`,`Last_Name`,`Email`,`Phone`, `Address`,`DOB`) values ('%s', '%s', '%s', '%s', '%s', '%s');";
+	
+	private static final String EMP_UPDATE_SQL =
+		"UPDATE Employees SET First_Name = '%s', Last_Name = '%s', Email = '%s', Phone = '%s', Address = '%s', DOB = '%s' WHERE ID = %s;";
+	
+	private static final String EMP_DELETE_BY_ID_SQL = "DELETE FROM Employees WHERE ID = %s";
+	private static final String EMP_DELETE_SCHEDULE_BY_ID_SQL = "DELETE from Employees_Schedule WHERE ID = %s";
+	
+	private Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
 
 	// Features of the UI
 	@FXML
@@ -96,23 +109,20 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	private Statement statement;
 	private ResultSet resultSet;
 
-	private int temp;
+	private int selectedEmpId;
 
 	@FXML
 	private BorderPane root;
 
 	public static BorderPane rootP;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// "Configures" the value of each column in the table
 
 		MainMenuSetAllDisable();
-		EmployeesFirst_Name
-				.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesFirst_Name"));
-		EmployeesLast_Name
-				.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesLast_Name"));
+		EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesFirst_Name"));
+		EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesLast_Name"));
 		EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesID"));
 		EmployeesEmail.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesEmail"));
 
@@ -201,20 +211,15 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 				if (isMainMenuAddNewButtonClick) {
 					btnEdit.setDisable(false);
 					btnDelete.setDisable(false);
-					int rowsAffected = statement
-							.executeUpdate("insert into`Employees` " + "(`First_Name`,`Last_Name`,`Email`,`Phone`,"
-									+ "`Address`,`DOB`" + ") " + "values ('" + txtFirst_Name.getText() + "','"
-									+ txtLast_Name.getText() + "','" + txtEmail.getText() + "','" + txtPhone.getText()
-									+ "','" + txtAddress.getText() + "','" + dtDOB.getValue().toString() + "'); ");
-
+					statement.executeUpdate(
+						String.format(EMP_INSERT_SQL, txtFirst_Name.getText(), txtLast_Name.getText(),
+							txtEmail.getText(), txtPhone.getText(), txtAddress.getText(), dtDOB.getValue().toString()));
 				} else if (isMainMenuEditButtonClick) {
 					btnAdd.setDisable(false);
 					btnDelete.setDisable(false);
-					int rowsAffected = statement.executeUpdate("update Employees set " + "First_Name = '"
-							+ txtFirst_Name.getText() + "'," + "Last_Name = '" + txtLast_Name.getText() + "',"
-							+ "Email = '" + txtEmail.getText() + "'," + "Phone = '" + txtPhone.getText() + "',"
-							+ "Address = '" + txtAddress.getText() + "'," + "DOB = '" + dtDOB.getValue()
-							+ "' where ID = " + temp + ";");
+					statement.executeUpdate(
+						String.format(EMP_UPDATE_SQL, txtFirst_Name.getText(), txtLast_Name.getText(),
+							txtEmail.getText(), txtPhone.getText(), txtAddress.getText(), dtDOB.getValue().toString(), selectedEmpId));
 				}
 
 				statement.close();
@@ -224,7 +229,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 				MainMenuSetAllDisable();
 				resetButtons();
 				TableEmployees.setItems(
-						Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
+						Employee_Table_Screen.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 				isMainMenuEditButtonClick = false;
 				isMainMenuAddNewButtonClick = false;
 			}
@@ -242,13 +247,12 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		if (TableEmployees.getSelectionModel().getSelectedItem() != null) {
 			btnAdd.setDisable(true);
 			btnDelete.setDisable(true);
-			Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
-			String sqlQuery = "select * FROM Employees where ID = " + getSelectedRow.getEmployeesID() + ";";
-
+			Main_Menu_EmployeeModel selectedEmp = TableEmployees.getSelectionModel().getSelectedItem();
+		
 			try {
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
-				resultSet = statement.executeQuery(sqlQuery);
+				resultSet = statement.executeQuery(String.format(EMP_SELECT_BY_ID_SQL, selectedEmp.getEmployeesID()));
 
 				MainMenuSetAllEnable();
 				while (resultSet.next()) {
@@ -258,7 +262,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 					txtPhone.setText(resultSet.getString("Phone"));
 					txtAddress.setText(resultSet.getString("Address"));
 					dtDOB.setValue(LocalDate.parse(resultSet.getString("DOB")));
-					temp = resultSet.getInt("ID");
+					selectedEmpId = resultSet.getInt("ID");
 					isMainMenuEditButtonClick = true;
 				}
 
@@ -303,20 +307,17 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 				public void handle(ActionEvent event) {
 					TableEmployees.setPlaceholder(new Label("No Employees"));
 					if (TableEmployees.getSelectionModel().getSelectedItem() != null) {
-						Main_Menu_EmployeeModel getSelectedRow = TableEmployees.getSelectionModel().getSelectedItem();
-						String sqlQuery = "delete from Employees where ID = '" + getSelectedRow.getEmployeesID() + "';";
-						String sqlQuery2 = "delete from Employees_Schedule where ID = '"
-								+ getSelectedRow.getEmployeesID() + "';";
-
+						Main_Menu_EmployeeModel selectedEmp = TableEmployees.getSelectionModel().getSelectedItem();
+						
 						try {
 							connection = SqliteConnection.Connector();
 							statement = connection.createStatement();
 
-							statement.executeUpdate(sqlQuery);
-							statement.executeUpdate(sqlQuery2);
+							statement.executeUpdate(String.format(EMP_DELETE_BY_ID_SQL, selectedEmp.getEmployeesID()));
+							statement.executeUpdate(String.format(EMP_DELETE_SCHEDULE_BY_ID_SQL, selectedEmp.getEmployeesID()));
 
 							TableEmployees.setItems(Employee_Table_Screen
-									.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));
+									.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 							statement.close();
 							connection.close();
 
@@ -360,15 +361,14 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	// Method to search for an employee based on given ID
 	@FXML
 	private void setMainMenuSearchButtonClick(Event event) {
-		String sqlQuery = "select * FROM Employees where ID = '" + txtSearch.getText() + "';";
+		String sqlQuery = String.format(EMP_SELECT_BY_ID_SQL, txtSearch.getText());
 		TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 	}
 
 	// Method to refresh employee table
 	@FXML
 	private void setMainMenuRefreshButtonClick(Event event) {
-		TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM Employees;"));// sql
-																														// Query
+		TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 		txtSearch.clear();
 	}
 
@@ -634,15 +634,13 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	@FXML
 	public void setOnSearchKeyPressed(KeyEvent event) throws IOException {
 		if (txtSearch.getText() != "") {
-			String sqlQuery = "select * FROM Employees where First_Name like '%" + txtSearch.getText() + "%' OR "
-					+ "Last_Name like '%" + txtSearch.getText() + "%';";
+			String sqlQuery = String.format(EMP_SEARCH_SQL, txtSearch.getText(), txtSearch.getText());
 			if (Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery) == null) {
 				TableEmployees.setPlaceholder(new Label("No Employee With Given Name"));
 			}
 			TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(sqlQuery));
 		} else {
-			TableEmployees
-					.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("select * FROM Employees"));
+			TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 		}
 	}
 

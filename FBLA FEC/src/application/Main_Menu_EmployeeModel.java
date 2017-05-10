@@ -1,18 +1,14 @@
 package application;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 
 public class Main_Menu_EmployeeModel{
 	
@@ -54,7 +50,7 @@ public class Main_Menu_EmployeeModel{
 	
 
 	//Adds the employees to an Observable List to eventually display on the table 
-	public ObservableList getDataFromSqlAndAddToObservableList(String query){
+	public ObservableList<Main_Menu_EmployeeModel> getDataFromSqlAndAddToObservableList(String query){
 	        ObservableList<Main_Menu_EmployeeModel> employeeTableData = FXCollections.observableArrayList();
 	        try {
 	        	connection = SqliteConnection.Connector();
@@ -69,9 +65,7 @@ public class Main_Menu_EmployeeModel{
 		                        resultSet.getString("Email"),
 		                        resultSet.getString("Phone"),
 		                        resultSet.getString("Address"),
-		                        resultSet.getString("DOB")
-		                        
-		                        ));
+		                        resultSet.getString("DOB")));
 		            }
 	            } 	
 	            else{

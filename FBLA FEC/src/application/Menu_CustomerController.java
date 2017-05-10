@@ -1,10 +1,8 @@
 package application;
 
 import java.io.IOException;
-
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -37,8 +35,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Menu_CustomerController extends MenuBar implements Initializable {
-
-	public Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
+	private static final String CUSTOMER_ATTENDANCE_SELECT_SQL =
+		"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM" + 
+			" Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = %s;";
+	
+	private static final String CUSTOMER_ATTENDANCE_SELECT_ALL_SQL =
+		"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM" + 
+			" Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;";
+	
+	private static final String CUSTOMER_ATTENDANCE_INSERT_SQL =
+		"INSERT INTO `Customers_Attendance` (ID, `Date`,`AMPM`,`Day_of_Week`) values (%s,'%s','%s','%s');";
+	
+	private static final String CUSTOMER_ATTENDANCE_DELETE_SQL =
+		"DELETE FROM Customers_Attendance WHERE ID = %s AND Date = '%s' AND AMPM = '%s';";
+					
+					
+	private Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
 
 	// UI Features
 	@FXML
@@ -46,9 +58,9 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	@FXML
 	StackPane stack;
 	@FXML
-	private Button txtAdd;
+	private Button btnAdd;
 	@FXML
-	private Button btShowAllAtt;
+	private Button btnShowAllAtt;
 	@FXML
 	private ToggleGroup group;
 	@FXML
@@ -62,7 +74,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	private Text lblCustomerAtt;
 
 	@FXML
-	private Button btSearchCust;
+	private Button btnSearchCust;
 
 	@FXML
 	private TableView<Menu_Customer_AttendanceModel> TableCustomerAttendance;
@@ -81,33 +93,26 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	private HBox hbMenu;
 
 	@FXML
-	private Button DeleteAttendanceButton;
+	private Button btnDelete;
 	@FXML
-	private Button SaveAttendanceButton;
+	private Button btnSave;
 
 	Connection connection;
 	private Statement statement;
-	private ResultSet resultSet;
-
-	private int temp;
 
 	@FXML
 	private AnchorPane root;
 
-	public static AnchorPane rootP;
+	public AnchorPane rootP;
 
-	private static int customerID = -1;
+	private int customerID = -1;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		CustomerAttFirst_Name.setCellValueFactory(
-				new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_FirstName"));
-		CustomerAttLast_Name.setCellValueFactory(
-				new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_LastName"));
-		CustomerAttDate
-				.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_Date"));
-		CustomerAttAMPM
-				.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_AMPM"));
+		CustomerAttFirst_Name.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_FirstName"));
+		CustomerAttLast_Name.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_LastName"));
+		CustomerAttDate.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_Date"));
+		CustomerAttAMPM.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_AMPM"));
 
 		rdAM.setSelected(true);
 		CustomersAttendanceSetAllDisable();
@@ -120,19 +125,17 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	public void setCustomer(int ID) {
 		this.customerID = ID;
 
-		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
-				"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-						+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = "
-						+ customerID + ";"));
+		TableCustomerAttendance.setItems(
+			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
+				String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
 		CustomersAttendanceSetAllEnable();
-
 	}
 
 	// Display Customer Attendance Text Fields
 	private void CustomersAttendanceSetAllDisable() {
-		DeleteAttendanceButton.setDisable(true);
+		btnDelete.setDisable(true);
+		btnSave.setDisable(true);
 		dtAttendance.setDisable(true);
-		SaveAttendanceButton.setDisable(true);
 		rdAM.setDisable(true);
 		rdPM.setDisable(true);
 		// TableCustomerAttendance.setDisable(true);
@@ -140,17 +143,12 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 
 	// Enable CustomerAttendance Fields
 	private void CustomersAttendanceSetAllEnable() {
-		DeleteAttendanceButton.setDisable(false);
+		btnDelete.setDisable(false);
+		btnSave.setDisable(false);
 		dtAttendance.setDisable(false);
-		SaveAttendanceButton.setDisable(false);
 		rdAM.setDisable(false);
 		rdPM.setDisable(false);
 		// TableCustomerAttendance.setDisable(false);
-	}
-
-	// Disables date picker for adding attendance
-	private void CustomersAttendanceSetAllClear() {
-		dtAttendance.setValue(null);
 	}
 
 	// Method to save a new Customer Attendance
@@ -162,16 +160,16 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 					connection = SqliteConnection.Connector();
 					statement = connection.createStatement();
 
-					int rowsAffected = statement.executeUpdate(
-							"insert into`Customers_Attendance` " + "(ID, `Date`,`AMPM`,`Day_of_Week`" + "" + ") "
-									+ "values (" + customerID + ",'" + dtAttendance.getValue().toString() + "','"
-									+ AMPM() + "','" + dtAttendance.getValue().getDayOfWeek().toString() + "'); ");
+					statement.executeUpdate(
+						String.format(CUSTOMER_ATTENDANCE_INSERT_SQL, 
+							customerID,
+							dtAttendance.getValue().toString(),
+							AMPM(),
+							dtAttendance.getValue().getDayOfWeek().toString()));
 
-					TableCustomerAttendance
-							.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
-									"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-											+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = "
-											+ customerID + ";"));
+					TableCustomerAttendance.setItems(
+						Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
+							String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
 
 					/*
 					 * CustomersAttendanceSetAllClear();
@@ -192,27 +190,14 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 
 			dialog.show();
 		}
 
 	}
-
-	// method called when the add new attendance button is clicked
-	private void setAddDeleteAttendance() {
-		btShowAllAtt.setDisable(true);
-		CustomersAttendanceSetAllEnable();
-		// TableCustomerAttendance.setDisable(false);
-
-	}
-
+	
 	// Checks to see whether AM or PM is selected
 	public String AMPM() {
 		if (rdAM.isSelected()) {
@@ -244,7 +229,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("Confirmation"));
-			content.setBody(new Text("Are you sure you want to delete this employee."));
+			content.setBody(new Text("Are you sure you want to delete this attendance record?"));
 			JFXButton btnYes = new JFXButton("Yes");
 			JFXButton btnNo = new JFXButton("No");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
@@ -255,20 +240,16 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 					connection = SqliteConnection.Connector();
 					statement = connection.createStatement();
 
-					String updateQuery = "delete from Customers_Attendance where ID = %s AND Date = '%s' AND AMPM = '%s';";
-					String selectQuery = "SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-							+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = %s;";
-					
-					statement.executeUpdate(String.format(updateQuery, 
+					statement.executeUpdate(String.format(CUSTOMER_ATTENDANCE_DELETE_SQL, 
 						getSelectedRow.getCustomers_ID(), getSelectedRow.getCustomers_Date(), getSelectedRow.getCustomers_AMPM()));
 					
 					TableCustomerAttendance.setItems(
-						Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(String.format(selectQuery, customerID)));
+						Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
 						
 					statement.close();
 					connection.close();
 					
-					btShowAllAtt.setDisable(false);
+					btnShowAllAtt.setDisable(false);
 				} 
 				catch (SQLException ex) {
 					ex.printStackTrace();
@@ -277,9 +258,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 				dialog.close();
 			});
 
-			btnNo.setOnAction(e -> {
-				dialog.close();
-			});
+			btnNo.setOnAction(e -> { dialog.close(); });
 
 			content.setActions(btnYes, btnNo);
 			dialog.show();
@@ -306,9 +285,8 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	// Method to refresh customer attendance table
 	@FXML
 	private void setShowAllAttClick(Event event) {
-		TableCustomerAttendance.setItems(Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
-				"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM"
-						+ " Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;"));
+		TableCustomerAttendance.setItems(
+			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_ATTENDANCE_SELECT_ALL_SQL));
 	}
 
 	private boolean validateAttendanceDate() {
@@ -321,12 +299,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-			button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					dialog.close();
-				}
-			});
+			button.setOnAction(e -> { dialog.close(); });
 			content.setActions(button);
 
 			dialog.show();

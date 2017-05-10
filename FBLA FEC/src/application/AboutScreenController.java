@@ -1,7 +1,6 @@
 package application;
 
 import java.net.URL;
-
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,13 +8,11 @@ import com.jfoenix.controls.JFXDrawer;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-
 
 public class AboutScreenController extends MenuBar implements Initializable {
 	

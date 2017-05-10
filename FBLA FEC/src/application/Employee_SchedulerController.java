@@ -1,7 +1,5 @@
 package application;
 
-import java.awt.print.PageFormat;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -10,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXCheckBox;
@@ -44,8 +45,26 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 public class Employee_SchedulerController extends MenuBar implements Initializable {
-
-	public Employee_Shift_SchedulerModel Scheduler_Table = new Employee_Shift_SchedulerModel();
+	public static final String EMP_SELECT_ALL_SQL = "SELECT * FROM EMPLOYEES";
+			
+	public static final String EMP_SCHEDULE_LOAD_BY_DATE_SQL = 
+		"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
+			+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '%s';";
+	
+	public static final String EMP_SCHEDULE_LOAD_BY_ID_AND_DATE_SQL =
+		"SELECT * FROM Employees_Schedule WHERE ID = %s AND Date = '%s';";
+	
+	public static final String EMP_SCHEDULE_UPDATE_SQL =
+		"UPDATE Employees_Schedule SET Shift = '%s' WHERE ID = %s AND Date = '%s'";
+	
+	public static final String EMP_SCHEDULE_INSERT_SQL =
+		"INSERT INTO Employees_Schedule(`ID`,`Date`,`Shift`) VALUES (%s, '%s','%s');";
+	
+	public static final String EMP_SCHEDULE_DELETE_SQL =
+		"DELETE FROM Employees_Schedule WHERE ID = %s AND Date = '%s'";
+		
+	
+	private Employee_Shift_SchedulerModel Scheduler_Table = new Employee_Shift_SchedulerModel();
 
 	@FXML
 	private JFXDatePicker dtSchedule;
@@ -93,6 +112,8 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	private Label lblFri;
 	@FXML
 	private Label lblSat;
+	
+	private List<UIDayContext> dayContexts = null;
 
 	@FXML
 	private GridPane grSchedule;
@@ -101,7 +122,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	Connection connection;
 	private Statement statement;
 	private ResultSet resultSet;
-	private PageFormat format;
 
 	@FXML
 	private JFXDrawer topDrawer;
@@ -119,29 +139,39 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		dtSchedule.setValue(LocalDate.now());
 
 		initToolbar(root, hbMenu);
-
+		
 		// loading the employee information into the table
-		cbEmployee.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
+		cbEmployee.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 
 		ObservableList<String> options = 
 			FXCollections.observableArrayList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 		cbDOW.getItems().addAll(options);
 		dtSchedule.setEditable(false);
 		dtSchedule.setDisable(false);
-
-		// checking what day it is today and loading the respective schedule
-		String day_of_week = LocalDate.now().getDayOfWeek().toString();
-		updateDateLabel(day_of_week);
+		
+		// initialized labelsObjs and listViewObjs into UIDayContext list
+		dayContexts = 
+			Arrays.asList(
+				new UIDayContext(lblSun, listSun), 
+				new UIDayContext(lblMon, listMon),
+				new UIDayContext(lblTues, listTues), 
+				new UIDayContext(lblWed, listWed),
+				new UIDayContext(lblThurs, listThurs), 
+				new UIDayContext(lblFri, listFri), 
+				new UIDayContext(lblSat, listSat));
+		
+		// add list selection listeners
+		for(UIDayContext dayContext : dayContexts) {
+			dayContext.listViewObj.getSelectionModel().selectedItemProperty().addListener(e -> {
+				chooseEmp(dayContext.labelObj, dayContext.listViewObj);
+			});
+		}
+		
+		// update schedule with current week dates
+		updateDateLabel(LocalDate.now());
 
 		// Loading each of the days with the employees scheduled that day
-		setLoadListSun();
-		setLoadListMon();
-		setLoadListTues();
-		setLoadListWed();
-		setLoadListThurs();
-		setLoadListFri();
-		setLoadListSat();
-
+		LoadEmployeeSchedule();
 	}
 
 	// Method that is run when a date is chosen on the date picker
@@ -149,130 +179,29 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	public void setOnDatePickerChosen(Event event) {
 		if (dtSchedule.getValue() != null) {
 			if (validateDate()) {
-				String day_of_week = dtSchedule.getValue().getDayOfWeek().toString();
-				updateDateLabel(day_of_week);
-				// Loads in employee information based on given date
-
-				setLoadListSun();
-				setLoadListMon();
-				setLoadListTues();
-				setLoadListWed();
-				setLoadListThurs();
-				setLoadListFri();
-				setLoadListSat();
+				updateDateLabel(dtSchedule.getValue());
+				LoadEmployeeSchedule();
 			}
 		}
 	}
 	
-	private void updateDateLabel(String day_of_week) {
-		if (day_of_week == "SUNDAY") {
-			lblSun.setText(LocalDate.now().toString());
-			lblMon.setText(LocalDate.now().plusDays(1).toString());
-			lblTues.setText(LocalDate.now().plusDays(2).toString());
-			lblWed.setText(LocalDate.now().plusDays(3).toString());
-			lblThurs.setText(LocalDate.now().plusDays(4).toString());
-			lblFri.setText(LocalDate.now().plusDays(5).toString());
-			lblSat.setText(LocalDate.now().plusDays(6).toString());
-		} else if (day_of_week == "MONDAY") {
-			lblMon.setText(LocalDate.now().toString());
-			lblTues.setText(LocalDate.now().plusDays(1).toString());
-			lblWed.setText(LocalDate.now().plusDays(2).toString());
-			lblThurs.setText(LocalDate.now().plusDays(3).toString());
-			lblFri.setText(LocalDate.now().plusDays(4).toString());
-			lblSat.setText(LocalDate.now().plusDays(5).toString());
-			lblSun.setText(LocalDate.now().minusDays(1).toString());
-		} else if (day_of_week == "TUESDAY") {
-			lblTues.setText(LocalDate.now().toString());
-			lblWed.setText(LocalDate.now().plusDays(1).toString());
-			lblThurs.setText(LocalDate.now().plusDays(2).toString());
-			lblFri.setText(LocalDate.now().plusDays(3).toString());
-			lblSat.setText(LocalDate.now().plusDays(4).toString());
-			lblSun.setText(LocalDate.now().minusDays(2).toString());
-			lblMon.setText(LocalDate.now().minusDays(1).toString());
-		} else if (day_of_week == "WEDNESDAY") {
-			lblWed.setText(LocalDate.now().toString());
-			lblThurs.setText(LocalDate.now().plusDays(1).toString());
-			lblFri.setText(LocalDate.now().plusDays(2).toString());
-			lblSat.setText(LocalDate.now().plusDays(3).toString());
-			lblSun.setText(LocalDate.now().minusDays(3).toString());
-			lblMon.setText(LocalDate.now().minusDays(2).toString());
-			lblTues.setText(LocalDate.now().minusDays(1).toString());
-		} else if (day_of_week == "THURSDAY") {
-			lblThurs.setText(LocalDate.now().toString());
-			lblFri.setText(LocalDate.now().plusDays(1).toString());
-			lblSat.setText(LocalDate.now().plusDays(2).toString());
-			lblSun.setText(LocalDate.now().minusDays(4).toString());
-			lblMon.setText(LocalDate.now().minusDays(3).toString());
-			lblTues.setText(LocalDate.now().minusDays(2).toString());
-			lblWed.setText(LocalDate.now().minusDays(1).toString());
-		} else if (day_of_week == "FRIDAY") {
-			lblFri.setText(LocalDate.now().toString());
-			lblSat.setText(LocalDate.now().plusDays(1).toString());
-			lblSun.setText(LocalDate.now().minusDays(5).toString());
-			lblMon.setText(LocalDate.now().minusDays(4).toString());
-			lblTues.setText(LocalDate.now().minusDays(3).toString());
-			lblWed.setText(LocalDate.now().minusDays(2).toString());
-			lblThurs.setText(LocalDate.now().minusDays(1).toString());
-		} else if (day_of_week == "SATURDAY") {
-			lblSat.setText(LocalDate.now().toString());
-			lblSun.setText(LocalDate.now().minusDays(6).toString());
-			lblMon.setText(LocalDate.now().minusDays(5).toString());
-			lblTues.setText(LocalDate.now().minusDays(4).toString());
-			lblWed.setText(LocalDate.now().minusDays(3).toString());
-			lblThurs.setText(LocalDate.now().minusDays(2).toString());
-			lblFri.setText(LocalDate.now().minusDays(1).toString());
+	private void LoadEmployeeSchedule() {
+		for(UIDayContext dayContext : dayContexts) {
+			setLoadList(dayContext.labelObj, dayContext.listViewObj);
 		}
 	}
-
-	// Based on what day is chosen, the respective chooseEmp__ is called which
-	// shows to the user that the day is selected to schedule
-	@FXML
-	private void chooseEmpSun() {
-		chosen = lblSun;
-		chosenlist = listSun;
-
-	}
-
-	@FXML
-	private void chooseEmpMon() {
-		chosen = lblMon;
-		chosenlist = listMon;
-
-	}
-
-	@FXML
-	private void chooseEmpTues() {
-		chosen = lblTues;
-		chosenlist = listTues;
-
-	}
-
-	@FXML
-	private void chooseEmpWed() {
-		chosen = lblWed;
-		chosenlist = listWed;
-
-	}
-
-	@FXML
-	private void chooseEmpThurs() {
-		chosen = lblThurs;
-		chosenlist = listThurs;
-
-	}
-
-	@FXML
-	private void chooseEmpFri() {
-		chosen = lblFri;
-		chosenlist = listFri;
-
-	}
-
-	@FXML
-	private void chooseEmpSat() {
-		chosen = lblSat;
-		chosenlist = listSat;
-
+	
+	private void updateDateLabel(LocalDate inputDate) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(DateUtils.asDate(inputDate));
+		calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+		
+		int daysToAdd = 0;
+		LocalDate firstDayOfWeek = DateUtils.asLocalDate(calendar.getTime());
+		for(UIDayContext dayContext : dayContexts) {
+			dayContext.labelObj.setText(firstDayOfWeek.plusDays(daysToAdd).toString());
+			daysToAdd++;
+		}
 	}
 
 	// Adds an employee to the schedule if it was selected from bottom table
@@ -282,25 +211,25 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 			String day_of_week = cbDOW.getValue().toString();
 			switch(day_of_week) {
 				case "Sunday":
-					chooseEmpSun();
+					chooseEmp(lblSun, listSun);
 					break;
 				case "Monday":
-					chooseEmpMon();
+					chooseEmp(lblMon, listMon);
 					break;
 				case "Tuesday":
-					chooseEmpTues();
+					chooseEmp(lblTues, listTues);
 					break;
 				case "Wednesday":
-					chooseEmpWed();
+					chooseEmp(lblWed, listWed);
 					break;
 				case "Thursday":
-					chooseEmpThurs();
+					chooseEmp(lblThurs, listThurs);
 					break;
 				case "Friday":
-					chooseEmpFri();
+					chooseEmp(lblFri, listFri);
 					break;
 				case "Saturday":
-					chooseEmpSat();
+					chooseEmp(lblSat, listSat);
 					break;
 			}
 			
@@ -309,14 +238,10 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 			int pos = str.indexOf(":");
 			String id = str.substring(pos + 1);
 
-			String sqlQuery = "select * FROM Employees_Schedule where ID = " + id + " AND Date = '" + chosen.getText()
-					+ "';";
-			// String sqlQuery1 = "select * FROM Employees where ID = "+id+";";
-
 			try {
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
-				resultSet = statement.executeQuery(sqlQuery);
+				resultSet = statement.executeQuery(String.format(EMP_SCHEDULE_LOAD_BY_ID_AND_DATE_SQL, id, chosen.getText()));
 
 				String shiftFromDb = null;
 				while (resultSet.next()) {
@@ -328,17 +253,15 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 
 				if (count == 0) {
 					if(shiftFromDb != null) {						
-						String sql = "update Employees_Schedule set Shift = '%s' where ID = %s and Date = '%s'";
-						statement.executeUpdate(String.format(sql, AMPM(), id, chosen.getText()));
+						statement.executeUpdate(String.format(EMP_SCHEDULE_UPDATE_SQL, AMPM(), id, chosen.getText()));
 					} else {
-						String sql = "insert into Employees_Schedule(`ID`,`Date`,`Shift`) values(%s, '%s','%s');";
-						statement.executeUpdate(String.format(sql, id, chosen.getText(), AMPM()));
+						statement.executeUpdate(String.format(EMP_SCHEDULE_INSERT_SQL, id, chosen.getText(), AMPM()));
 					}
 				} else {
 					NotificationType notificationType = NotificationType.ERROR;
 					TrayNotification tray = new TrayNotification();
 					tray.setTitle("Employee Repeat");
-					tray.setMessage("This employee is already working at this shift");
+					tray.setMessage("This employee is already working at this shift.");
 					tray.setNotificationType(notificationType);
 					tray.showAndDismiss(Duration.millis(5000));
 				}
@@ -349,16 +272,9 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 
 			} catch (SQLException e) {
 				e.printStackTrace();
-
 			}
 
-			setLoadListSun();
-			setLoadListMon();
-			setLoadListTues();
-			setLoadListWed();
-			setLoadListThurs();
-			setLoadListFri();
-			setLoadListSat();
+			LoadEmployeeSchedule();
 		} else if (validateAMPM()) {
 			NotificationType notificationType = NotificationType.ERROR;
 			TrayNotification tray = new TrayNotification();
@@ -369,8 +285,15 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		}
 
 	}
-
-	public String AMPM() {
+	
+	// Based on what day is chosen, the respective chooseEmp__ is called which
+	// shows to the user that the day is selected to schedule
+	private void chooseEmp(Label dayLabel, ListView<String> dayList) {
+		chosen = dayLabel;
+		chosenlist = dayList;
+	}
+	
+	private String AMPM() {
 		if (cbAM.isSelected() && cbPM.isSelected()) {
 			return "AM/PM";
 		} else if (cbAM.isSelected()) {
@@ -381,64 +304,39 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 			return "";
 		}
 	}
+	
+	private boolean validateAMPM() {
+		if (AMPM() != "") {
+			return true;
+		} else {
+			NotificationType notificationType = NotificationType.ERROR;
+			TrayNotification tray = new TrayNotification();
+			tray.setTitle("Validate Shift");
+			tray.setMessage("Please select a valid shift (AM, PM)");
+			tray.setNotificationType(notificationType);
+			tray.showAndDismiss(Duration.millis(25000));
+
+			return false;
+		}
+	}
 
 	// Methods to load the employees into the schedule
-	private void setLoadListSun() {
-		listSun.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblSun.getText() + "';")));
+	private void setLoadList(Label lblObj, ListView<String> listViewObj) {
+		listViewObj.setItems(
+			Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
+				String.format(EMP_SCHEDULE_LOAD_BY_DATE_SQL, lblObj.getText())));
 	}
-
-	private void setLoadListMon() {
-		listMon.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblMon.getText() + "';")));
-	}
-
-	private void setLoadListTues() {
-		listTues.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblTues.getText() + "';")));
-	}
-
-	private void setLoadListWed() {
-		listWed.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblWed.getText() + "';")));
-	}
-
-	private void setLoadListThurs() {
-		listThurs.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblThurs.getText() + "';")));
-	}
-
-	private void setLoadListFri() {
-		listFri.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblFri.getText() + "';")));
-	}
-
-	private void setLoadListSat() {
-		listSat.setItems((Scheduler_Table.getDataFromSqlAndAddToObservableListSchedule(
-				"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
-						+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '"
-						+ lblSat.getText() + "';")));
-	}
-
+	
 	// Method to print the schedule
 	@FXML
 	private void doPrint(Event event) throws InvocationTargetException {
-
 		Printer printer = Printer.getDefaultPrinter();
+		
 		PrinterJob job = PrinterJob.createPrinterJob();
-
+		if(job != null && printer == null) {
+			printer = job.getPrinter();
+		}
+		
 		if (printer != null) {
 			PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE,
 					Printer.MarginType.DEFAULT);
@@ -468,7 +366,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 			tray.showAndDismiss(Duration.millis(10000));
 
 		}
-
 	}
 
 	// Method called when user wants to delete an employee schedule on a certain
@@ -476,30 +373,21 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	@FXML
 	private void schedulerDelete(Event event) {
 		if (chosenlist.getSelectionModel().getSelectedItem() != null) {
-			String getSelectedRow = chosenlist.getSelectionModel().getSelectedItem().substring(0, 1);
-			String sqlQuery = "delete FROM Employees_Schedule where ID = " + getSelectedRow + " AND Date = '"
-					+ chosen.getText() + "';";
+			String selectedEmpId = chosenlist.getSelectionModel().getSelectedItem().substring(0, 1);
+			
 			try {
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
 
-				statement.executeUpdate(sqlQuery);
+				statement.executeUpdate(String.format(EMP_SCHEDULE_DELETE_SQL, selectedEmpId, chosen.getText()));
 
-				setLoadListSun();
-				setLoadListMon();
-				setLoadListTues();
-				setLoadListWed();
-				setLoadListThurs();
-				setLoadListFri();
-				setLoadListSat();
+				LoadEmployeeSchedule();
 
 				statement.close();
 				connection.close();
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		} else {
 			NotificationType notificationType = NotificationType.ERROR;
 			TrayNotification tray = new TrayNotification();
@@ -574,22 +462,5 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 
 			return false;
 		}
-
-	}
-
-	private boolean validateAMPM() {
-		if (AMPM() != "") {
-			return true;
-		} else {
-			NotificationType notificationType = NotificationType.ERROR;
-			TrayNotification tray = new TrayNotification();
-			tray.setTitle("Validate Shift");
-			tray.setMessage("Please select a valid shift (AM, PM)");
-			tray.setNotificationType(notificationType);
-			tray.showAndDismiss(Duration.millis(25000));
-
-			return false;
-		}
-
 	}
 }

@@ -123,12 +123,12 @@
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </padding>
                               </Label>
-                              <Button fx:id="CustomerClearButton" disable="true" layoutX="282.0" layoutY="505.0" mnemonicParsing="false" onAction="#CustomersSetAllClear" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #483D8B; -fx-text-fill: white;" text="Clear">
+                              <Button fx:id="btnClear" disable="true" layoutX="282.0" layoutY="505.0" mnemonicParsing="false" onAction="#CustomersSetAllClear" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #483D8B; -fx-text-fill: white;" text="Clear">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="txtEdit" layoutX="106.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerEditButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="Edit" textFill="WHITE">
+                              <Button fx:id="btnEdit" layoutX="106.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerEditButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #00CED1;" text="Edit" textFill="WHITE">
                                  <padding>
                                     <Insets left="1.0" right="1.0" />
                                  </padding>
@@ -138,12 +138,12 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <Button fx:id="txtDelete" layoutX="185.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerDeleteButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #DC143C;" text="Delete" textFill="WHITE">
+                        <Button fx:id="btnDelete" layoutX="185.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerDeleteButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #DC143C;" text="Delete" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="OPEN_HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="CustomerSaveButton" disable="true" layoutX="359.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerSaveButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #2F4F4F; -fx-text-fill: white;" text="Save">
+                        <Button fx:id="btnSave" disable="true" layoutX="359.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomerSaveButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #2F4F4F; -fx-text-fill: white;" text="Save">
                            <padding>
                               <Insets right="1.0" />
                            </padding>
@@ -151,7 +151,7 @@
                               <Cursor fx:constant="OPEN_HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="txtAdd" layoutX="8.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomersAddNewButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #1E90FF;" text="Add" textFill="WHITE">
+                        <Button fx:id="btnAdd" layoutX="8.0" layoutY="505.0" mnemonicParsing="false" onAction="#setCustomersAddNewButtonClick" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #1E90FF;" text="Add" textFill="WHITE">
                            <padding>
                               <Insets right="1.0" />
                            </padding>

@@ -15,8 +15,6 @@ public class Employee_Shift_SchedulerModel {
 	private final SimpleIntegerProperty EmployeesID;
 	private final SimpleStringProperty EmployeesFirst_Name;
 	private final SimpleStringProperty EmployeesLast_Name;
-	private final SimpleStringProperty EmployeesScheduleDate;
-	private final SimpleStringProperty EmployeesScheduleShift;
 	
 	Connection connection;
 	
@@ -24,35 +22,27 @@ public class Employee_Shift_SchedulerModel {
     private ResultSet resultSet;
     
     //Constructors
-    public Employee_Shift_SchedulerModel(int EmployeesID, String Date, String Shift, String LastName, String FirstName){
-
+    public Employee_Shift_SchedulerModel(int EmployeesID, String Date, String LastName, String FirstName){
 		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
-		this.EmployeesScheduleDate = new SimpleStringProperty(Date);
-		this.EmployeesScheduleShift = new SimpleStringProperty(Shift);
 		this.EmployeesLast_Name = new SimpleStringProperty(LastName);
 		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
 	}
     
     public Employee_Shift_SchedulerModel(int EmployeesID, String FirstName, String LastName){
 
-		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);
-		this.EmployeesScheduleDate = new SimpleStringProperty("");
-		this.EmployeesScheduleShift = new SimpleStringProperty("");
+		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);	
 		this.EmployeesLast_Name = new SimpleStringProperty(LastName);
 		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
 	}
 	
 	public Employee_Shift_SchedulerModel(){
-
 		this.EmployeesID = new SimpleIntegerProperty(0);
 		this.EmployeesFirst_Name = new SimpleStringProperty("");
 		this.EmployeesLast_Name = new SimpleStringProperty("");
-		this.EmployeesScheduleDate = new SimpleStringProperty("");
-		this.EmployeesScheduleShift = new SimpleStringProperty("");
 	}
 	
 	//Adds new Employees to Observable List to eventually be loaded into the table
-	public ObservableList getDataFromSqlAndAddToObservableList(String query){
+	public ObservableList<String> getDataFromSqlAndAddToObservableList(String query){
         ObservableList<String> employeeTableData = FXCollections.observableArrayList();
         try {
         	connection = SqliteConnection.Connector();
@@ -78,7 +68,7 @@ public class Employee_Shift_SchedulerModel {
     }
 	
 	//Add new Employees to the Employees_Schedule Table with their scheduler information
-	public ObservableList getDataFromSqlAndAddToObservableListSchedule(String query){
+	public ObservableList<String> getDataFromSqlAndAddToObservableListSchedule(String query){
 		ObservableList<String> employeeTableData = FXCollections.observableArrayList();
         try {
         	connection = SqliteConnection.Connector();

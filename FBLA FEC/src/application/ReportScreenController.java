@@ -19,12 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class ReportScreenController extends MenuBar implements Initializable {
-	
-	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
-	
-    private int temp;
-    
+public class ReportScreenController extends MenuBar implements Initializable {    
     @FXML
 	private TreeTableView<String> treeTableMenu;
 	@FXML
@@ -74,9 +69,6 @@ public class ReportScreenController extends MenuBar implements Initializable {
         stage.setTitle("Week Customer Attendance Data");
         stage.show();
    	}
-    
-    
-    
 }
 
 
