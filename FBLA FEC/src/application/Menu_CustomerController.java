@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
@@ -49,7 +50,6 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	private static final String CUSTOMER_ATTENDANCE_DELETE_SQL =
 		"DELETE FROM Customers_Attendance WHERE ID = %s AND Date = '%s' AND AMPM = '%s';";
 					
-					
 	private Menu_Customer_AttendanceModel Customers_Table_Attendance_Screen = new Menu_Customer_AttendanceModel();
 
 	// UI Features
@@ -69,13 +69,10 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	private JFXRadioButton rdPM;
 	@FXML
 	private JFXDatePicker dtAttendance;
-
 	@FXML
 	private Text lblCustomerAtt;
-
 	@FXML
 	private Button btnSearchCust;
-
 	@FXML
 	private TableView<Menu_Customer_AttendanceModel> TableCustomerAttendance;
 	@FXML
@@ -86,24 +83,22 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	private TableColumn<Menu_Customer_AttendanceModel, String> CustomerAttDate;
 	@FXML
 	private TableColumn<Menu_Customer_AttendanceModel, String> CustomerAttAMPM;
-
 	@FXML
 	private JFXDrawer topDrawer;
 	@FXML
 	private HBox hbMenu;
-
 	@FXML
 	private Button btnDelete;
 	@FXML
 	private Button btnSave;
+	@FXML
+	private Label lblCustomerName;
 
 	Connection connection;
 	private Statement statement;
 
 	@FXML
 	private AnchorPane root;
-
-	public AnchorPane rootP;
 
 	private int customerID = -1;
 
@@ -122,15 +117,16 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 		initToolbar(root, hbMenu);
 	}
 
-	public void setCustomer(int ID) {
-		this.customerID = ID;
+	public void setCustomer(Menu_CustomerModel customer) {
+		this.customerID = customer.getCustomers_ID();
+		this.lblCustomerName.setText(String.format("%s %s", customer.getCustomersFirst_Name(), customer.getCustomersLast_Name()));
 
 		TableCustomerAttendance.setItems(
 			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
 				String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
 		CustomersAttendanceSetAllEnable();
 	}
-
+	
 	// Display Customer Attendance Text Fields
 	private void CustomersAttendanceSetAllDisable() {
 		btnDelete.setDisable(true);
@@ -248,8 +244,6 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 						
 					statement.close();
 					connection.close();
-					
-					btnShowAllAtt.setDisable(false);
 				} 
 				catch (SQLException ex) {
 					ex.printStackTrace();
@@ -285,6 +279,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	// Method to refresh customer attendance table
 	@FXML
 	private void setShowAllAttClick(Event event) {
+		lblCustomerName.setText("");
 		TableCustomerAttendance.setItems(
 			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_ATTENDANCE_SELECT_ALL_SQL));
 	}

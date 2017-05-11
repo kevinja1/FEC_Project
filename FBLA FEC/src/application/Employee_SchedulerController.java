@@ -162,7 +162,9 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		
 		// add list selection listeners
 		for(UIDayContext dayContext : dayContexts) {
-			dayContext.listViewObj.getSelectionModel().selectedItemProperty().addListener(e -> {
+			dayContext.listViewObj.setOnMouseClicked(e -> {
+				// clear other listViewSelected Items
+				
 				chooseEmp(dayContext.labelObj, dayContext.listViewObj);
 			});
 		}
@@ -373,7 +375,8 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	@FXML
 	private void schedulerDelete(Event event) {
 		if (chosenlist.getSelectionModel().getSelectedItem() != null) {
-			String selectedEmpId = chosenlist.getSelectionModel().getSelectedItem().substring(0, 1);
+			String selectedItem = chosenlist.getSelectionModel().getSelectedItem();			
+			String selectedEmpId = selectedItem.substring(0, selectedItem.indexOf(":"));
 			
 			try {
 				connection = SqliteConnection.Connector();

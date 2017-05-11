@@ -133,6 +133,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 		
 		initToolbar(root, hbMenu);
+		CustomersSetAllDisable();
 	}
 	
 	private void disableAddEditDeleteButtons(boolean enableInd) {
@@ -202,6 +203,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		
 		disableSaveClearButtons(true);
 		disableAddEditDeleteButtons(false);
+		CustomersSetAllDisable();
 	}
 
 	//Method called when user saves a new customer
@@ -331,8 +333,8 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 						connection = SqliteConnection.Connector();
 						statement = connection.createStatement();
 
-						statement.executeUpdate(CUSTOMER_DELETE_SQL, selectedCustomer.getCustomers_ID());
-						statement.executeUpdate(CUSTOMER_ATTENDANCE_DELETE_SQL, selectedCustomer.getCustomers_ID());
+						statement.executeUpdate(String.format(CUSTOMER_DELETE_SQL, selectedCustomer.getCustomers_ID()));
+						statement.executeUpdate(String.format(CUSTOMER_ATTENDANCE_DELETE_SQL, selectedCustomer.getCustomers_ID()));
 						
 						statement.close();
 						connection.close();
@@ -620,7 +622,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	@FXML
 	public void setOKClicked(Event event) throws IOException{
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
-			Menu_CustomerModel getSelectedRow = TableCustomers.getSelectionModel().getSelectedItem();
+			Menu_CustomerModel selectedCustomer = TableCustomers.getSelectionModel().getSelectedItem();
 			
 			AnchorPane pane;
 			try {
@@ -629,7 +631,8 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 				pane = loader.load();
 				Menu_CustomerController controller = 
 					    loader.<Menu_CustomerController>getController();
-			   controller.setCustomer(getSelectedRow.getCustomers_ID());
+			   controller.setCustomer(selectedCustomer);
+
 			   root.getChildren().setAll(pane);
 			} catch (IOException e) {
 				e.printStackTrace();
