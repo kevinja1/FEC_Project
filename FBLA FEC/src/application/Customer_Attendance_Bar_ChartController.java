@@ -3,10 +3,6 @@ package application;
 import java.lang.reflect.InvocationTargetException;
 //importing all packages needed for this class
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -20,6 +16,7 @@ import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -47,6 +44,9 @@ public class Customer_Attendance_Bar_ChartController implements Initializable{
 		
 	@FXML
 	private BarChart<String,Integer> barChartAttendance;
+	
+	@FXML
+	private Button btnPrint;
 	
 	private String[] week = new String[7];
 	
@@ -184,37 +184,43 @@ public class Customer_Attendance_Bar_ChartController implements Initializable{
 			
 			//if default printer is found, Scale the printer to the size of the page, based on 
 			//default printer setup. Orientation should be Landscape
-			if(printer != null){
-				 PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
-				 double scaleX = pageLayout.getPrintableWidth() / Screen.getBoundsInParent().getWidth();
-				 double scaleY = pageLayout.getPrintableHeight() / Screen.getBoundsInParent().getHeight();
-				 Scale scale = new Scale(scaleX, scaleY);
-			  	 Screen.getTransforms().add(scale);
-			  	   
-			if(job.printPage(pageLayout, Screen)){
-			     job.endJob();
-			     //Scale the chart back to normal
-			     Screen.getTransforms().remove(scale);        	
-			    }
-			    else{
-			    	NotificationType notificationType = NotificationType.ERROR;
+			try {
+				btnPrint.setVisible(false);
+				
+				if(printer != null){
+					 PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+					 double scaleX = pageLayout.getPrintableWidth() / Screen.getBoundsInParent().getWidth();
+					 double scaleY = pageLayout.getPrintableHeight() / Screen.getBoundsInParent().getHeight();
+					 Scale scale = new Scale(scaleX, scaleY);
+				  	 Screen.getTransforms().add(scale);
+				  	   
+				if(job.printPage(pageLayout, Screen)){
+				     job.endJob();
+				     //Scale the chart back to normal
+				     Screen.getTransforms().remove(scale);        	
+				    }
+				    else{
+				    	NotificationType notificationType = NotificationType.ERROR;
+				        TrayNotification tray = new TrayNotification();
+				        tray.setTitle("Printing error");
+				        tray.setMessage("Try turning on your printers");
+				        tray.setNotificationType(notificationType);
+				        tray.showAndDismiss(Duration.millis(10000));
+				    }
+				}
+				//if printer is null, give a tray notification that printer is not found
+				else if(printer == null){
+			    	//tray notification printer not found
+			    		
+					NotificationType notificationType = NotificationType.ERROR;
 			        TrayNotification tray = new TrayNotification();
-			        tray.setTitle("Printing error");
-			        tray.setMessage("Try turning on your printers");
+			        tray.setTitle("Printer not found");
+			        tray.setMessage("Please set default printer/turn printer on");
 			        tray.setNotificationType(notificationType);
-			        tray.showAndDismiss(Duration.millis(10000));
+			        tray.showAndDismiss(Duration.millis(10000));	
 			    }
+			} finally {
+				btnPrint.setVisible(true);
 			}
-			//if printer is null, give a tray notification that printer is not found
-			else if(printer == null){
-		    	//tray notification printer not found
-		    		
-				NotificationType notificationType = NotificationType.ERROR;
-		        TrayNotification tray = new TrayNotification();
-		        tray.setTitle("Printer not found");
-		        tray.setMessage("Please set default printer/turn printer on");
-		        tray.setNotificationType(notificationType);
-		        tray.showAndDismiss(Duration.millis(10000));	
-		    }	    	
 		}
 }
