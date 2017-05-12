@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -45,22 +46,35 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 public class Menu_Customer_DetailsController extends MenuBar implements Initializable {
+	
+	//SQL Queries
+	
+	//selects all Customers from the Customer Table
 	private static final String CUSTOMER_SELECT_ALL_SQL = "SELECT * FROM Customers;";
+	
+	//Selects a customer with a given ID
 	private static final String CUSTOMER_SELECT_BY_ID = "SELECT * FROM Customers WHERE ID = %s;";
 	
+	//Displays customers with given first and last names
 	private static final String CUSTOMER_SEARCH_SQL = "SELECT * FROM Customers WHERE First_Name like '%%%s%%' OR Last_Name like '%%%s%%';";
 	
+	//Inserts a new customer into the database
 	private static final String CUSTOMER_INSERT_SQL =
 		"INSERT INTO `Customers` (`First_Name`,`Last_Name`,`Email`,`Phone`,`Address`,`DOB`) VALUES ('%s','%s','%s','%s','%s','%s');";
 	
+	//Updates a given customer's field values
 	private static final String CUSTOMER_UPDATE_SQL =
 		"UPDATE Customers SET First_Name = '%s', Last_Name = '%s', Email = '%s', Phone = '%s', Address = '%s', DOB = '%s' where ID = %s";
 		
+	//Delete a customer
 	private static final String CUSTOMER_DELETE_SQL = "DELETE FROM Customers WHERE ID = %s;";
+	//Delete a customer attendance
 	private static final String CUSTOMER_ATTENDANCE_DELETE_SQL = "DELETE FROM Customers_Attendance WHERE ID = %s;";
 	
+	//class to do calculations and database operations for customers
 	private Menu_CustomerModel Customers_Table_Screen = new Menu_CustomerModel();
 	
+	//UI Features
 	@FXML
 	private JFXTextField txtFirst_Name;
 	@FXML
@@ -94,15 +108,20 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	@FXML
 	private TableColumn<Menu_CustomerModel, String> CustomersEmail;
 	
+	
+	//for saving purposes, checks whether the user wishes to add or delete
 	private boolean isCustomersAddNewButtonClick;
 	private boolean isCustomersEditButtonClick;
 
+	//Connection, statement, and resultSet for the database operations
 	Connection connection;
 	private Statement statement;
 	private ResultSet resultSet;
 
+	//id of the selected Customer
 	private int selectedCustomerId;
 	
+	//Some more UI Features
 	@FXML
 	private JFXDrawer topDrawer;
 	@FXML
@@ -132,6 +151,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		//Fills in the customers in the customer table
 		TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 		
+		//Displays the navigation bar at the top of the screen
 		initToolbar(root, hbMenu);
 		CustomersSetAllDisable();
 	}
@@ -210,10 +230,12 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	@FXML
 	private void setCustomerSaveButtonClick(Event event){
 		try{	       
+			//Checks to see whether all field values are valid
 			if(validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB() && validateAddress()){
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
-
+				
+				//if the user wishes to add, the new customer is inserted into the database
 				if(isCustomersAddNewButtonClick){
 					isCustomersEditButtonClick = true;
 					btnEdit.setDisable(false);
@@ -226,7 +248,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 							txtPhone.getText(),
 							txtAddress.getText(),
 							dtDOB.getValue().toString()));
-				}
+				}//if the user wishes to edit, the customer values are updated in the database
 				else if (isCustomersEditButtonClick){
 					isCustomersAddNewButtonClick = false;
 					btnAdd.setDisable(false);
@@ -245,6 +267,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 				statement.close();
 				connection.close();
 
+				//Clears all text fields on the screen once the Customer is saved
 				CustomersSetAllClear();
 				CustomersSetAllDisable();
 				TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
@@ -265,6 +288,8 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null) {
 			btnAdd.setDisable(true);
 			btnDelete.setDisable(true);
+			
+			//saves the selected customer as an object
 			Menu_CustomerModel selectedCustomer = TableCustomers.getSelectionModel().getSelectedItem();
 
 			try {
@@ -272,7 +297,10 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(String.format(CUSTOMER_SELECT_BY_ID, selectedCustomer.getCustomers_ID()));
 
+				//Enables all text fields 
 				CustomersSetAllEnable();
+				
+				//Sets the text field values to that of the selected customer
 				while(resultSet.next()) {
 					txtFirst_Name.setText(resultSet.getString("First_Name"));
 					txtLast_Name.setText(resultSet.getString("Last_Name"));
@@ -291,6 +319,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 
 		}
 		else{
+			//Displays an error message if no customer was selected
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("No Customer Selected"));
 			content.setBody(new Text("To edit please select a Customer"));
@@ -313,7 +342,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 	//Method called when user wishes to delete a customer
 	@FXML
 	private void setCustomerDeleteButtonClick(Event event){
-		
+		//A message is displayed first to confirm whether the user wishes to delete the selected employee
 		if(TableCustomers.getSelectionModel().getSelectedItem()!=null){
 			TableCustomers.setPlaceholder(new Label("No Customers"));	
 			JFXDialogLayout content = new JFXDialogLayout();
@@ -324,9 +353,11 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);  
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			
+			//If the user wishes to delete the selected employee, the employee is deleted
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event){
+					//Selected customer is saved as an object
 					Menu_CustomerModel selectedCustomer = TableCustomers.getSelectionModel().getSelectedItem();
 					
 					try {
@@ -339,6 +370,7 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 						statement.close();
 						connection.close();
 						
+						//Sets updated table with new updated customers
 						TableCustomers.setItems(Customers_Table_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_SELECT_ALL_SQL));
 						dialog.close();
 					}
@@ -408,57 +440,12 @@ public class Menu_Customer_DetailsController extends MenuBar implements Initiali
 		}
 	} 
 
-	//Following launch methods are to load other windows for various parts of the program
-	@FXML
-	private void launchScheduler(Event event) throws IOException{
-		((Node)event.getSource()).getScene().getWindow().hide();
-		Parent Scheduler = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-		Scene scheduler = new Scene(Scheduler);
-		Stage Schedule = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Schedule.hide();
-		Schedule.setScene(scheduler);
-		Schedule.setTitle("Scheduler");
-		Schedule.show();
-	}
-
-	@FXML
-	private void launchEmployeeMainMenu(Event event) throws IOException{
-		((Node)event.getSource()).getScene().getWindow().hide();
-		Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
-		Scene MainMenu = new Scene(Main_Menu);
-		Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		mainMenu.hide();
-		mainMenu.setScene(MainMenu);
-		mainMenu.setTitle("Main Menu");
-		mainMenu.show();
-	}
-
-	@FXML
-	private void launchBarChart(Event event) throws IOException{
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
-		loader.load();
-		Parent p = loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("All Customer Attendance Data");
-		stage.show();
-	}
-
-	@FXML
-	private void launchLineChart(Event event) throws IOException{
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
-		loader.load();
-		Parent p = loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("Week Customer Attendance Data");
-		stage.show();
-	}
+	
 
 	//Following validate methods are to make sure the required info is provided in the correct format,
-	//otherwise show an alert
+	//otherwise show an alert. For more information about how these methods work, please visit Main_Menu_EmployeeController.java and see the comments 
+	//atop these methods in that class. They work similarly.
+	
 	private boolean validateFirstName(){
 		Pattern p = Pattern.compile("[a-zA-z]+");
 		Matcher m = p.matcher(txtFirst_Name.getText());

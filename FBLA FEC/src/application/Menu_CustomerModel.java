@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Menu_CustomerModel {
+	
+	//instance variables for the Customer
 	private final SimpleStringProperty CustomersFirst_Name;
 	private final SimpleStringProperty CustomersLast_Name;
 	private final SimpleStringProperty Customers_Address;
@@ -38,6 +41,7 @@ public class Menu_CustomerModel {
 		this.Customers_ID = new SimpleIntegerProperty(CustomersID);
 	}
 
+	//Constructor without a parameter
 	public Menu_CustomerModel() {
 
 		this.CustomersFirst_Name = new SimpleStringProperty("");

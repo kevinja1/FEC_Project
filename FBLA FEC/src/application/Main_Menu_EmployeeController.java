@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -42,22 +43,35 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+//Controller for the Employee Details screen
 public class Main_Menu_EmployeeController extends MenuBar implements Initializable {
+	
+	//SQL queries
+	//selects all field for every employee
 	private static final String EMP_SELECT_ALL_SQL = "SELECT * FROM Employees;";
+	
+	//selects Employees with a specified id
 	private static final String EMP_SELECT_BY_ID_SQL = "SELECT * FROM Employees where ID = %s;";
 	
+	//selects Employees with given Name etc.
 	private static final String EMP_SEARCH_SQL =
 		"SELECT * FROM Employees WHERE First_Name like '%%%s%%' OR Last_Name like '%%%s%%';";
-			
+	
+	//Insert employee into database
 	private static final String EMP_INSERT_SQL =
 		"INSERT INTO `Employees` (`First_Name`,`Last_Name`,`Email`,`Phone`, `Address`,`DOB`) values ('%s', '%s', '%s', '%s', '%s', '%s');";
 	
+	//updates an employee with new field values
 	private static final String EMP_UPDATE_SQL =
 		"UPDATE Employees SET First_Name = '%s', Last_Name = '%s', Email = '%s', Phone = '%s', Address = '%s', DOB = '%s' WHERE ID = %s;";
 	
+	//delete employee with given id
 	private static final String EMP_DELETE_BY_ID_SQL = "DELETE FROM Employees WHERE ID = %s";
+	
+	//delete employee shift
 	private static final String EMP_DELETE_SCHEDULE_BY_ID_SQL = "DELETE from Employees_Schedule WHERE ID = %s";
 	
+	//class to do database operations and calculations
 	private Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
 
 	// Features of the UI
@@ -102,15 +116,19 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	@FXML
 	private HBox hbMenu;
 
+	//for the purposes of the save method, checks whether the user is adding or editing
 	private boolean isMainMenuAddNewButtonClick;
 	private boolean isMainMenuEditButtonClick;
 
+	//Connection, statement, and resultSet for database operations
 	Connection connection;
 	private Statement statement;
 	private ResultSet resultSet;
 
+	//ID of the selected employee
 	private int selectedEmpId;
 
+	//Pane name for the purposes of changing the screen on the same window
 	@FXML
 	private BorderPane root;
 
@@ -120,7 +138,10 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	public void initialize(URL location, ResourceBundle resources) {
 		// "Configures" the value of each column in the table
 
+		//Sets certain buttons on the screen disable so user cannot edit them immediately
 		MainMenuSetAllDisable();
+		
+		//Configures each column with values to expect
 		EmployeesFirst_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesFirst_Name"));
 		EmployeesLast_Name.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesLast_Name"));
 		EmployeesID.setCellValueFactory(new PropertyValueFactory<Main_Menu_EmployeeModel, String>("EmployeesID"));
@@ -130,6 +151,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		TableEmployees.setItems(Employee_Table_Screen.getDataFromSqlAndAddToObservableList("SELECT * FROM EMPLOYEES"));
 		dtDOB.setEditable(false);
 
+		//Method that displays navigation menu on top of screen
 		initToolbar(root, hbMenu);
 	}
 
@@ -202,19 +224,22 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	private void setMainMenuSaveButtonClick(Event event) {
 		try {
 
+			//Checks to see if user has inputted valid values for each field
 			if (validateFirstName() && validateLastName() && validateEmail() && validatePhone() && validateDOB()
 					&& validateAddress()) {
 
 				connection = SqliteConnection.Connector();
 				statement = connection.createStatement();
-
+				
+				//if the main menu add button was clicked, the employee is inserted
 				if (isMainMenuAddNewButtonClick) {
 					btnEdit.setDisable(false);
 					btnDelete.setDisable(false);
 					statement.executeUpdate(
 						String.format(EMP_INSERT_SQL, txtFirst_Name.getText(), txtLast_Name.getText(),
 							txtEmail.getText(), txtPhone.getText(), txtAddress.getText(), dtDOB.getValue().toString()));
-				} else if (isMainMenuEditButtonClick) {
+				} //if the main menu edit button was clicked, the employee values are updated
+				else if (isMainMenuEditButtonClick) {
 					btnAdd.setDisable(false);
 					btnDelete.setDisable(false);
 					statement.executeUpdate(
@@ -225,9 +250,12 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 				statement.close();
 				connection.close();
 
+				//Once it is saved it clears values
 				MainMenuSetAllClear();
 				MainMenuSetAllDisable();
 				resetButtons();
+				
+				//Sets the table of Employees with the new Employees and field values
 				TableEmployees.setItems(
 						Employee_Table_Screen.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 				isMainMenuEditButtonClick = false;
@@ -247,6 +275,8 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		if (TableEmployees.getSelectionModel().getSelectedItem() != null) {
 			btnAdd.setDisable(true);
 			btnDelete.setDisable(true);
+			
+			//gets the exact employee that was selected
 			Main_Menu_EmployeeModel selectedEmp = TableEmployees.getSelectionModel().getSelectedItem();
 		
 			try {
@@ -255,6 +285,8 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 				resultSet = statement.executeQuery(String.format(EMP_SELECT_BY_ID_SQL, selectedEmp.getEmployeesID()));
 
 				MainMenuSetAllEnable();
+				
+				//Sets all text fields to the values of the selected employee
 				while (resultSet.next()) {
 					txtFirst_Name.setText(resultSet.getString("First_Name"));
 					txtLast_Name.setText(resultSet.getString("Last_Name"));
@@ -271,12 +303,15 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 			}
 
 		} else {
+			//if no employee is selected it alerts the user
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("No Employee Selected"));
 			content.setBody(new Text("To edit please select an employee from the  table"));
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			
+			//if the user clicks the ok button on the dialogbox, it will exit the dialog box
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -295,6 +330,8 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	@FXML
 	private void setMainMenuDeleteButtonClick(Event event) {
 		if (TableEmployees.getSelectionModel().getSelectedItem() != null) {
+			
+			//If the user clicks delete, it confirms whether the user wants to delete the employee
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("Confirmation"));
 			content.setBody(new Text("Are you sure you want to delete this employee."));
@@ -302,6 +339,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 			JFXButton button1 = new JFXButton("No");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			//If the user says yes, the employee is deleted
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -313,9 +351,11 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 							connection = SqliteConnection.Connector();
 							statement = connection.createStatement();
 
+							//Deletes employees from both the employee table and the employee_schedule table
 							statement.executeUpdate(String.format(EMP_DELETE_BY_ID_SQL, selectedEmp.getEmployeesID()));
 							statement.executeUpdate(String.format(EMP_DELETE_SCHEDULE_BY_ID_SQL, selectedEmp.getEmployeesID()));
 
+							//Sets the table of employee to the updated employees
 							TableEmployees.setItems(Employee_Table_Screen
 									.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 							statement.close();
@@ -329,6 +369,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 
 				}
 			});
+			//If the user says no, the dialog box is exited
 			button1.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -375,53 +416,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	// The following launch methods are for loading other screens in the program
 	// when their respective buttons are clicked
 
-	@FXML
-	private void launchScheduler(Event event) throws IOException {
-		((Node) event.getSource()).getScene().getWindow().hide();
-		Parent Scheduler = FXMLLoader.load(getClass().getResource("Employee_Shift_Scheduler.fxml"));
-		Scene scheduler = new Scene(Scheduler);
-		Stage Schedule = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Schedule.hide();
-		Schedule.setScene(scheduler);
-		Schedule.setTitle("Scheduler");
-		Schedule.show();
-	}
-
-	@FXML
-	private void launchCustomerScreen(Event event) throws IOException {
-		((Node) event.getSource()).getScene().getWindow().hide();
-		Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
-		Scene customer_screen = new Scene(CustomerScreen);
-		Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Customer_Screen.hide();
-		Customer_Screen.setScene(customer_screen);
-		Customer_Screen.setTitle("Customer Screen");
-		Customer_Screen.show();
-	}
-
-	@FXML
-	private void launchBarChart(Event event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
-		loader.load();
-		Parent p = loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("All Customer Attendance Data");
-		stage.show();
-	}
-
-	@FXML
-	private void launchLineChart(Event event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
-		loader.load();
-		Parent p = loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.setTitle("Week Customer Attendance Data");
-		stage.show();
-	}
+	
 
 	// Shows the extra employee information by launching a mini-window
 	@FXML
@@ -437,6 +432,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 			Stage stage = new Stage();
 			stage.setScene(new Scene(p));
 
+			//Loads the profiler view for the given employee
 			Employee_Profile_ViewController profileView = loader.getController();
 			profileView.setCurrentInfo(info);
 			stage.show();
@@ -468,11 +464,14 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		if (m.find() && m.group().equals(txtFirst_Name.getText())) {
 			return true;
 		} else {
+			//displays a message if the user doesn't enter a valid first name
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("Error First Name"));
 			content.setBody(new Text("Please enter a valid first name."));
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
+			
+			//sets the border to red of the alert message
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -491,7 +490,10 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		}
 	}
 
+	//Makes sure the last name entered is valid
 	private boolean validateLastName() {
+		
+		//Makes sure it is all letters and no numbers, etc.
 		Pattern p = Pattern.compile("[a-zA-z]+");
 		Matcher m = p.matcher(txtLast_Name.getText());
 		if (m.find() && m.group().equals(txtLast_Name.getText())) {
@@ -503,6 +505,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+			//if the ok button on the dialog box is clicked, the error message exits
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -514,23 +517,29 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 			dialog.show();
 			txtLast_Name.clear();
 
+			//brings cursor to the last name text field
 			txtLast_Name.requestFocus();
 
 			return false;
 		}
 	}
 
+	//Validates the format of the given email
 	private boolean validateEmail() {
+		
+		//Makes sure the email begins with characters, then the @ symbol, then some more characters, then a dot, and finally some more characters
 		Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
 		Matcher m = p.matcher(txtEmail.getText());
 		if (m.find() && m.group().equals(txtEmail.getText())) {
 			return true;
 		} else {
+			//Dialog box to alert user that their inputed email address is of invalid format
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("Error Email"));
 			content.setBody(new Text("Please enter a valid email address."));
 			JFXButton button = new JFXButton("Okay");
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
+			//sets the border of the dialgo box to red
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -549,6 +558,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		}
 	}
 
+	//Validates the format of the phone number (***-***-****)
 	private boolean validatePhone() {
 		Pattern p = Pattern.compile("[0-9]{3}[-][0-9]{3}[-][0-9]{4}");
 		Matcher m = p.matcher(txtPhone.getText());
@@ -579,6 +589,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 		}
 	}
 
+	//validates that a date of birth was inputted and the value is not null
 	private boolean validateDOB() {
 		if (dtDOB.getValue() != null) {
 			return true;
@@ -604,6 +615,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 
 	}
 
+	//validates that an Address was inputed and the text field value is not null
 	private boolean validateAddress() {
 		if (txtAddress.getText() != null) {
 			return true;
@@ -665,6 +677,7 @@ public class Main_Menu_EmployeeController extends MenuBar implements Initializab
 	@FXML
 	public void handleDoubleClick(MouseEvent mouseEvent) throws IOException {
 		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+			//Counts the number of mouse clicks that happened
 			if (mouseEvent.getClickCount() == 2) {
 				if (TableEmployees.getSelectionModel().getSelectedItem() != null) {
 					Employee_Profile_ViewModel info = new Employee_Profile_ViewModel(

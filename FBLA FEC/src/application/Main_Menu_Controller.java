@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 //Controller class for the first screen that loads once the user logs in
 public class Main_Menu_Controller extends MenuBar implements Initializable {
 	
+	//UI Features
     @FXML
 	private TreeTableView<String> treeTableMenu;
 	@FXML
@@ -24,12 +25,15 @@ public class Main_Menu_Controller extends MenuBar implements Initializable {
 	private JFXDrawer topDrawer;	
 	@FXML
 	private HBox hbMenu;
+	
+	//BorderPane for the purposes of changing the screen on the same window
 	@FXML
 	private BorderPane root;
 	
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initToolbar(root, hbMenu);
+        //Method that displays the navigation menu at the top of the screen
+    	initToolbar(root, hbMenu);
     }
 }
 

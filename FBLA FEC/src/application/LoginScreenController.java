@@ -82,12 +82,15 @@ public class LoginScreenController implements Initializable {
 			} else {
 				//if username or password are incorrect, the user will be alerted
 				
+				//error message is generated
 				JFXDialogLayout content = new JFXDialogLayout();
 				content.setHeading(new Text("Error Login"));
 				content.setBody(new Text("Incorrect Username or Password"));
 				JFXButton button = new JFXButton("Okay");
 				JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 				content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+				
+				//If the user clicks the ok button on the error message, the message will exit
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {

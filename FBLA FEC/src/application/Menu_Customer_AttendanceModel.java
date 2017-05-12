@@ -33,6 +33,7 @@ public class Menu_Customer_AttendanceModel {
 		this.Customers_LastName = new SimpleStringProperty(Customers_LastName);
 	}
 
+	//Constructors with no parameters
 	public Menu_Customer_AttendanceModel() {
 
 		this.Customers_Date = new SimpleStringProperty("");

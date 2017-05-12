@@ -37,6 +37,7 @@ public class Employee_Shift_SchedulerModel {
 		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
 	}
 	
+    //constructor with no parameters
 	public Employee_Shift_SchedulerModel(){
 		this.EmployeesID = new SimpleIntegerProperty(0);
 		this.EmployeesFirst_Name = new SimpleStringProperty("");
@@ -51,6 +52,7 @@ public class Employee_Shift_SchedulerModel {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query); 
            
+            //Adds strings which will be displayed in the ListView for scheduling
             while(resultSet.next()){
                 employeeTableData.add(
                         resultSet.getString("First_Name") + " " +
@@ -77,6 +79,8 @@ public class Employee_Shift_SchedulerModel {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query); 
            
+
+            //Adds strings which will be displayed in the ListView for scheduling with the Shift as well
             while(resultSet.next()){
                 employeeTableData.add(
                         resultSet.getString("ID") + ": " + resultSet.getString("First_Name") +" "+
@@ -99,7 +103,7 @@ public class Employee_Shift_SchedulerModel {
 	    public Integer getEmployeesID() {
 	        return EmployeesID.get();
 	    }
-
+	    
 	    public SimpleIntegerProperty EmployeesID() {
 	        return EmployeesID();
 	    }

@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXButton;
@@ -17,7 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+//Class that has the navigation tool bar at the top which every screen uses
 public class MenuBar {
+	//UI Features, each button navigates to a different screen in the program
 	@FXML
 	protected JFXButton buttonDetails;
 	@FXML
@@ -32,42 +35,50 @@ public class MenuBar {
 	protected JFXButton buttonExit;
 	
 	public void initToolbar(Pane root, HBox hbMenu) {
+		
+		//The following code sets the graphic and label for each of the buttons in the navigation screen
 		buttonDetails.setGraphic(new ImageView("application/ic_perm_identity_white_48pt.png"));
         buttonDetails.setText("Employee Details");
         buttonDetails.setTextFill(Color.WHITE);
         buttonDetails.setContentDisplay(ContentDisplay.TOP);
         buttonDetails.setAlignment(Pos.BOTTOM_CENTER);
         
+      //The following code sets the graphic and label for each of the buttons in the navigation screen
         buttonSchedule.setGraphic(new ImageView("application/ic_date_range_white_48pt.png"));
         buttonSchedule.setText("Employee Schedule");
         buttonSchedule.setTextFill(Color.WHITE);
         buttonSchedule.setContentDisplay(ContentDisplay.TOP);
         buttonSchedule.setAlignment(Pos.BOTTOM_CENTER);
         
+      //The following code sets the graphic and label for each of the buttons in the navigation screen
         buttonCustomer.setGraphic(new ImageView("application/ic_group_white_2x.png"));
         buttonCustomer.setText("Customer Attendance");
         buttonCustomer.setTextFill(Color.WHITE);
         buttonCustomer.setContentDisplay(ContentDisplay.TOP);
         buttonCustomer.setAlignment(Pos.BOTTOM_CENTER);
         
+      //The following code sets the graphic and label for each of the buttons in the navigation screen
         buttonReports.setGraphic(new ImageView("application/ic_insert_chart_white_2x.png"));
         buttonReports.setText("Reports");
         buttonReports.setTextFill(Color.WHITE);
         buttonReports.setContentDisplay(ContentDisplay.TOP);
         buttonReports.setAlignment(Pos.BOTTOM_CENTER);
         
+      //The following code sets the graphic and label for each of the buttons in the navigation screen
         buttonAbout.setGraphic(new ImageView("application/ic_info_outline_white_48pt.png"));
         buttonAbout.setText("About");
         buttonAbout.setTextFill(Color.WHITE);
         buttonAbout.setContentDisplay(ContentDisplay.TOP);
         buttonAbout.setAlignment(Pos.BOTTOM_CENTER);
         
+      //The following code sets the graphic and label for each of the buttons in the navigation screen
         buttonExit.setGraphic(new ImageView("application/ic_clear_white_48pt.png"));
         buttonExit.setText("Exit");
         buttonExit.setTextFill(Color.WHITE);
         buttonExit.setContentDisplay(ContentDisplay.TOP);
         buttonExit.setAlignment(Pos.BOTTOM_CENTER);
-        
+      
+        //The following code is for which screen to load if each button is clicked
         for(Node node: hbMenu.getChildren()){
     		if(node.getAccessibleText()!=null){
     			node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {

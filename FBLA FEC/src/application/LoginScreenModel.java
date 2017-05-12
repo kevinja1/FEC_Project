@@ -1,10 +1,14 @@
 package application;
+
+//import statements
 import java.sql.*;
 
 public class LoginScreenModel {
 	
+	//Database connection
 	Connection connection;
 	
+	//If connection is not established, exit program
 	public LoginScreenModel(){
 		connection = SqliteConnection.Connector();
 		if(connection == null){

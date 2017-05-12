@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -35,18 +36,24 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+//Controller Class for Customer Attendance screen
 public class Menu_CustomerController extends MenuBar implements Initializable {
+	
+	//Selects the customer attendance for a selected ID
 	private static final String CUSTOMER_ATTENDANCE_SELECT_SQL =
 		"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM" + 
 			" Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID WHERE Customers_Attendance.ID = %s;";
 	
+	//Selects all customer attendances
 	private static final String CUSTOMER_ATTENDANCE_SELECT_ALL_SQL =
 		"SELECT Customers_Attendance.*, Customers.ID, Customers.First_Name, Customers.Last_Name FROM" + 
 			" Customers_Attendance INNER JOIN Customers ON Customers_Attendance.ID=Customers.ID;";
 	
+	//Inserts a new customer attendance
 	private static final String CUSTOMER_ATTENDANCE_INSERT_SQL =
 		"INSERT INTO `Customers_Attendance` (ID, `Date`,`AMPM`,`Day_of_Week`) values (%s,'%s','%s','%s');";
 	
+	//Deletes a customer attendance
 	private static final String CUSTOMER_ATTENDANCE_DELETE_SQL =
 		"DELETE FROM Customers_Attendance WHERE ID = %s AND Date = '%s' AND AMPM = '%s';";
 					
@@ -100,10 +107,12 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 	@FXML
 	private AnchorPane root;
 
+	//customerID of selected customer
 	private int customerID = -1;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		//Configures the column for expected value types
 		CustomerAttFirst_Name.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_FirstName"));
 		CustomerAttLast_Name.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_LastName"));
 		CustomerAttDate.setCellValueFactory(new PropertyValueFactory<Menu_Customer_AttendanceModel, String>("Customers_Date"));
@@ -114,13 +123,16 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 
 		dtAttendance.setEditable(false);
 
+		//Displays navigation menu on the top of the screen
 		initToolbar(root, hbMenu);
 	}
 
+	//This method sets the customer for which the attendance is being drawn.
 	public void setCustomer(Menu_CustomerModel customer) {
 		this.customerID = customer.getCustomers_ID();
 		this.lblCustomerName.setText(String.format("%s %s", customer.getCustomersFirst_Name(), customer.getCustomersLast_Name()));
 
+		//Tells the table to display values of attendance for the given customer
 		TableCustomerAttendance.setItems(
 			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(
 				String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
@@ -180,6 +192,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			}
 
 		} else {
+			//This error message is displayed if no customer is selected
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("No Customer Selected"));
 			content.setBody(new Text("To add, please select a customer"));
@@ -203,19 +216,6 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 		}
 	}
 
-	@FXML
-	private void LaunchCustomerDetails(Event event) throws IOException {
-		((Node) event.getSource()).getScene().getWindow().hide();
-		Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer_Details.fxml"));
-		Scene customer_screen = new Scene(CustomerScreen);
-		Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Customer_Screen.hide();
-		Customer_Screen.setScene(customer_screen);
-		Customer_Screen.setTitle("Infinity Family Entertainment Center");
-		Customer_Screen.show();
-
-	}
-
 	// Method for deleting a customer attendance
 	@FXML
 	private void setCustomerAttendanceDeleteButtonClick(Event event) {
@@ -223,6 +223,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			Menu_Customer_AttendanceModel getSelectedRow = 
 				TableCustomerAttendance.getSelectionModel().getSelectedItem();
 			
+			//Asks the user for a confirmation on whether they wish to delete the selected customer Attendance
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("Confirmation"));
 			content.setBody(new Text("Are you sure you want to delete this attendance record?"));
@@ -231,6 +232,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			JFXDialog dialog = new JFXDialog(stack, content, JFXDialog.DialogTransition.LEFT);
 			content.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
 
+			//If they select yes, then it proceeds to delete the customer attendance
 			btnYes.setOnAction(e -> {
 				try {
 					connection = SqliteConnection.Connector();
@@ -239,6 +241,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 					statement.executeUpdate(String.format(CUSTOMER_ATTENDANCE_DELETE_SQL, 
 						getSelectedRow.getCustomers_ID(), getSelectedRow.getCustomers_Date(), getSelectedRow.getCustomers_AMPM()));
 					
+					//The table is updated with the new customer attendances
 					TableCustomerAttendance.setItems(
 						Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(String.format(CUSTOMER_ATTENDANCE_SELECT_SQL, customerID)));
 						
@@ -258,6 +261,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			dialog.show();
 
 		} else {
+			//If no attendance is selected, then the program prompts the user to select an attendance from the table before deleting
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("No Attendance Selected"));
 			content.setBody(new Text("Please select an attendance from the table."));
@@ -284,6 +288,7 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			Customers_Table_Attendance_Screen.getDataFromSqlAndAddToObservableList(CUSTOMER_ATTENDANCE_SELECT_ALL_SQL));
 	}
 
+	//This method makes sure the value for the date is not null otherwise it prompts the user to enter a date.
 	private boolean validateAttendanceDate() {
 		if (dtAttendance.getValue() != null) {
 			return true;

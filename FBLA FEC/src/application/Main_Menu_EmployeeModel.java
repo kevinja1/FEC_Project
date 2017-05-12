@@ -1,5 +1,7 @@
 package application;
 
+//import statements
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +39,7 @@ public class Main_Menu_EmployeeModel{
 		this.EmployeesDOB = new SimpleStringProperty(EmployeesDOB);
 	}
 	
+	//Constructor with no parameters
 	public Main_Menu_EmployeeModel(){
 
 		this.EmployeesID = new SimpleIntegerProperty(0);
