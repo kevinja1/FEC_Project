@@ -307,4 +307,18 @@ public class Menu_CustomerController extends MenuBar implements Initializable {
 			return false;
 		}
 	}
+	
+	@FXML
+	private void LaunchCustomerDetails(Event event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
+		Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer_Details.fxml"));
+		Scene customer_screen = new Scene(CustomerScreen);
+		Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Customer_Screen.hide();
+		Customer_Screen.setScene(customer_screen);
+		Customer_Screen.setTitle("Infinity Family Entertainment Center");
+		Customer_Screen.show();
+
+	}
+
 }
