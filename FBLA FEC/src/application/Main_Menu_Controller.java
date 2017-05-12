@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,9 +13,9 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
+//Controller class for the first screen that loads once the user logs in
 public class Main_Menu_Controller extends MenuBar implements Initializable {
-	public Main_Menu_EmployeeModel Employee_Table_Screen = new Main_Menu_EmployeeModel();
-    
+	
     @FXML
 	private TreeTableView<String> treeTableMenu;
 	@FXML

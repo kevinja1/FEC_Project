@@ -1,6 +1,5 @@
 package application;
 
-//import statements
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -45,10 +44,7 @@ import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
-//Controller Class for the Employee Scheduler
 public class Employee_SchedulerController extends MenuBar implements Initializable {
-	
-	//SQL queries for data access, insertion, deletion
 	public static final String EMP_SELECT_ALL_SQL = "SELECT * FROM EMPLOYEES";
 			
 	public static final String EMP_SCHEDULE_LOAD_BY_DATE_SQL = 
@@ -68,10 +64,8 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		"DELETE FROM Employees_Schedule WHERE ID = %s AND Date = '%s'";
 		
 	
-	//Class to perform calculations, database operations for the scheduler
 	private Employee_Shift_SchedulerModel Scheduler_Table = new Employee_Shift_SchedulerModel();
 
-	//UI Features
 	@FXML
 	private JFXDatePicker dtSchedule;
 	@FXML
@@ -124,10 +118,7 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 	@FXML
 	private GridPane grSchedule;
 
-	
 	private Label chosen;
-	
-	//Connection, statement, and resulSet for database access
 	Connection connection;
 	private Statement statement;
 	private ResultSet resultSet;
@@ -147,13 +138,11 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		cbDOW.setValue("Sunday");
 		dtSchedule.setValue(LocalDate.now());
 
-		//Method to load navigation menu at top of screen
 		initToolbar(root, hbMenu);
 		
 		// loading the employee information into the table
 		cbEmployee.setItems(Scheduler_Table.getDataFromSqlAndAddToObservableList(EMP_SELECT_ALL_SQL));
 
-		//Observable List values for combo box for user to choose day of week
 		ObservableList<String> options = 
 			FXCollections.observableArrayList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 		cbDOW.getItems().addAll(options);
@@ -204,7 +193,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		}
 	}
 	
-	//updates UI Label to alert user what date it is
 	private void updateDateLabel(LocalDate inputDate) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(DateUtils.asDate(inputDate));
@@ -257,7 +245,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(String.format(EMP_SCHEDULE_LOAD_BY_ID_AND_DATE_SQL, id, chosen.getText()));
 
-				//Counts how many instances of the employee in the exact shift inputed there exists
 				String shiftFromDb = null;
 				while (resultSet.next()) {
 					shiftFromDb = resultSet.getString("Shift");
@@ -266,7 +253,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 					}
 				}
 
-				//If there are already no instances of the employee in this shift, this either inserts the employee into this shift, or updates their shift
 				if (count == 0) {
 					if(shiftFromDb != null) {						
 						statement.executeUpdate(String.format(EMP_SCHEDULE_UPDATE_SQL, AMPM(), id, chosen.getText()));
@@ -274,7 +260,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 						statement.executeUpdate(String.format(EMP_SCHEDULE_INSERT_SQL, id, chosen.getText(), AMPM()));
 					}
 				} else {
-					//Otherwise, the user will be alerted the following message
 					NotificationType notificationType = NotificationType.ERROR;
 					TrayNotification tray = new TrayNotification();
 					tray.setTitle("Employee Repeat");
@@ -310,7 +295,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		chosenlist = dayList;
 	}
 	
-	//Method to know which shifts the user wishes to input the employee for
 	private String AMPM() {
 		if (cbAM.isSelected() && cbPM.isSelected()) {
 			return "AM/PM";
@@ -323,7 +307,6 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		}
 	}
 	
-	//Makes sure at least one check box is selected
 	private boolean validateAMPM() {
 		if (AMPM() != "") {
 			return true;
@@ -418,6 +401,55 @@ public class Employee_SchedulerController extends MenuBar implements Initializab
 		}
 	}
 
+	// Following methods launch the other screens for various parts of the
+	// program
+	@FXML
+	private void launchEmployeeMainMenu(Event event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
+		Parent Main_Menu = FXMLLoader.load(getClass().getResource("Main_Menu_Employee.fxml"));
+		Scene MainMenu = new Scene(Main_Menu);
+		Stage mainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		mainMenu.hide();
+		mainMenu.setScene(MainMenu);
+		mainMenu.setTitle("Main Menu");
+		mainMenu.show();
+	}
+
+	@FXML
+	private void launchCustomerScreen(Event event) throws IOException {
+		((Node) event.getSource()).getScene().getWindow().hide();
+		Parent CustomerScreen = FXMLLoader.load(getClass().getResource("Menu_Customer.fxml"));
+		Scene customer_screen = new Scene(CustomerScreen);
+		Stage Customer_Screen = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Customer_Screen.hide();
+		Customer_Screen.setScene(customer_screen);
+		Customer_Screen.setTitle("Customer Screen");
+		Customer_Screen.show();
+	}
+
+	@FXML
+	private void launchBarChart(Event event) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("AMPM_Bar_Chart.fxml"));
+		loader.load();
+		Parent p = loader.getRoot();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(p));
+		stage.setTitle("All Customer Attendance Data");
+		stage.show();
+	}
+
+	@FXML
+	private void launchLineChart(Event event) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("Customer_Attendance_Line_Chart.fxml"));
+		loader.load();
+		Parent p = loader.getRoot();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(p));
+		stage.setTitle("Week Customer Attendance Data");
+		stage.show();
+	}
 
 	// Gives an alert if a user tries to schedule without selecting a date
 	private boolean validateDate() {
