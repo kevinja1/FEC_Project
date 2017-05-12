@@ -191,9 +191,11 @@ public class Customer_Attendance_Line_ChartController implements Initializable{
 		//if default printer is found, Scale the printer to the size of the page, based on 
 		//default printer setup. Orientation should be Landscape
 		try {
+			//sets btnPrint to invisible so it does not show up when printing
 			btnPrint.setVisible(false);
 			
 			if(printer != null){
+				 //Scales the panes for printing purposes
 				 PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
 				 double scaleX = pageLayout.getPrintableWidth() / Screen.getBoundsInParent().getWidth();
 				 double scaleY = pageLayout.getPrintableHeight() / Screen.getBoundsInParent().getHeight();

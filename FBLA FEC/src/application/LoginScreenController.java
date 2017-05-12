@@ -1,5 +1,6 @@
 package application;
 
+//import statement
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,9 +29,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+//Controller class for login screen
 public class LoginScreenController implements Initializable {
+	//Model for database operations
 	public LoginScreenModel loginModel = new LoginScreenModel();
 
+	//UI Features
 	@FXML
 	private JFXTextField txtUsername;
 
@@ -62,6 +66,7 @@ public class LoginScreenController implements Initializable {
 		}
 	}
 
+	//Code to login the user if inputted username and password is correct
 	private void loginAction(Event event) throws IOException {
 		try {
 			if (loginModel.isLogin(txtUsername.getText(), txtPassword.getText())) {
@@ -75,7 +80,8 @@ public class LoginScreenController implements Initializable {
 				mainMenu.setTitle("Infinity Family Entertainment Center");
 				mainMenu.show();
 			} else {
-
+				//if username or password are incorrect, the user will be alerted
+				
 				JFXDialogLayout content = new JFXDialogLayout();
 				content.setHeading(new Text("Error Login"));
 				content.setBody(new Text("Incorrect Username or Password"));

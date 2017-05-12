@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+//Methods to ease the process of loading in dates (keeping it organized)
 public class DateUtils {
 
 	public static Date asDate(LocalDate localDate) {

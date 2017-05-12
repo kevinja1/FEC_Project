@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.lang.reflect.InvocationTargetException;
 //importing all packages needed for this class
 import java.net.URL;
@@ -25,7 +26,6 @@ import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
- 
 public class Customer_Attendance_Bar_ChartController implements Initializable{
 	
 	//This is an instance of the Customer_Attendance_Report_Model Class which will perform the actual calculations for the chart
@@ -39,36 +39,46 @@ public class Customer_Attendance_Bar_ChartController implements Initializable{
 	@FXML
 	private Label lblWeek;
 	
+	//Pane where all the UI features or on
 	@FXML
 	private Pane Screen;
 		
+	//Actual bar chart
 	@FXML
 	private BarChart<String,Integer> barChartAttendance;
 	
 	@FXML
 	private Button btnPrint;
 	
+	//array for the purposes of storing what week the user chooses
 	private String[] week = new String[7];
 	
+	//Series for the bar chart
 	XYChart.Series<String, Integer> seriesAM;
 	XYChart.Series<String, Integer> seriesPM;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb){
 		
-		
+		//sets the two series to new XYChart.Series objects
 		seriesAM = new XYChart.Series<>();
 		seriesPM = new XYChart.Series<>();
 		
+		//Two series for the purposes of different shift times
 		seriesAM.setName("AM");
 		seriesPM.setName("PM");
 		
+		//disables dtWeek so user can not edit it immediately
 		dtWeek.setEditable(false);
+		
+		//Sets the label of the week to the current date
 		lblWeek.setText("Week of " + LocalDate.now().toString());
 		
         //Loads in this week's data
 		setDates(LocalDate.now());	   
 		addDataToXYChart();
+		
+		//Adds the two series to the Bar Chart
 		barChartAttendance.getData().addAll(seriesAM, seriesPM);     
 	}
 	
@@ -185,9 +195,11 @@ public class Customer_Attendance_Bar_ChartController implements Initializable{
 			//if default printer is found, Scale the printer to the size of the page, based on 
 			//default printer setup. Orientation should be Landscape
 			try {
+				//sets btnPrint to invisible so that it doesn't show up when printing
 				btnPrint.setVisible(false);
 				
 				if(printer != null){
+					//Scales the panes for printing purposes 
 					 PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
 					 double scaleX = pageLayout.getPrintableWidth() / Screen.getBoundsInParent().getWidth();
 					 double scaleY = pageLayout.getPrintableHeight() / Screen.getBoundsInParent().getHeight();

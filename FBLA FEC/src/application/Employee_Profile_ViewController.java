@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 
 //This is the mini-window that appears when for extra employee details
 public class Employee_Profile_ViewController {
+	
+	//UI Features
 	@FXML
 	private ImageView profilePic;
 	@FXML
@@ -37,7 +39,7 @@ public class Employee_Profile_ViewController {
         txtAddress.setText("Address: " +currentInfo.getAddress());
         txtEmail.setText("Email: " + currentInfo.getEmail());
       
-       
+        //profile picture general image
         profilePic.setImage(new Image("/application/default-user-icon.png"));
 
         this.Info = currentInfo;

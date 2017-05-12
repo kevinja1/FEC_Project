@@ -49,21 +49,28 @@ import tray.notification.TrayNotification;
 public class Employee_SchedulerController extends MenuBar implements Initializable {
 	
 	//SQL queries for data access, insertion, deletion
+	
+	//selects all fields from Employee table
 	public static final String EMP_SELECT_ALL_SQL = "SELECT * FROM EMPLOYEES";
 			
+	//Selects employees on a given date that are working
 	public static final String EMP_SCHEDULE_LOAD_BY_DATE_SQL = 
 		"SELECT Employees_Schedule.*, Employees.ID, Employees.First_Name, Employees.Last_Name FROM"
 			+ " Employees_Schedule INNER JOIN Employees ON Employees_Schedule.ID=Employees.ID WHERE Employees_Schedule.Date = '%s';";
 	
+	//Selects specific employee working on a given date
 	public static final String EMP_SCHEDULE_LOAD_BY_ID_AND_DATE_SQL =
 		"SELECT * FROM Employees_Schedule WHERE ID = %s AND Date = '%s';";
 	
+	//Setting an employee shift (updating)
 	public static final String EMP_SCHEDULE_UPDATE_SQL =
 		"UPDATE Employees_Schedule SET Shift = '%s' WHERE ID = %s AND Date = '%s'";
 	
+	//Setting an employee shift (inserting)
 	public static final String EMP_SCHEDULE_INSERT_SQL =
 		"INSERT INTO Employees_Schedule(`ID`,`Date`,`Shift`) VALUES (%s, '%s','%s');";
 	
+	//Deleting an employee's shift
 	public static final String EMP_SCHEDULE_DELETE_SQL =
 		"DELETE FROM Employees_Schedule WHERE ID = %s AND Date = '%s'";
 		

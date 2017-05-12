@@ -1,5 +1,6 @@
 package application;
 
+//import statements
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ public class Employee_Shift_SchedulerModel {
 	private final SimpleStringProperty EmployeesFirst_Name;
 	private final SimpleStringProperty EmployeesLast_Name;
 	
+	//Connection, statement, and resultSet for database connection
 	Connection connection;
-	
     private Statement statement;
     private ResultSet resultSet;
     
@@ -28,6 +29,7 @@ public class Employee_Shift_SchedulerModel {
 		this.EmployeesFirst_Name = new SimpleStringProperty(FirstName);
 	}
     
+    //constructor with ID, FirstName, and LastName
     public Employee_Shift_SchedulerModel(int EmployeesID, String FirstName, String LastName){
 
 		this.EmployeesID = new SimpleIntegerProperty(EmployeesID);	
